@@ -1,18 +1,14 @@
-============
-Architecture
-============
+========
+Solution
+========
 
 .. toctree::
    :maxdepth: 2
 
-   get_started
-   concepts
-   conscience
-   directory
-   containers
-   objectstorage_arch
-   why_a_proxy
-   objectstorage_repli
-   objectstorage_volume_index
+   overview
+   core_concepts
+   data_storage
+   data_access
+   services
 
 .. end of contents
