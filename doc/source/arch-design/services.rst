@@ -45,7 +45,7 @@ MySQL is used as a backend for Openstack Keystone.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - CPU and network intensive
 - Recommanded to be deployed as cluster using MariaDB Galera cluster on at least 3 different servers.
 
@@ -102,7 +102,7 @@ There is only one instance of meta0 per namespace.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - Very limited and static entries
 - CPU and network intensive
 - Must be deployed on 3 different servers
@@ -115,7 +115,7 @@ The meta1 can manage several million of container.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - CPU and network intensive
 - Must be deployed on at least 3 different servers
 - Recommanded to be deployed on high performance storage like SSD or NVMe
@@ -126,7 +126,7 @@ The meta2 directory stores for each container the content list and for each cont
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - CPU, IO and network intensive
 - Must be deployed on at least 3 different servers
 - Recommanded to be deployed on high performance storage like SSD or NVMe
@@ -173,7 +173,7 @@ Each rawx has a Rdir instance associated which is not hosted on the same server.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - IO intensive
 - Must be deployed on every disks of the platform
 
@@ -217,7 +217,7 @@ Key characteristics :
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - IO intensive
 - Recommanded to be deployed on high performance storage like SSD or NVMe
 
@@ -241,7 +241,7 @@ Redis is used by the account service to store the accounts information.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - IO intensive
 - Recommanded to be deployed on high performance storage like SSD or NVMe
 
@@ -275,8 +275,3 @@ Key characteristics :
 WebUI
 -----
 TODO
-
-
-
-
-•  MEMCACHE

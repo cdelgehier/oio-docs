@@ -94,5 +94,5 @@ Metadata proxy
 Whichever protocol is in used by the internal services (directories), all clients rely on a layer of gateways that provides a simple REST API for metadata accesses. This API provides high-level operations that encapsulate all the underlying logic behind the management of accounts, containers, and their contents. Gateways are also the ideal place for shared cache mechanisms, similar to the way name service cache daemon works on Linux hosts.
 
 .. image:: ../../../images/openio-client-with-proxy.svg
-   :width: 600 px
+   :width: 500 px
    :align: center
