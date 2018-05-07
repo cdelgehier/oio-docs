@@ -1,7 +1,7 @@
 dist: trusty
 language: python
 install:
-  - sudo apt-get install -y --force-yes python-virtualenv libleveldb-dev liberasurecode-dev libattr1-dev libleveldb1
+  - sudo apt-get install -y --force-yes python-virtualenv libleveldb-dev liberasurecode-dev libattr1-dev libleveldb1 libzookeeper-mt-dev
   - sudo apt-get install -y --force-yes doxygen
   - virtualenv $HOME/venv && source $HOME/venv/bin/activate
   - pip install --upgrade pip setuptools virtualenv tox
