@@ -14,7 +14,7 @@ The sandbox will emulate a 4 nodes cluster.
 
    quickstart
    docker_image
+   multi_nodes_install
    build_from_source
-   setup_sandbox
 
 .. end of contents

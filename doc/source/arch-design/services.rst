@@ -258,9 +258,9 @@ Key characteristics :
 - Stateless
 
 
-Charge Back
------------
-Charge back is an Http service allowing to retrieve the following information for an account, useful for billing :
+Billing
+-------
+OIO-Billing is an Http service allowing to retrieve the following information for an account, useful for billing :
 
 - number of bytes
 - number of objects

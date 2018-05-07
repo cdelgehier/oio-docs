@@ -20,6 +20,7 @@ aspect of operating the platform by showing how to perform various administratio
    operations_add_rawx
    operations_rebuild_rawx
    operations_sizing
+   sizing-guide 
    operations_log_format
    operations_backup_restore
    operations_keystone_swift_integration

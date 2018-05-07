@@ -19,7 +19,6 @@ This API can take advantage of many features available in OpenIO SDS without maj
 
 .. image:: ../../../images/openio-arch-access-gateway-scalability.png
    :width: 600 px
-   :align: center
 
 
 Filesystem
@@ -79,8 +78,6 @@ With the benefit of gateways, clients are easy to write. They all make use of th
 - **Python**
 
 - **Java**
-
-- **Go**
 
  These clients are considered “low-level,” since they are also involved in data placement too and are close to the remote services. Technically, they require access to the whole grid of nodes; they are a part of it. Another option is to deploy a REST gateway to access data from the outside, such as our implementation of Amazon® S3 or OpenStack® SWIFT.
 
