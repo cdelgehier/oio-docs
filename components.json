@@ -2,19 +2,19 @@
     "repositories":{
         "oio-sds":{
             "repository":"http://github.com/open-io/oio-sds",
-            "id":"4.x"
+            "id":"4.2.0.b2"
         },
         "oio-swift":{
             "repository":"http://github.com/open-io/oio-swift",
-            "id":"1.0.2"
+            "id":"1.2.x"
         },
         "swift3":{
             "repository":"http://github.com/open-io/swift3",
-            "id":"1.12.0-openio"
+            "id":"master"
         },
         "oio-api-java":{
             "repository":"http://github.com/open-io/oio-api-java",
-            "id":"0.7.1"
+            "id":"0.7.3"
         },
         "oio-cb":{
             "repository":"git@github.com:open-io/oio-cb.git",
@@ -35,7 +35,7 @@
         },
         "oio-replicator":{
             "repository":"git@github.com:open-io/oio-replicator.git",
-            "id":"0.4.1"
+            "id":"0.4.4"
         }
     },
     "deps": {
