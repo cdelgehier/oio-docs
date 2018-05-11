@@ -42,6 +42,7 @@ Architecture
 ^^^^^^^^^^^^
 
 The main characteristics of OIO-FS include:
+
 •	Metadata stored in RAM for optimal performance: The entire structure of the file system is stored in memory, ensuring the best performance for use cases where the directory tree is frequently traversed. This data structure is continuously synchronized with persistent storage to ensure that no data is lost.
 •	Object-file parity: The contents of each file in OIO-FS becomes a unique object once it is persisted on OIO-SDS. A typical use case would be to then expose this object via Amazon S3 or OpenStack Swift.
 •	A high-performance data cache: The OIO-FS cache is what does all the magic. It aggregates backend calls and creates an illusion of local storage performance to applications. The consistency model is fully configurable allowing users to choose whether they prefer to optimize the application for performance or consistency.
@@ -67,8 +68,6 @@ Architecture specifics
 •	**NFS**: OIO-FS also supports this standard file sharing protocol, which is mainly used by industrial applications and Linux/UNIX computers.
 
 
-
-
 Client SDKs
 -----------
 With the benefit of gateways, clients are easy to write. They all make use of the gateway layer and only have to efficiently manage data streams. The following implementations are currently available:
@@ -86,4 +85,6 @@ Command line
 ------------
 A central tool provides CLI access to the Python native API. Since the command line requires the same network accesses to the grid, this means the oio command is meant to be run on grid nodes or their clients.
 
- “openio action ${container_id}/${objectid}”
+.. code-block:: text
+
+    openio action ${container_id}/${objectid}

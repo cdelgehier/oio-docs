@@ -110,10 +110,10 @@ For each chunk, rdir stores:
 
 - ‘mtime’: date of the last update of this entry (when a chunk is uploaded to a rawx)
 - ‘rtime’: date of the rebuilt or not present
-- extended attributes of the chunk
+- the id of the object the chunk belongs to
 
 If the volume has no associated rdir, a rdir will be automatically associated to
-it. The meta1 stores this association using the special account _RDIR.
+it. The meta1 stores this association using the special account **_RDIR**.
 
 
 Metadata proxy
