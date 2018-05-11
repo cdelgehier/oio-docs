@@ -23,6 +23,10 @@ If you do not have such an installation, please refer to the guide
 guide ":ref:`label-sandbox-guide`" for an installation "the hard way" (with
 all the control you might dream of).
 
+In the subsequent sections, we will asusme the **${REDIS_ENDPOINT}** macro is
+replaced with the actual network endpoint of the Redis service, e.g. the local
+redis server at `127.0.0.1:6379`.
+
 
 oio-fs configuration
 ~~~~~~~~~~~~~~~~~~~~
@@ -31,7 +35,7 @@ Prepare your system
 ^^^^^^^^^^^^^^^^^^^
 
 If working with a regular "non-priviledged" user, you will need to configure
-the FUSE permissions. In the file `/et/fuse.conf`, you should uncomment the
+the FUSE permissions. In the file `/etc/fuse.conf`, you should uncomment the
 line with `user_allow_other`.
 
 If working in a container, be sure it has been started in proviledged mode.
@@ -90,10 +94,12 @@ Many options are available:
    OIOFS options:
      -v   --verbose              be verbose
      --syslog-id <id>            set syslog id
-     --oiofs-files-per-folder    set the maximum number of files
-                                 per cache subfolder
      --oiofs-config              configuration file
      --oiofs-user-url <url>      set oiofs target user URL
+     --cache-action <action>     action to perform if cache directory is not empty (recovery mode)
+                                 'retrieve': retrieve the cache and continue like nothing happened
+                                 'flush': retrieve and flush the cache and continue like nothing happened
+                                 'erase': Remove all the files in the cache directory (Warning: the cache will be definitely erased)
 
    FUSE options:
      -d   -o debug          enable debug output (implies -f)
@@ -109,6 +115,7 @@ Many options are available:
      -o subtype=NAME        set filesystem type
      -o large_read          issue large read requests (2.4 only)
      -o max_read=N          set maximum size of read requests
+
      -o max_write=N         set maximum size of write requests
      -o max_readahead=N     set maximum readahead
      -o max_background=N    set number of maximum background requests
@@ -125,87 +132,64 @@ Many options are available:
      -o [no_]splice_read    use splice to read from the fuse device
 
 
-The only mandatory value is `--oiofs-user-url` that must match the oio-sds URL
-you already used earlier: `OPENIO/MyAccount/MyReference`.
+The mandatory value are:
+
+* `--oiofs-user-url` that must match the oio-sds URL you already used earlier, e.g.
+  `OPENIO/MyAccount/MyReference`.
+* `--oiofs-config` that must point to a readable JSON file, whose keys are described
+  here-below.
+
+oiofs-fuse: configuration file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`oio-fs` is configured with a JSON file, the possible keys (directives) are
+described here-below.
+
+.. contents::
+   :local:
 
 
-oiofs-fuse: config. file
-^^^^^^^^^^^^^^^^^^^^^^^^
+attributes_timeout
+------------------
 
-The minimal file you need to provides must contain the 3 keys that a presented
-below:
+Set the validity delay for user extended attributes (a.k.a `xattr`), in seconds.
+Set to 0 to never cache the xattr.
 
-.. code-block:: json
-   :caption: Minimal configuration
-
-   {
-     "redis_server": "127.0.0.1:6379",
-     "cache_directory": "/run/user/1000/oiofs-cache",
-     "cache_size": "5000000"
-   }
-
-But several other keys are possible, and a complete example is presented below:
-
-.. code-block:: json
-   :caption: Complete configuration
-
-   {
-     "stats_server": "127.0.0.1:8080",
-     "redis_server": "127.0.0.1:6379",
-     "redis_sentinel_server": "127.0.0.1:6378",
-     "redis_sentinel_name": "plop",
-     "cache_directory": "/run/user/1000/oiofs-cache",
-     "cache_size": "5000000",
-     "cache_asynchronous": true
-   }
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **0**
 
 
-stats_server
-------------
+auto_retry
+----------
 
-The adress of the internal HTTP server that exhibit some metrics about the behavior
-of the current oiofs-fuse.
+By default the cache doesn't retry on write/read/flush but returns EAGAIN.
+This can cause some problems with the local mounts. You can enable automatic
+retry when setting `auto_retry` to `true`
 
-* **optional**
-* Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address, followed by a colon the the TCP port.
-* Default: None
-
-
-redis_server
-------------
-
-The adress of the Redis that manage the inodes persistence.
-
-* **MANDATORY**
-* Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address, followed by a colon the the TCP port.
-* Default: None
+* **OPTIONAL**
+* Format: **true** or **false**
+* Default: **false**
 
 
-redis_sentinel_name
--------------------
+cache_asynchronous
+------------------
 
-The name of the redis sentinel, to be used in conjunction with *redis_sentinel_server*
+Configure the cache management: set `cache_asynchronous` to `false` for a
+synchronous write-back behavior, or set `cache_asynchronous` to `true` to make
+it asynchronous, thus relaxing the security for better performance.
 
-* **optional**
-* Format: an ASCII string with no space.
-* Default: None
+* **OPTIONAL**
+* Format: **true** of **false**
+* Default: **false**
 
-
-redis_sentinel_server
----------------------
-
-The address of the redis sentinel, to be used in conjunction with *redis_sentinel_name*
-
-* **optional**
-* Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address, followed by a colon the the TCP port.
-* Default: None
 
 cache_directory
 ---------------
 
 Explain where oiofs-fuse will will store its cached chunks of data.
-It must point to a directory with read / write / execute permissions granted
-to the user running oiofs-fuse.
+It must point to a directory with `read` / `write` / `execute` permissions
+granted to the user running `oiofs-fuse`.
 
 No special options is required, but the operator is invited to dedicate a
 directory on a partitio that is rather fast. The fastest the best!
@@ -219,34 +203,334 @@ directory on a partitio that is rather fast. The fastest the best!
 cache_size
 ----------
 
-How many bytes might a cache hold?
-When the limit is reached, the behavior is different depending on the type
-of cache that has been configured.
+Sets how many bytes might a cache hold.
 
-In cases of a synchronous cache (when `cache_asynchronous` is set to `false`),
-the content is expunged from the cache until enough space is recovered for
-the file being accessed. But in cases of an asynchronous cache, reaching the
-is a possible trigger for a write-back of the cache.
+When the limit is reached, the behavior is different depending on the type
+of cache that has been configured. In cases of a synchronous cache (when
+`cache_asynchronous` is set to `false`), the content is expunged from the
+cache until enough space is recovered for the file being accessed. In cases of
+asynchronous caches, reaching the is a possible trigger for a write-back of
+the cache.
 
 * **MANDATORY**
-* Format: an ASCII string with no space.
+* Format: a positive integer
 * Default: None
 
 
-cache_asynchronous
-------------------
+cache_size_on_flush
+-------------------
 
-* **optional**
-* Format: an ASCII string with no space.
-* Default: *false*
+On `cache full` events, `oio-fs` will flush the cache until its size reaches a
+value below the threshold set by `cache_size_on_flush`.
+
+* **MANDATORY**
+* Format: a positive integer
+* Default: None
+
+
+cache_timeout
+-------------
+
+Set how many seconds happen between periodic flush of the cache.
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **5**
+
+
+fuse_max_retry
+--------------
+
+The number maximal number of rewrite (`auto_retry` must be set to `true`).
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **10**
+
+
+ignore_flush
+------------
+
+When using an asynchronous cache, it is possible to postpone the `flush()`
+commands by setting `ignore_flush` to `true`. 
+
+* **OPTIONAL**
+* Format: **true** or **false**
+* Default: **false**
+
+
+log_level
+---------
+
+Tune the verbosity of the è oio-fs` server. As a rule of thumb, verbosity levels
+beyond **"NOTICE"** are suitable for production. Below that level, there is a risk
+of flood.
+
+* **OPTIONAL**
+* Format: a string among "TRACE2", "TRACE", "DEBUG", "INFO", "NOTICE", "WARN" and "ERROR"
+* Default: **"NOTICE"**
+
+
+max_packed_chunks
+-----------------
+
+To increase speed, the cache aggregates chunks before sending them to `oio-sds`.
+This is the maximum number of chunks per upload.
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **10**
+
+
+recovery_cache_directory
+------------------------
+
+In High Availability setups, a second directory can be configured so that
+`oio-fs` will also use it to locate its file chunks from the cache. It is up
+to the operators to deploy that second partition with the suitable technology.
+
+* **OPTIONAL**
+* Format: an ASCII string, as a local path
+* Default: None
+
+
+redis_sentinel_server
+---------------------
+
+Set the locations of the Redis Sentinel services to target, when not using
+`redis_server`.
+
+* **MANDATORY** (if not using `redis_server`)
+* Format: a array of ASCII strings representing valid network locations, i.e. a dot-decimal representations of IPv4 addresses or a colon-hexadecimal representations of an IPv6 addresses, followed by a colon then the TCP port.
+* Default: None
+
+
+redis_sentinel_name
+-------------------
+
+Set the name of the Redis service to use on the Redis Sentinel services, when
+not using `redis_server`.
+
+* **MANDATORY** (if not using `redis_server`)
+* Format: an ASCII string
+* Default: None
+
+
+redis_server
+------------
+
+The network location of the Redis server that manage the inodes persistence,
+when not using a Redis Sentinel.
+
+When targetting a Redis Sentinel (toward a replicated Redis cluster), you must
+not use the `redis_server` configuration and rather use the couple
+`redis_sentinel_server` and `redis_sentinel_name`.
+
+* **MANDATORY** (if not using `redis_sentinel_server`)
+* Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address, followed by a colon the the TCP port.
+* Default: None
+
+
+stats_server
+------------
+
+The adress of the internal HTTP server that exhibit some metrics about the behavior
+of the current oiofs-fuse. If no address is explicitely configured, no internal stats
+server is started and no socket is exposed.
+
+Please refer to that :ref:`section <ref-oiofs-sample-stat>` for an example output of
+the internal stats server.
+
+* **OPTIONAL**
+* Format: an ASCII string, the dot-decimal representation of an IPv4 address or a
+  colon-hexadecimal representation of an IPv6 address, followed by a colon then the TCP port.
+* Default: None
+
+
+max_redis_connections
+---------------------
+
+To improve the overall performance it is necessary to avoid the connection to Redis
+(Single or Sentinel) to become the bottleneck. `oio-fs` has been adapted to manage
+a pool of connections, the connections are created on demand until `max_redis_connections`
+is reached. Any attempt to get an outstanding connection is blocked until a connection
+is released in the pool.
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **30**
 
 
 Additional notes
 ~~~~~~~~~~~~~~~~
 
+Minimal setups
+^^^^^^^^^^^^^^
+
+The minimal file you need to provides must contain the 4 keys presented below:
+
+.. code-block:: json
+   :caption: Minimal configuration
+
+   {
+     "redis_server": "${REDIS_ENDPOINT}",
+     "cache_directory": "/var/tmpfs/oiofs-cache",
+     "cache_size": "5000000",
+     "auto_retry": true
+   }
+
+
 Fast setups
 ^^^^^^^^^^^
+
+Speeding up an `oio-fs` installation ...
+
+* A cache as large as possible: The larger, the better. Your whole dataset
+  should be held in the cache
+* A cache as fast as possible: either on NVMe or on a `tmpfs` partition
+* An asynchronous cache: to go as fast the the cache goes.
+* An `oio-sds` as fast as possible
+
+.. code-block:: json
+   :caption: Complete configuration
+
+   {
+     "redis_server": "${REDIS_ENDPOINT}",
+     "cache_asynchronous": true,
+     "cache_size": 1073741824,
+     "cache_size_on_flush": 536870912,
+     "stats_server": "127.0.0.1:8081",
+   }
 
 Conservative setups
 ^^^^^^^^^^^^^^^^^^^
 
+.. code-block:: json
+   :caption: Complete configuration
+
+   {
+     "redis_server": "${REDIS_ENDPOINT}",
+     "cache_asynchronous": false,
+     "cache_directory": "/var/tmpfs/oiofs-cache",
+     "cache_size": 1073741824,
+     "cache_size_on_flush": 536870912,
+     "stats_server": "127.0.0.1:8081",
+     "log_level": "NOTICE",
+     "auto_retry": true,
+     "retry_delay": 500,
+     "cache_timeout": 5,
+     "max_packed_chunks": 10,
+     "attributes_timeout": 0
+   }
+
+.. _ref-oiofs-sample-stat:
+
+Sample stats
+^^^^^^^^^^^^
+
+Here is a sample of request/response exchange between an HTTP client and the
+stats server internal to the oiofs server. Please note that the output has been
+pretty-printed for a readability purpose, but that it won't necessary be in
+actual production deployments.
+
+.. code-block:: http
+
+   GET /stats HTTP/1.0
+   Content-Length: 0
+
+
+.. code-block:: http
+
+   HTTP/1.0 200 OK
+   Content-Type: application/json
+   Content-Length: 3211
+
+   {
+       "cache_chunk_avg_age_microseconds": 45182744.85526317,
+       "cache_chunk_count": 76,
+       "cache_chunk_total_byte": 1073741824,
+       "cache_chunk_used_byte": 638156800,
+       "cache_read_avg_ms": 254.05700590625,
+       "cache_read_count": 64,
+       "cache_read_hit": 63,
+       "cache_read_max_ms": 16256.968105,
+       "cache_read_miss": 1,
+       "cache_read_total_byte": 8388608,
+       "cache_read_total_ms": 16259648378,
+       "fuse_create_avg_ms": 0.564568625,
+       "fuse_create_count": 128,
+       "fuse_create_max_ms": 5.605509,
+       "fuse_create_total_ms": 72264784,
+       "fuse_flush_avg_ms": 0.0026561472868217055,
+       "fuse_flush_count": 129,
+       "fuse_flush_max_ms": 0.016336,
+       "fuse_flush_total_ms": 342643,
+       "fuse_forget_avg_ms": 10.371277872727273,
+       "fuse_forget_count": 55,
+       "fuse_forget_max_ms": 25.606962,
+       "fuse_forget_total_ms": 570420283,
+       "fuse_fsync_avg_ms": 0.002647375,
+       "fuse_fsync_count": 128,
+       "fuse_fsync_max_ms": 0.009823,
+       "fuse_fsync_total_ms": 338864,
+       "fuse_getattr_avg_ms": 0.00864849011299435,
+       "fuse_getattr_count": 708,
+       "fuse_getattr_max_ms": 0.996713,
+       "fuse_getattr_total_ms": 6123131,
+       "fuse_getxattr_avg_ms": 0.15538891055297852,
+       "fuse_getxattr_count": 65536,
+       "fuse_getxattr_max_ms": 4.525084,
+       "fuse_getxattr_total_ms": 10183567642,
+       "fuse_lookup_avg_ms": 0.1955374585492228,
+       "fuse_lookup_count": 386,
+       "fuse_lookup_max_ms": 1.915471,
+       "fuse_lookup_total_ms": 75477459,
+       "fuse_open_avg_ms": 0.013,
+       "fuse_open_count": 2,
+       "fuse_open_max_ms": 0.016417,
+       "fuse_open_total_ms": 26000,
+       "fuse_opendir_avg_ms": 0.027907,
+       "fuse_opendir_count": 1,
+       "fuse_opendir_max_ms": 0.027907,
+       "fuse_opendir_total_ms": 27907,
+       "fuse_read_avg_ms": 246.4167555151515,
+       "fuse_read_count": 66,
+       "fuse_read_max_ms": 16257.488012,
+       "fuse_read_total_byte": 8650752,
+       "fuse_read_total_ms": 16263505864,
+       "fuse_readdir_avg_ms": 0.8259346666666666,
+       "fuse_readdir_count": 3,
+       "fuse_readdir_max_ms": 1.828243,
+       "fuse_readdir_total_ms": 2477804,
+       "fuse_release_avg_ms": 0.0027184186046511627,
+       "fuse_release_count": 129,
+       "fuse_release_max_ms": 0.015133,
+       "fuse_release_total_ms": 350676,
+       "fuse_releasedir_avg_ms": 0.013553,
+       "fuse_releasedir_count": 1,
+       "fuse_releasedir_max_ms": 0.013553,
+       "fuse_releasedir_total_ms": 13553,
+       "fuse_unlink_avg_ms": 1.3638342181818182,
+       "fuse_unlink_count": 55,
+       "fuse_unlink_max_ms": 5.007258,
+       "fuse_unlink_total_ms": 75010882,
+       "fuse_write_avg_ms": 0.02686740651321411,
+       "fuse_write_count": 262144,
+       "fuse_write_max_ms": 1815.726145,
+       "fuse_write_total_byte": 1073741824,
+       "fuse_write_total_ms": 7043129413,
+       "sds_download_avg_ms": 90.156922,
+       "sds_download_count": 1,
+       "sds_download_failed": 0,
+       "sds_download_max_ms": 90.156922,
+       "sds_download_succeeded": 1,
+       "sds_download_total_byte": 8388608,
+       "sds_download_total_ms": 90156922,
+       "sds_upload_avg_ms": 1023.9186892755681,
+       "sds_upload_count": 352,
+       "sds_upload_failed": 296,
+       "sds_upload_max_ms": 11277.834337,
+       "sds_upload_succeeded": 56,
+       "sds_upload_total_byte": 2952790016,
+       "sds_upload_total_ms": 360419378625
+   }
