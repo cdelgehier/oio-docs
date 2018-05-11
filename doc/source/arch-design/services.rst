@@ -47,7 +47,7 @@ Key characteristics :
 
 - Stateful
 - CPU and network intensive
-- Recommanded to be deployed as cluster using MariaDB Galera cluster on at least 3 different servers.
+- Recommended to be deployed as cluster using MariaDB Galera cluster on at least 3 different servers.
 
 
 
@@ -82,7 +82,7 @@ Key characteristics :
 
 **Conscience-agent**
 
-This service monitore local services on the machine and also manage service registration in the conscience.
+This service monitors local services on the machine and also manage service registration in the conscience.
 
 Key characteristics :
 
@@ -96,7 +96,7 @@ All of the directory services are replicated.
 
 **META0**
 
-The meta0 directory stores for each container his meta1 adress.
+The meta0 directory stores for each container his meta1 address.
 Meta0 handles a very limited and static number of entries (65,536).
 There is only one instance of meta0 per namespace.
 
@@ -106,11 +106,11 @@ Key characteristics :
 - Very limited and static entries
 - CPU and network intensive
 - Must be deployed on 3 different servers
-- Recommanded to be deployed on high performance storage like SSD or NVMe
+- Recommended to be deployed on high performance storage like SSD or NVMe
 
 **META1**
 
-The meta1 directory stores for each container his meta2 adress.
+The meta1 directory stores for each container his meta2 address.
 The meta1 can manage several million of container.
 
 Key characteristics :
@@ -118,18 +118,18 @@ Key characteristics :
 - Stateful
 - CPU and network intensive
 - Must be deployed on at least 3 different servers
-- Recommanded to be deployed on high performance storage like SSD or NVMe
+- Recommended to be deployed on high performance storage like SSD or NVMe
 
 **META2**
 
-The meta2 directory stores for each container the content list and for each content their chunks adresses.
+The meta2 directory stores for each container the content list and for each content their chunks addresses.
 
 Key characteristics :
 
 - Stateful
 - CPU, IO and network intensive
 - Must be deployed on at least 3 different servers
-- Recommanded to be deployed on high performance storage like SSD or NVMe
+- Recommended to be deployed on high performance storage like SSD or NVMe
 
 
 **Zookeeper**
@@ -138,7 +138,7 @@ This service is used to store the directory services election statuses.
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - Need a quite high volume of RAM
 
 **Metadata-proxy**
@@ -161,13 +161,13 @@ The RAWX service is a share-nothing service responsible to store the chunks. The
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - IO intensive
 - Must be deployed on every disks of the platform
 
 **Rdir**
 
-Rdir is a reverse directory which stores chuncks references of a rawx. This service is useful to rebuild a rawx.
+Rdir is a reverse directory which stores chunks references of a rawx. This service is useful to rebuild a rawx.
 
 Each rawx has a Rdir instance associated which is not hosted on the same server.
 
@@ -179,7 +179,7 @@ Key characteristics :
 
 **oio-blob-indexer**
 
-oio-blob-indexer is a crawler which re-index chuncks in the Rdir
+oio-blob-indexer is a crawler which re-index chunks in the Rdir
 
 Key characteristics :
 
@@ -189,7 +189,7 @@ Key characteristics :
 
 **ECD**
 
-ECD (Erasure Coding Daemon) is used to manage Erasure Coding threw C and Java SDKs
+ECD (Erasure Coding Daemon) is used to manage Erasure Coding through C and Java SDKs
 
 Key characteristics :
 
@@ -219,7 +219,7 @@ Key characteristics :
 
 - Stateful
 - IO intensive
-- Recommanded to be deployed on high performance storage like SSD or NVMe
+- Recommended to be deployed on high performance storage like SSD or NVMe
 
 
 Account management
@@ -232,7 +232,7 @@ Following an operation on a container (PUT, DELETE), events are created and cons
 
 Key characteristics :
 
-- Stateless
+- Stateful
 - CPU intensive
 
 **REDIS**
@@ -243,7 +243,7 @@ Key characteristics :
 
 - Stateful
 - IO intensive
-- Recommanded to be deployed on high performance storage like SSD or NVMe
+- Recommended to be deployed on high performance storage like SSD or NVMe
 
 
 Other Services
@@ -251,7 +251,7 @@ Other Services
 
 Replicator
 ----------
-The replicator service is a work queue consumer process. It’s main purpose is to asynchronously replicate objects and container from one local namespace to another geographically distant namespace.
+The replicator service is a work queue consumer process. Its main purpose is to asynchronously replicate objects and container from one local namespace to another geographically distant namespace.
 
 Key characteristics :
 

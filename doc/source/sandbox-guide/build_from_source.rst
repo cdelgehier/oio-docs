@@ -152,13 +152,6 @@ Libraries:
           redis-server \
           beanstalkd
 
-
-Enable external services
-
-   .. code-block:: shell
-
-      sudo systemctl enable beanstalkd
-
 We used to start redis from systemctl, but an instance will be started along with
 OpenIO SDS services.
 

@@ -5,7 +5,7 @@ Data Storage
 Storage policies
 ----------------
 Storage policies are OpenIO’s way of managing storage tiering. They consist of triplets describing constraints set by the requestor: which storage class is to be used (the kind of device with its fallback, i.e., fast SSD, SAS drive, tape, etc.); how data is to be protected (simple replication or sophisticated erasure encoding); whether data is to be processed (compressed, encrypted, etc.).
-All possible storage policies are namespace-wide, with default configurations that can be changed on the fly. These defaults can be overridden for each account, as well as on a per-container basis.
+All possible storage policies are namespace-wide, with default configurations that can be changed on the fly. These defaults can be overridden on a per-container basis.
 
 
 Versioning
