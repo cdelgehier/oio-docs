@@ -152,8 +152,8 @@ described here-below.
 attributes_timeout
 ------------------
 
-Set the validity delay for user extended attributes (a.k.a `xattr`), in seconds.
-Set to 0 to never cache the xattr.
+Set the validity delay for the `oiofs` chunks attributes, in seconds.
+Set to 0 to never cache those attributes.
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -241,7 +241,7 @@ Set how many seconds happen between periodic flush of the cache.
 fuse_max_retry
 --------------
 
-The number maximal number of rewrite (`auto_retry` must be set to `true`).
+The maximal number of rewrite (`auto_retry` must be set to `true`).
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -262,7 +262,7 @@ commands by setting `ignore_flush` to `true`.
 log_level
 ---------
 
-Tune the verbosity of the è oio-fs` server. As a rule of thumb, verbosity levels
+Tune the verbosity of the `oio-fs` server. As a rule of thumb, verbosity levels
 beyond **"NOTICE"** are suitable for production. Below that level, there is a risk
 of flood.
 
@@ -380,33 +380,11 @@ The minimal file you need to provides must contain the 4 keys presented below:
    }
 
 
-Fast setups
-^^^^^^^^^^^
-
-Speeding up an `oio-fs` installation ...
-
-* A cache as large as possible: The larger, the better. Your whole dataset
-  should be held in the cache
-* A cache as fast as possible: either on NVMe or on a `tmpfs` partition
-* An asynchronous cache: to go as fast the the cache goes.
-* An `oio-sds` as fast as possible
-
-.. code-block:: json
-   :caption: Complete configuration
-
-   {
-     "redis_server": "${REDIS_ENDPOINT}",
-     "cache_asynchronous": true,
-     "cache_size": 1073741824,
-     "cache_size_on_flush": 536870912,
-     "stats_server": "127.0.0.1:8081",
-   }
-
 Conservative setups
 ^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: json
-   :caption: Complete configuration
+   :caption: Conservative configuration
 
    {
      "redis_server": "${REDIS_ENDPOINT}",
@@ -422,6 +400,7 @@ Conservative setups
      "max_packed_chunks": 10,
      "attributes_timeout": 0
    }
+
 
 .. _ref-oiofs-sample-stat:
 
