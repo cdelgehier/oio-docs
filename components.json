@@ -1,5 +1,6 @@
 {
     "release": "18.04",
+    "stable": false,
     "repositories":{
         "oio-sds":{
             "repository":"http://github.com/open-io/oio-sds",
@@ -17,9 +18,9 @@
             "repository":"http://github.com/open-io/oio-api-java",
             "id":"0.7.3"
         },
-        "oio-cb":{
-            "repository":"git@github.com:open-io/oio-cb.git",
-            "id":"master"
+        "oio-billing":{
+            "repository":"git@github.com:open-io/oio-billing.git",
+            "id":"0.0.2"
         },
         "dockerfiles":{
             "repository":"http://github.com/open-io/dockerfiles",
@@ -32,22 +33,140 @@
         },
         "oio-fs":{
             "repository":"git@github.com:open-io/oio-fs.git",
-            "id":"master"
+            "id":"2.0.0"
         },
         "oio-replicator":{
             "repository":"git@github.com:open-io/oio-replicator.git",
             "id":"0.4.4"
+        },
+        "oio-dashboard":{
+            "repository":"git@github.com:open-io/oio-dashboard.git",
+            "id":"2.1.0-rc1"
+        },
+
+        "cosbench":{
+            "repository":"git@github.com:open-io/cosbench.git",
+            "id":"v0.4.2.c3"
+        },
+        "cosbench_xml-job":{
+            "repository":"git@github.com:open-io/cosbench_xml-job.git",
+            "id":"master"
+        },
+
+        "oio-stackstorm-dashboard":{
+            "repository":"git@github.com:open-io/oio-stackstorm-dashboard.git",
+            "id":"master"
+        },
+        "oio-stackstorm-build":{
+            "repository":"git@github.com:open-io/oio-stackstorm-build.git",
+            "id":"master"
+        },
+
+        "rpm-specfiles":{
+            "repository":"git@github.com:open-io/rpm-specfiles.git",
+            "id":"master"
+        },
+        "deb-packaging":{
+            "repository":"git@github.com:open-io/deb-packaging.git",
+            "id":"master"
+        },
+
+        "ansible-openio-monitoring":{
+            "repository":"git@github.com:open-io/ansible-openio-monitoring.git",
+            "id":"master"
+        },
+
+        "ansible-role-openio-haproxy":{
+            "repository":"git@github.com:open-io/ansible-role-openio-haproxy.git",
+            "id":"master"
+        },
+        "ansible-role-openio-gridinit":{
+            "repository":"git@github.com:open-io/ansible-role-openio-gridinit.git",
+            "id":"master"
+        },
+        "ansible-role-openio-grafana":{
+            "repository":"git@github.com:open-io/ansible-role-openio-grafana.git",
+            "id":"master"
+        },
+        "ansible-role-openio-oiofs":{
+            "repository":"git@github.com:open-io/ansible-role-openio-oiofs.git",
+            "id":"master"
+        },
+        "ansible-role-openio-logrotate":{
+            "repository":"git@github.com:open-io/ansible-role-openio-logrotate.git",
+            "id":"master"
+        },
+        "ansible-role-openio-netdata":{
+            "repository":"git@github.com:open-io/ansible-role-openio-netdata.git",
+            "id":"master"
+        },
+        "ansible-role-openio-redis":{
+            "repository":"git@github.com:open-io/ansible-role-openio-redis.git",
+            "id":"master"
+        },
+        "ansible-role-openio-galera":{
+            "repository":"git@github.com:open-io/ansible-role-openio-galera.git",
+            "id":"master"
+        },
+        "ansible-role-openio-keepalived":{
+            "repository":"git@github.com:open-io/ansible-role-openio-keepalived.git",
+            "id":"master"
+        },
+        "ansible-role-openio-memcached":{
+            "repository":"git@github.com:open-io/ansible-role-openio-memcached.git",
+            "id":"master"
+        },
+        "ansible-role-prometheus":{
+            "repository":"git@github.com:open-io/ansible-role-prometheus.git",
+            "id":"master"
+        },
+        "ansible-role-openio-filebeat":{
+            "repository":"git@github.com:open-io/ansible-role-openio-filebeat.git",
+            "id":"master"
+        },
+        "ansible-role-repo-openstack":{
+            "repository":"git@github.com:open-io/ansible-role-repo-openstack.git",
+            "id":"master"
+        },
+        "openstack-ansible-os_keystone":{
+            "repository":"git@github.com:open-io/openstack-ansible-os_keystone.git",
+            "id":"master"
+        },
+        "openstack-ansible-plugins":{
+            "repository":"git@github.com:open-io/openstack-ansible-plugins.git",
+            "id":"master"
+        },
+
+        "ansible-role-openio-sds":{
+            "repository":"git@github.com:open-io/ansible-role-openio-sds.git",
+            "id":"master"
+        },
+
+        "puppet-openiosds-profile":{
+            "repository":"git@github.com:open-io/puppet-openiosds-profile.git",
+            "id":"master"
+        },
+        "puppet-openiosds-profile-swift":{
+            "repository":"git@github.com:open-io/puppet-openiosds-profile-swift.git",
+            "id":"master"
+        },
+        "puppet-gridinit":{
+            "repository":"git@github.com:open-io/puppet-gridinit.git",
+            "id":"master"
+        },
+        "puppet-openiosds":{
+            "repository":"git@github.com:open-io/puppet-openiosds.git",
+            "id":"master"
         }
     },
     "deps": {
-      "asn1c": {
-        "repository": "https://github.com/open-io/asn1c.git",
-        "id": "v0.9.27.1"
-      },
-      "gridinit": {
-        "repository": "https://github.com/open-io/gridinit.git",
-        "id": "v1.6"
-      }
-  },
-  "stable": false
+        "asn1c": {
+            "repository": "https://github.com/open-io/asn1c.git",
+            "id": "v0.9.27.1"
+        },
+        "gridinit": {
+            "repository": "https://github.com/open-io/gridinit.git",
+            "id": "v1.6"
+        }
+    }
 }
