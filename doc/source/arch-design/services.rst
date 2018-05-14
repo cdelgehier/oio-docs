@@ -2,6 +2,9 @@
 Services
 ========
 
+.. contents::
+   :local:
+
 Introduction
 ~~~~~~~~~~~~
 

@@ -2,6 +2,9 @@
 Data Storage
 ============
 
+.. contents::
+   :local:
+
 Storage policies
 ----------------
 Storage policies are OpenIO’s way of managing storage tiering. They consist of triplets describing constraints set by the requestor: which storage class is to be used (the kind of device with its fallback, i.e., fast SSD, SAS drive, tape, etc.); how data is to be protected (simple replication or sophisticated erasure encoding); whether data is to be processed (compressed, encrypted, etc.).

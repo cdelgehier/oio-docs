@@ -2,6 +2,8 @@
 Core concepts
 =============
 
+.. contents::
+   :local:
 
 Data organisation
 ~~~~~~~~~~~~~~~~~

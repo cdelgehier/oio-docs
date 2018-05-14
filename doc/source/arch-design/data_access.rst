@@ -2,6 +2,9 @@
 Data Access
 ===========
 
+.. contents::
+   :local:
+
 S3 API
 ------
 OpenIO SDS is compatible with the Amazon® S3 API.
