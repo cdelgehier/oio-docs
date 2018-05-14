@@ -360,6 +360,25 @@ is released in the pool.
 * Format: a positive integer
 * Default: **30**
 
+max_flush_thread
+----------------
+
+To improve the overall performance it is also necessary to avoid the connection to `oio-sds`
+to become the bottleneck. `oio-fs` manage a pool of thread, the threads are created on demand until `max_flush_thread` is reached. Any more demand will be blocked until a thread finishes its job (threads are reused).
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **10**
+
+upload_retry_upload
+-------------------
+
+In some cases `oio-fs` may be too fast for `oio-sds`, for example when there is a lot of `oio-fs`
+instances on only one cluster. So to not overload `oio-sds` of requests there is a parameter to wait after a request failed.
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **0**
 
 Additional notes
 ~~~~~~~~~~~~~~~~
