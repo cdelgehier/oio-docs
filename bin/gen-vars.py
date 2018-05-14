@@ -32,6 +32,7 @@ def main(out):
             name = conv(component + '_' + k)
             value = vals[v]
             print("{0} {1}".format(name, value), file=out)
+    print("RELEASE {0}".format(data["release"]), file=out)
 
 
 if __name__ == "__main__":

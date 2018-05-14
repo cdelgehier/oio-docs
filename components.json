@@ -1,4 +1,5 @@
 {
+    "release": "18.04",
     "repositories":{
         "oio-sds":{
             "repository":"http://github.com/open-io/oio-sds",
