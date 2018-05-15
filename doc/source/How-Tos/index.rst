@@ -12,6 +12,7 @@ common tools of the industry.
    cookbook_rclone
    cookbook_cyberduck
    cookbook_vmware
+   ../arch-design/s3_compliancy
 
 .. end of contents
 
