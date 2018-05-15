@@ -2,6 +2,7 @@
 target/
 /result-docs/
 build*/
+doc2/
 
 # auto-generated files
 /doc/source/admin-guide/variables.rst

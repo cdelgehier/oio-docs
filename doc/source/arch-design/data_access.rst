@@ -7,11 +7,16 @@ Data Access
 
 S3 API
 ------
-OpenIO SDS is compatible with the Amazon® S3 API.
-Amazon S3 is the most common and de facto standard object storage API. With S3 you will be able to manage objects with or without versions, buckets of objects.
-Using OpenIO SDS as a backend for Amazon S3 clients, your infrastructure will take advantage of all the gateways and applications already available on the market, on premises, and with all the benefits coming from SDS, including features like the read-after-write consistency that lacks from S3.
 
-TODO : compliancy matrix
+OpenIO SDS is compatible with the Amazon® S3 API. Amazon S3 is the most common
+and *de facto* standard object storage API. With S3 you will be able to manage
+objects with or without versions, buckets of objects. Using OpenIO SDS as a
+backend for Amazon S3 clients, your infrastructure will take advantage of all
+the gateways and applications already available on the market, on premises,
+and with all the benefits coming from SDS, including features like the
+read-after-write consistency that lacks from S3.
+
+Please check the ":ref:`label-s3-compliancy`" of OpenIO SDS.
 
 Openstack Swift API
 -------------------

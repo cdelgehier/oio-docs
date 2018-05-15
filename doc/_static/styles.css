@@ -1054,3 +1054,7 @@ a.footer__community:after {
 .footer__license__icons--by {
     background: url('./images/ico-by.svg') no-repeat;
 }
+
+table.s3-table {
+    width: 500px;
+}
