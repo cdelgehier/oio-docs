@@ -12,7 +12,7 @@
         },
         "swift3":{
             "repository":"https://github.com/open-io/swift3",
-            "id":"master"
+            "id":"1.12.2-openio"
         },
         "oio-api-java":{
             "repository":"https://github.com/open-io/oio-api-java",
@@ -30,7 +30,7 @@
         "dockerfiles":{
             "doc": false,
             "repository":"https://github.com/open-io/dockerfiles",
-            "id":"master"
+            "id":"1.0.0"
         },
         "oio-fs":{
             "doc": false,
@@ -56,7 +56,7 @@
         "cosbench_xml-job":{
             "doc": false,
             "repository":"git@github.com:open-io/cosbench_xml-job.git",
-            "id":"master"
+            "id":"1.0.0"
         },
 
         "oio-stackstorm-dashboard":{
@@ -84,7 +84,7 @@
         "ansible-openio-monitoring":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-openio-monitoring.git",
-            "id":"master"
+            "id":"v2.1.2"
         },
 
         "ansible-role-openio-haproxy":{
@@ -95,27 +95,27 @@
         "ansible-role-openio-gridinit":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-gridinit.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-grafana":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-grafana.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-oiofs":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-oiofs.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-logrotate":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-logrotate.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-netdata":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-netdata.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-redis":{
             "doc": false,
@@ -125,12 +125,12 @@
         "ansible-role-openio-galera":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-galera.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-keepalived":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-keepalived.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-memcached":{
             "doc": false,
@@ -145,12 +145,12 @@
         "ansible-role-openio-filebeat":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-filebeat.git",
-            "id":"master"
+            "id":"0.1.0"
         },
         "ansible-role-repo-openstack":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-repo-openstack.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "openstack-ansible-os_keystone":{
             "doc": false,
@@ -166,9 +166,14 @@
         "ansible-role-openio-sds":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-sds.git",
-            "id":"master"
+            "id":"1.0.0"
         },
 
+        "puppet-gridinit":{
+            "doc": false,
+            "repository":"git@github.com:open-io/puppet-gridinit.git",
+            "id":"1.1.9"
+        },
         "puppet-openiosds-profile":{
             "doc": false,
             "repository":"git@github.com:open-io/puppet-openiosds-profile.git",
@@ -179,15 +184,10 @@
             "repository":"git@github.com:open-io/puppet-openiosds-profile-swift.git",
             "id":"master"
         },
-        "puppet-gridinit":{
-            "doc": false,
-            "repository":"git@github.com:open-io/puppet-gridinit.git",
-            "id":"master"
-        },
         "puppet-openiosds":{
             "doc": false,
             "repository":"git@github.com:open-io/puppet-openiosds.git",
-            "id":"master"
+            "id":"4.0.25"
         }
     },
     "deps": {
