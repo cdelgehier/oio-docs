@@ -2,6 +2,15 @@
 Understand the format of the logs
 =================================
 
+.. contents::
+   :local:
+
+oio-swift
++++++++++
+
+oio-sds: oio-proxy, oio-meta{0,1,2}-server
+++++++++++++++++++++++++++++++++++++++++++
+
 The services in an OpenIO system respect a common format for their logs. Each
 log item is a single line of text, encoded in UTF-8. A line is a sequence of
 items separated by a sequence of white spaces. For an easy parsing, the variety
@@ -159,4 +168,7 @@ Another key used by OpenIO SDS is ``e=``, that gives the root cause of the
 error that occured. At the moment, there is no common format for that error,
 but we tend to explain the error as a JSON object with ``status`` and a
 ``message`` field.
+
+oio-sds: rawx services
+++++++++++++++++++++++
 
