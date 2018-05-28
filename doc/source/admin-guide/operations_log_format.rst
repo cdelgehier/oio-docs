@@ -2,6 +2,14 @@
 Understand the format of the logs
 =================================
 
+The services in an OpenIO system respect a common format for their logs. Each
+log item is a single line of text, encoded in UTF-8. A line is a sequence of
+items separated by a sequence of white spaces. For an easy parsing, the variety
+of the messages is organized around a recursion of envelopes (header and
+payload). All the fields are always present on a line, and when a field is not
+set it is represented by a single dash character.
+
+
 .. contents::
    :local:
 
@@ -162,12 +170,6 @@ compound parameters.
 oio-sds: oio-proxy, oio-meta{0,1,2}-server
 ++++++++++++++++++++++++++++++++++++++++++
 
-The services in an OpenIO system respect a common format for their logs. Each
-log item is a single line of text, encoded in UTF-8. A line is a sequence of
-items separated by a sequence of white spaces. For an easy parsing, the variety
-of the messages is organized around a recursion of envelopes (header and
-payload). All the fields are always present on a line, and when a field is not
-set it is represented by a single dash character.
 
 
 COMMON envelope
@@ -194,7 +196,7 @@ and all the others are populated by the application.
    * - Payload
      - A data whose format will depend on the value of the ``Domain``
    * - Loglevel
-     - A value in the set: **error**, **warning**, **notice**, **info**, **debug**
+     - A value in the set: **err**, **warning**, **notice**, **info**, **debug**
 
 
 ACCESS logs
