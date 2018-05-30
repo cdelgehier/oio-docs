@@ -67,7 +67,7 @@
         "oio-stackstorm-build":{
             "doc": false,
             "repository":"git@github.com:open-io/oio-stackstorm-build.git",
-            "id":"master"
+            "id":"1.0.0"
         },
 
         "rpm-specfiles":{
@@ -90,7 +90,7 @@
         "ansible-role-openio-haproxy":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-haproxy.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-gridinit":{
             "doc": false,
@@ -120,7 +120,7 @@
         "ansible-role-openio-redis":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-redis.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-openio-galera":{
             "doc": false,
@@ -135,7 +135,7 @@
         "ansible-role-openio-memcached":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-memcached.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "ansible-role-prometheus":{
             "doc": false,
@@ -152,10 +152,10 @@
             "repository":"git@github.com:open-io/ansible-role-repo-openstack.git",
             "id":"1.0.0"
         },
-        "openstack-ansible-os_keystone":{
+        "ansible-role-openio-keystone":{
             "doc": false,
-            "repository":"git@github.com:open-io/openstack-ansible-os_keystone.git",
-            "id":"master"
+            "repository":"git@github.com:open-io/ansible-role-openio-keystone.git",
+            "id":"1.0.0"
         },
         "openstack-ansible-plugins":{
             "doc": false,
@@ -177,12 +177,12 @@
         "puppet-openiosds-profile":{
             "doc": false,
             "repository":"git@github.com:open-io/puppet-openiosds-profile.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "puppet-openiosds-profile-swift":{
             "doc": false,
             "repository":"git@github.com:open-io/puppet-openiosds-profile-swift.git",
-            "id":"master"
+            "id":"1.0.0"
         },
         "puppet-openiosds":{
             "doc": false,
