@@ -6,11 +6,11 @@ Preparation
 ~~~~~~~~~~~
 
 Find information about the service you want to rebuild.
-By running ``openio cluster list rawx`` you will get the list of all rawx service ids accompanied by their volume path.
+By running ``openio cluster list rawx`` you will get the list of all rawx service IDs accompanied by their volume path.
 
 Verify that the service was automatically scored to zero by running ``openio cluster list rawx``.
 
-If not, Lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``. Where RAWX_ID is the network address of the service (ip:port).
+If not, lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``. Where RAWX_ID is the network address of the service (ip:port).
 This will prevent the service from getting upload requests, and will reduce the number of download requests.
 
 Set the incident date
@@ -44,6 +44,4 @@ You can now launch the rebuild by using the ``oio-blob-rebuilder`` tool:
 
   .. code-block:: console
 
-    # oio-blob-rebuilder <NAMESPACE> <RAWX_ID>
-
-
+    # oio-blob-rebuilder <NAMESPACE> --volume <RAWX_ID>
