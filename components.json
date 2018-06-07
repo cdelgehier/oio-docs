@@ -8,15 +8,15 @@
         },
         "oio-swift":{
             "repository":"https://github.com/open-io/oio-swift",
-            "id":"1.2.x"
+            "id":"1.3.0"
         },
         "swift3":{
             "repository":"https://github.com/open-io/swift3",
-            "id":"1.12.2-openio"
+            "id":"1.12.4-openio"
         },
         "oio-api-java":{
             "repository":"https://github.com/open-io/oio-api-java",
-            "id":"0.7.3"
+            "id":"1.0.0"
         },
         "oio-billing":{
             "doc": false,
@@ -140,7 +140,7 @@
         "ansible-role-prometheus":{
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-prometheus.git",
-            "id":"master"
+            "id":"v3.0.1"
         },
         "ansible-role-openio-filebeat":{
             "doc": false,
@@ -156,11 +156,6 @@
             "doc": false,
             "repository":"git@github.com:open-io/ansible-role-openio-keystone.git",
             "id":"1.0.0"
-        },
-        "openstack-ansible-plugins":{
-            "doc": false,
-            "repository":"git@github.com:open-io/openstack-ansible-plugins.git",
-            "id":"master"
         },
 
         "ansible-role-openio-sds":{
