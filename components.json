@@ -62,7 +62,7 @@
         "oio-stackstorm-dashboard":{
             "doc": false,
             "repository":"git@github.com:open-io/oio-stackstorm-dashboard.git",
-            "id":"master"
+            "id":"2.1.0"
         },
         "oio-stackstorm-build":{
             "doc": false,
