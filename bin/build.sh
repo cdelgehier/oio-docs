@@ -8,65 +8,69 @@ BUILD=$(readlink --canonicalize "$1")
 
 mkdir -p $TARGET
 
-# Prepare an environment for the building process
-mkdir -p "$BUILD"
-./bin/gen-vars.py "$BUILD/vars.export"
+if [[ -z "$OIO_DOCS_LIGHT" ]]; then
+
+    # Prepare an environment for the building process
+    mkdir -p "$BUILD"
+    ./bin/gen-vars.py "$BUILD/vars.export"
+
+    # Generate the RAWX API
+    ./bin/extract-doc.py --tag=RAWX \
+      $(find $BUILD/oio-sds/rawx-apache2/src -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/rawx_api_calls.rst
+
+    ./bin/extract-doc.py --tag=CS \
+      $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/proxy_cs_api_calls.rst
+
+    ./bin/extract-doc.py --tag=DIR \
+      $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/proxy_dir_api_calls.rst
+
+    ./bin/extract-doc.py --tag=CONTAINER \
+      $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/proxy_container_api_calls.rst
+
+    ./bin/extract-doc.py --tag=RDIR \
+      $(find $BUILD/oio-sds/rdir -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/rdir_api_calls.rst
+
+    ./bin/extract-doc.py --tag=ACCT \
+      $(find $BUILD/oio-sds/oio/account -type f -name '*.py') \
+      > doc/source/sdk-guide/acct_api_calls.rst
+
+    # # Build the oio-sds variables
+    $BUILD/oio-sds/confgen.py rst "$BUILD/oio-sds/conf.json" \
+      doc/source/admin-guide/variables.rst || true
+
+    # Build the Java API javadoc
+    if which javadoc 2>/dev/null >/dev/null ; then
+      if [[ -d $BUILD/oio-api-java/src/main/java ]] ; then
+        ( cd $BUILD/oio-api-java/src/main/java \
+          && javadoc -d $TARGET/oio-api-java-doc io.openio.sds )
+      fi
+    fi
 
 
-# Generate the RAWX API
-./bin/extract-doc.py --tag=RAWX \
-  $(find $BUILD/oio-sds/rawx-apache2/src -type f -name '*.c' -or -name '*.h') \
-  > doc/source/sdk-guide/rawx_api_calls.rst
+    # Build the C API doxygen doc
+    if which doxygen 2>/dev/null >/dev/null ; then
+      if [[ -r doc/Doxyfile-api-c ]] ; then
+        doxygen doc/Doxyfile-api-c
+      fi
+    fi
 
-./bin/extract-doc.py --tag=CS \
-  $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
-  > doc/source/sdk-guide/proxy_cs_api_calls.rst
+    # We configured sphinx to make it document the python sdk. The modules will
+    # be loaded, we need even the dependencies.
+    cd "$BUILD/oio-sds" \
+      && pip install --upgrade -r test-requirements.txt \
+      && pip install --upgrade -r all-requirements.txt \
+      && python ./setup.py install
 
-./bin/extract-doc.py --tag=DIR \
-  $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
-  > doc/source/sdk-guide/proxy_dir_api_calls.rst
-
-./bin/extract-doc.py --tag=CONTAINER \
-  $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
-  > doc/source/sdk-guide/proxy_container_api_calls.rst
-
-./bin/extract-doc.py --tag=RDIR \
-  $(find $BUILD/oio-sds/rdir -type f -name '*.c' -or -name '*.h') \
-  > doc/source/sdk-guide/rdir_api_calls.rst
-
-./bin/extract-doc.py --tag=ACCT \
-  $(find $BUILD/oio-sds/oio/account -type f -name '*.py') \
-  > doc/source/sdk-guide/acct_api_calls.rst
-
-
-# Build the oio-sds variables
-$BUILD/oio-sds/confgen.py rst "$BUILD/oio-sds/conf.json" \
-  doc/source/admin-guide/variables.rst || true
-
-
-# Build the Java API javadoc
-if which javadoc 2>/dev/null >/dev/null ; then
-  if [[ -d $BUILD/oio-api-java/src/main/java ]] ; then
-    ( cd $BUILD/oio-api-java/src/main/java \
-      && javadoc -d $TARGET/oio-api-java-doc io.openio.sds )
-  fi
+    # Build the Python API sphinx doc
+    if [[ -d "$BUILD/oio-sds/oio" ]] ; then
+    sphinx-apidoc --ext-autodoc -o doc2/source/sdk-guide/python-api "$BUILD/oio-sds/oio"
+    fi
 fi
-
-
-# Build the C API doxygen doc
-if which doxygen 2>/dev/null >/dev/null ; then
-  if [[ -r doc/Doxyfile-api-c ]] ; then
-    doxygen doc/Doxyfile-api-c
-  fi
-fi
-
-# We configured sphinx to make it document the python sdk. The modules will
-# be loaded, we need even the dependencies.
-( cd "$BUILD/oio-sds" \
-  && pip install --upgrade -r test-requirements.txt \
-  && pip install --upgrade -r all-requirements.txt \
-  && python ./setup.py install )
-
 
 # Generate a copy of all the sources to patch them, in order to expose
 # the release of each component
@@ -74,13 +78,6 @@ if [[ -d doc2 ]] ; then
   rm -rf doc2
 fi
 cp -rp doc doc2
-
-
-# Build the Python API sphinx doc
-if [[ -d "$BUILD/oio-sds/oio" ]] ; then
-  sphinx-apidoc --ext-autodoc -o doc2/source/sdk-guide/python-api "$BUILD/oio-sds/oio"
-fi
-
 
 SED='sed -i '
 while read K V ; do
