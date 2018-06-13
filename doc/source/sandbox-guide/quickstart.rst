@@ -16,6 +16,10 @@ Try using docker
 
 For more information, check out our :ref:`docker image <ref-docker-image>` documentation.
 
+Try on a Raspberry PI
+---------------------
+
+Check out our Raspberry PI :ref:`install guide <ref-install-raspberry-pi-standalone>`.
 
 Install
 -------

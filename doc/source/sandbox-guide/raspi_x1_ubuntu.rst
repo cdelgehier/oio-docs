@@ -1,6 +1,17 @@
-============
-Installation
-============
+.. _ref-install-raspberry-pi-standalone:
+====================================
+SDS on a Raspberry PI
+====================================
+
+This guide will show you how to install OpenIO SDS in standalone mode on a Raspberry Pi 3B running Ubuntu Xenial 64bits.
+
+Requirements
+~~~~~~~~~~~~
+
+- Raspberry Pi Model 3B
+- SD Card with at least 2GB free space
+- Host Machine running Linux
+- Basic ethernet cable setup with a DHCP server (to provide an IP for the Raspberry PI)
 
 Prepare SD Card
 ~~~~~~~~~~~~~~~
@@ -9,7 +20,8 @@ On your host machine, get an already preinstalled OpenIO SDS image.
 
    .. code-block:: shell
 
-    $ wget [URL] -O openio.img
+    $ wget http://mirror.openio.io/pub/images/openio/sds/17.04/ubuntu/xenial/oio-sds-17.04-ubuntu-xenial-arm64-rpi3b.zip -O openio.img.zip
+    $ unzip openio.img.zip
 
 Now insert your SD card into your host machine and write the image onto it.
 
@@ -72,6 +84,14 @@ For example, using awsclis
    .. code-block:: shell
 
     $ apt -y install awscli
+    $ mkdir -p ~/.aws
+    $ cat << EOF > ~/.aws/credentials
+    [default]
+    aws_access_key_id=demo:demo
+    aws_secret_access_key=DEMO_PASS
+    s3 =
+        signature_version = s3
+    EOF
     $ aws --endpoint-url http://[RPI_IP]:6007 --no-verify-ssl s3 cp /proc/cpuinfo s3://mycontainer/
     upload: ../../proc/cpuinfo to s3://mycontainer/cpuinfo
 

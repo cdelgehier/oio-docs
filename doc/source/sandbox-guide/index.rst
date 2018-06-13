@@ -14,6 +14,7 @@ The sandbox will emulate a 4 nodes cluster.
 
    quickstart
    docker_image
+   raspi_x1_ubuntu
    multi_nodes_install
    build_from_source
 
