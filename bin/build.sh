@@ -6,12 +6,12 @@ TARGET=$(readlink --canonicalize result-docs)
 BUILD=$(readlink --canonicalize "$1")
 [[ -n "$BUILD" ]]
 
-mkdir -p $TARGET
+mkdir -p "$TARGET"
+mkdir -p "$BUILD"
 
 if [[ -z "$OIO_DOCS_LIGHT" ]]; then
 
     # Prepare an environment for the building process
-    mkdir -p "$BUILD"
     ./bin/gen-vars.py "$BUILD/vars.export"
 
     # Generate the RAWX API
@@ -51,7 +51,6 @@ if [[ -z "$OIO_DOCS_LIGHT" ]]; then
       fi
     fi
 
-
     # Build the C API doxygen doc
     if which doxygen 2>/dev/null >/dev/null ; then
       if [[ -r doc/Doxyfile-api-c ]] ; then
@@ -61,15 +60,10 @@ if [[ -z "$OIO_DOCS_LIGHT" ]]; then
 
     # We configured sphinx to make it document the python sdk. The modules will
     # be loaded, we need even the dependencies.
-    cd "$BUILD/oio-sds" \
+    ( cd "$BUILD/oio-sds" \
       && pip install --upgrade -r test-requirements.txt \
       && pip install --upgrade -r all-requirements.txt \
-      && python ./setup.py install
-
-    # Build the Python API sphinx doc
-    if [[ -d "$BUILD/oio-sds/oio" ]] ; then
-    sphinx-apidoc --ext-autodoc -o doc2/source/sdk-guide/python-api "$BUILD/oio-sds/oio"
-    fi
+      && python ./setup.py install )
 fi
 
 # Generate a copy of all the sources to patch them, in order to expose
@@ -78,6 +72,11 @@ if [[ -d doc2 ]] ; then
   rm -rf doc2
 fi
 cp -rp doc doc2
+
+# Build the Python API sphinx doc
+if [[ -z "$OIO_DOCS_LIGHT" && -d "$BUILD/oio-sds/oio" ]] ; then
+    sphinx-apidoc --ext-autodoc -o doc2/source/sdk-guide/python-api "$BUILD/oio-sds/oio"
+fi
 
 SED='sed -i '
 while read K V ; do
