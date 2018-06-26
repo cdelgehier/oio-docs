@@ -9,11 +9,18 @@ by showing how to perform various administration tasks.
 .. toctree::
    :maxdepth: 1
 
-   configuration_ec
+   configuration_conscience
    configuration_storagepolicies
-   configuration_namespace
+   configuration_ec
    configuration_swift
    configuration_oiofs
+   configuration_rawx
+   configuration_rdir
+   configuration_container
+   configuration_account
+   configuration_zk
+   configuration_gridinit
+   configuration_namespace
    sizing-guide
 
 .. end of contents

@@ -1,6 +1,6 @@
-============================
-HowTo: Scale your cluster up
-============================
+=====================
+Scale your cluster up
+=====================
 
 Here you will learn how to scale your cluster by adding a new node.
 The steps below are given for ubuntu/debian, please use the package manager belonging to your distribution.
