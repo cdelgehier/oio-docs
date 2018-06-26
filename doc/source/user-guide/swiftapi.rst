@@ -1,6 +1,13 @@
-**Setup**
+=================
+Use the Swift API
+=================
 
-Simplest way to start use swift over OpenIO is to follow http://docs.openio.io/17.04/docker-image/ to run standalone OpenIO SDS with Swift connector:
+Setup
++++++
+
+Simplest way to start use Swift over OpenIO is to follow
+http://docs.openio.io/{{RELEASE}}/docker-image/ to run standalone OpenIO SDS with
+Swift connector:
 
 ::
 
@@ -10,7 +17,9 @@ You can use now Swift API (described at https://developer.openstack.org/api-ref/
 
 Few simple examples with `curl` command.
 
-**Authentication**
+
+Authentication
+++++++++++++++
 
 First, you have to retrieve your Authentication Token (`tempauth`)
 
@@ -35,7 +44,9 @@ and expose it for following examples
   $ export STORAGE_URL=http://127.0.0.1:6007/v1/AUTH_demo
   $ export TOKEN=AUTH_tkdc3c3c9c09bb470ebd4561faf524244f
 
-**Create new container**
+
+Create new container
+++++++++++++++++++++
 
 ::
 
@@ -48,7 +59,9 @@ and expose it for following examples
   X-Openstack-Request-Id: txe4da25b8234b4906b71e9-005ae73ca0
   Date: Mon, 30 Apr 2018 15:56:17 GMT
 
-**List available containers**
+
+List available containers
++++++++++++++++++++++++++
 
 ::
 
@@ -73,7 +86,8 @@ and expose it for following examples
   ]
 
 
-**Upload a new content to a container:**
+Upload a new content to a container
++++++++++++++++++++++++++++++++++++
 
 ::
 
@@ -90,7 +104,8 @@ and expose it for following examples
   X-Openstack-Request-Id: tx5d6a44c25b6347349cce6-005ae72f8e
   Date: Mon, 30 Apr 2018 15:00:30 GMT
 
-**List content of a container**
+List content of a container
++++++++++++++++++++++++++++
 
 ::
 
@@ -129,7 +144,8 @@ and expose it for following examples
   X-Openstack-Request-Id: txd3efa8f6a63f45a194bf8-005ae72fc3
   Date: Mon, 30 Apr 2018 15:01:23 GMT
 
-**Delete a container**
+Delete a container
+++++++++++++++++++
 
 ::
 
