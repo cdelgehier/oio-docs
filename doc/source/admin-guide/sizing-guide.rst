@@ -100,8 +100,31 @@ encryption, and all data chunking is usually computed at this level.
 By adding up CPU cores for the front end and back end, it is easy to find the
 right amount of cores needed for each node for simple layout configurations.
 
-.. image:: ../../../images/openio-admin-sizing-cpu.png
-   :width: 800 px
+.. list-table::
+   :header-rows: 1
+
+   * - Workload
+     - Node capacity
+     - Storage node
+     - Access node
+     - Single node
+   * - Cold Data
+     - 60-90 HDDs (0.5-1PB)
+     - 8
+     - 8
+     - 16
+   * - Small files
+       Frequent access
+     - 10-24 HDDs (80-300TB)
+     - 10-16
+     - 10-16
+     - 20-32
+   * - Large files
+       High throughput
+     - 48-90 HDDs (0.5-1PB)
+     - 8-12
+     - 8-12
+     - 16-24
 
 RAM
 ~~~
@@ -149,9 +172,31 @@ the right amount of RAM needed for each node for simple layout configurations.
 Examples
 --------
 
-.. image:: ../../../images/openio-admin-sizing-ram.png
-   :width: 800 px
+.. list-table::
+   :header-rows: 1
 
+   * - Workload
+     - Node capacity
+     - Storage node RAM
+     - Access node RAM
+     - Single node RAM
+   * - Cold Data
+     - 60-90 HDDs (0.5-1PB)
+     - 64GB
+     - 16GB
+     - 80GB
+   * - Small files
+       Frequent access
+     - 10-24 HDDs (80-300TB)
+     - 32-64GB
+     - 32-64GB
+     - 64-128GB
+   * - Large files
+       High throughput
+     - 48-90 HDDs (0.5-1PB)
+     - 128GB
+     - 32GB
+     - 160GB
 
 Storage
 ~~~~~~~
