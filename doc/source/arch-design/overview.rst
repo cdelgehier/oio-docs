@@ -1,52 +1,91 @@
-========
-Overview
-========
+===================
+Key characteristics
+===================
 
-The OpenIO project is an open source cloud platform for all
-sizes of platforms, which aims to be easy to use, install and connect
-with your applications.
+.. contents::
+   :depth: 1
+   :local:
 
-OpenIO provides a cloud platform built around storage for your applications,
-for that it provides a set of interrelated services, each service offers a
-dedicated API to facilitate integration.
+The OpenIO project is an open source cloud platform for all sizes of platforms,
+dedicated to data-centric applications, built around OpenIO SDS, a highly
+flexible object store that  allows  users  to  build  infrastructures  that
+can  respond  to  the  most  demanding  requirements,  both  in  terms  of
+scalability  and  performance.
 
-The following table describes the OpenIO key caracteristics :
+OpenIO SDS is a highly flexible solution that allows users to build storage
+infrastructures that can respond to the most demanding requirements, both in
+terms of scalability and performance. In this section, we briefly introduce
+the most important characteristics of its design.
 
-.. list-table:: OpenIO Key caracteristics
-   :header-rows: 1
-   :widths: 15 40
+Innovative Scale-out design
+---------------------------
+A grid of nodes, instead of traditional cluster ring-like layout, flexible,
+resource conscious and capable of supporting heterogeneous hardware. OpenIO
+SDS cluster organisation is is not based on static data allocation, which is
+usually associated to *Chord* peer-to-peer distributed hash table algorithm,
+pretty common among object stores. Data and metadata hash tables are organised
+in a distributed directory, allowing to reach the same level of scalability
+but with a better and more consistent performance, no matter the size of
+the cluster.
 
-   * - Caracteristics
-     - Description
-   * - Multi-tenancy
-     - Multi-tenancy is a core element of OpenIO SDS. Data is organized in two main levels: the account and the container. Data objects are stored sing the following hierarchy: namespace/account/container/object. Multiple namespaces can be configured in each cluster, providing multi-region/zone logical layouts for applications and segregated workloads depending on tenant or data geo-distribution needs. There is no classic subdirectory tree. Objects are stored in a flat structure at the container level. As with many other object storage solutions, it is possible to emulate a filesystem tree, but it has no physical reality.
-   * - Hardware agnostic
-     - Our technology is adaptive. OpenIO is able to detect the efficiency of each node deployed in the infrastructure and use it at its true capacity. The load can be balanced on heterogeneous nodes; OpenIO will take this into account to get the best performance from each node.
-   * - No SPOF architecture
-     - Every service used to serve data is redundant. From the top level of the directory to the chunk of data stored on disk, all information is duplicated. There is no SPOF (single point of failure): a node can be shut down, and it will not affect overall integrity or availability.
-   * - Scale-out architecture
-     - The minimal installation of OpenIO can be very small. It is even possible to start with a single instance Docker container in a VM for testing purposes. But to get full protection for the data, it is recommended to start with three servers/VMs. Scaling the cluster is easy and seamless; it is possible to add as many new nodes as needed at once, without affecting performance or data availability. Anticipating long-term capacity and performance  is not necessary; the system will be able to take advantage of new resources as soon as they are added to the cluster.
-   * - Isolation
-     - Each container is stored in a separate file (i.e. not in one unique data structure), and each chunk is also stored as a file. This greatly improves the overall robustness of the solution, and limits the impact of corruption or the loss of a single item.
-   * - Integrity
-     - Integrity checks are performed periodically to ensure that no silent data corruption or loss occurs.
+The minimal installation of OpenIO can be very small and allows to grow with
+small increments. Scaling the cluster is easy and seamless: it is possible to
+add as many new nodes as needed at once, without affecting performance or
+data availability.
 
+Anticipating long-term capacity and performance is not necessary: the system
+will be able to take advantage of new resources as soon as they are added to
+the cluster.
 
-The following table describes the OpenIO key features :
+Hardware agnostic
+------------------
+A fully software-defined solution that runs on x86 and ARM with minimal
+requirements (starting at 1 CPU core, 512 MB of RAM, 1 NIC, and 4 GB of
+storage). Supported in mixed physical and virtual environments as well as
+deployed in containers, the cloud, or at the edge.
 
-.. list-table:: OpenIO Key features
-   :header-rows: 1
-   :widths: 15 40
+Cluster nodes can be different from each other, allowing different hardware
+generations and capacities to be combined over time without affecting
+performance and efficiency.
 
-   * - Features
-     - Description
-   * - Tiering
-     - With storage tiering, it is possible to configure classes of hardware, and select a specific one when needed to store data. This mechanism is called a storage policy. For example, a pool of high performance disks (like SSDs) can be configured in a special class to store objects that require low latency access. Several storage policies can be configured for the same namespace. They can be associated with specific hardware, but also with old or new objects, with a specific data protection mechanism for a particular dataset, etc.
-   * - Replication and Erasure Coding
-     - Configurable at each level of the architecture, directory replication secures namespace integrity. The service directory and metadata containers can be synchronously replicated to other nodes. Data can be protected and replicated in various manners, from simple replication that just creates multiple copies of data, to erasure coding, or even distributed erasure coding. This allows the user to choose the best compromise between data availability and durability, storage efficiency, and cost.
-   * - Versioning
-     - A container can keep several versions of an object. This is configured at the container-level, for all the objects at once. The setting is set at the container’s creation. It may be activated during the container’s life. If no value is specified, the namespace default value is considered. When versioning is disabled, pushing a new version of an object overrides the former version, and deleting an object marks it for removal. When versioning is enabled, pushing an object creates a new version of the object. Previous versions of an object can be listed and restored. The semantics of objects versioning has been designed to be compliant with both Amazon S3 and Swift APIs.
-   * - Compression
-     - Applied to chunks of data, this reduces overall storage cost. Decompression is made live during chunk download, with an acceptable extra latency and CPU usage. Compression is usually an asynchronous job to avoid hurting performance, and you can specify which data you want to compress (data ages, mime-types, users…).
-   * - Geo-Redundancy
-     - OpenIO SDS allows storage policies and data to be distributed across multiple datacenters. Depending on distance and latency requirements, data storage clusters can be stretched over multiple locations synchronously, or replicated to a different site asynchronously.
+Conscience Technology - Dynamic load balancing
+----------------------------------------------
+Thanks to Conscience technology, each operation is always performed on the
+most available node. Each node of the cluster computes a quality score every
+few seconds and shares it on a distributed shared board accessible to all
+nodes
+
+Each time a new operation is requested, the best nodes are selected according
+to customer’s fine-grained policies for optimal resource utilization, and
+best performance.
+
+Event-driven
+------------
+OpenIO SDS catches all events that occur in the cluster and can pass them
+up in the stack or directly to an application on the local node. OpenIO’s
+Grid for Apps serverless framework takes advantage of all OpenIO SDS features
+and can process all its events seamlessly, and third-party solutions can
+be integrated as well. Grid for Apps is an application backend for micro
+services, automated data processing workflows, and event-driven applications.
+
+Multi-tenancy
+-------------
+An OpenIO SDS cluster can have multiple logical domains as well as accounts and
+containers. Data can be organized in different storage pools and protection
+schemes. All these features are designed to segregate data and workloads
+while keeping the system efficient.
+
+No rebalancing
+--------------
+Conscience technology eliminates the need for cluster rebalancing.
+
+When new nodes are added, they progressively offload nodes in place thanks to
+the scoring mechanism. Their quality score is better than for older,
+heavy-loaded nodes, and they’ll be used more often. New resources are immediately
+available ensuring that performance improves with the added resources.
+
+With Conscience Technology, OpenIO SDS is able to detect the efficiency
+of each node deployed in the infrastructure and use it at its true capacity.
+The load can be balanced on heterogeneous nodes, the Conscience will consider
+this to get the best performance from each node.
+
