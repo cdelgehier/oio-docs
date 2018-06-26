@@ -38,7 +38,6 @@ and all the others are populated by the application.
 ACCESS logs
 ~~~~~~~~~~~
 
-
 .. list-table:: Fields from the SWIFT envelope
    :widths: 20 100
 
@@ -84,6 +83,7 @@ ACCESS logs
      - High-resolution timestamp from the end of the request.
    * - Policy Index
      - The value of the storage policy index.
+
 
 In one log line, all of the above fields are space-separated and url-encoded. If any value is empty, it will be logged as a ``-``. This allows for simple parsing by splitting each line on whitespace.
 New values may be placed at the end of the log line from time to time, but the order of the existing values will not change.
@@ -150,27 +150,25 @@ compound parameters.
      - `-`
    * - Client Etag
      - `-`
-  * - Transaction ID
-    - `tx2a84a70d4be94ed9815e7-005afd4bab`
-  * - Headers
-    - `-`
-  * - Request Time
-    - `0.0060`
-  * - Source
-    - `-`
-  * - Log Info
-    - `-`
-  * - Request Start Time
-    - `1526549419.422362089`
-  * - Request End Time
-    - `1526549419.428388119`
-  * - Policy Index
-    - `-`
+   * - Transaction ID
+     - `tx2a84a70d4be94ed9815e7-005afd4bab`
+   * - Headers
+     - `-`
+   * - Request Time
+     - `0.0060`
+   * - Source
+     - `-`
+   * - Log Info
+     - `-`
+   * - Request Start Time
+     - `1526549419.422362089`
+   * - Request End Time
+     - `1526549419.428388119`
+   * - Policy Index
+     - `-`
 
 oio-sds: oio-proxy, oio-meta{0,1,2}-server
 ++++++++++++++++++++++++++++++++++++++++++
-
-
 
 COMMON envelope
 ~~~~~~~~~~~~~~~
