@@ -31,17 +31,19 @@ access. Several storage policies can be configured for the same namespace. They
 can be associated with specific hardware, but also with old or new objects,
 with a specific data protection mechanism for a particular dataset, etc.
 
-Hybrid cloud support
---------------------
+.. Hybrid cloud support
+.. --------------------
 
 Dynamic storage policies
 ------------------------
 Storage policies are OpenIO’s way of managing storage tiering. They consist
-of triplets describing constraints set by the requestor: which storage
-class is to be used (the kind of device with its fallback, i.e., fast SSD,
-SAS drive, tape, etc.); how data is to be protected (simple replication or
-sophisticated erasure encoding); whether data is to be processed (compressed,
-encrypted, etc.).
+of triplets describing constraints set by the requestor:
+
+- which storage class is to be used (the kind of device with its fallback,
+  i.e., fast SSD, SAS drive, tape, etc.);
+- how data is to be protected (simple replication or sophisticated erasure
+  encoding);
+- whether data is to be processed (compressed, encrypted, etc.).
 
 All possible storage policies are namespace-wide, with default configurations
 that can be changed on the fly. These defaults can be overridden on a
@@ -55,6 +57,34 @@ Dynamic data protection policies are also available. They allow the system
 to automatically select the best data protection mechanism after looking
 at the characteristics of the stored object, associating optimal efficiency
 and data protection for each object stored in the system.
+
+OpenIO designed a dynamic data protection mechanism that automatically selects
+the best data protection mechanism according to the characteristics of the
+stored object, thus combining optimal efficiency and data protection. It is
+thus possible to have several storage policies for each domain / user / bucket,
+then to assign rules to apply these policies, e.g. depending on the size of the
+object to be stored.
+
+In a context where we do not know the type of file to store, the use of the
+dynamic data protection mechanism implemented by OpenIO is therefore recommended.
+
+As an example, both `x3` replication and `14+4` erasure coding can be assigned
+for a new bucket, with the rule that files smaller than 128KiB are replicated,
+while larger files use erasure coding.
+
+As an illustration, for an 8 KB object, we obtain:
+
+- 3 copies: a total capacity of 8 * 3 = 24KB but only 3 IOPS.
+- EC 14 + 4 (considering a piece of 8Ko): 8 * 18 = 72KB and 18 IOPS.
+  In this case, a multiple data protection policy is not only better in terms
+  of performance, but also in terms of capacity consumption.
+
+For an 8 MB file, you get:
+
+- 3 copies: a total capacity of 8 * 3 = 24 MB
+- EC 14 + 4: the total capacity is approximately 10.2 MB
+  In this case, no matter what the IOPS are, it’s really clear that erasure
+  coding saves a lot of stockage space.
 
 Data Compression
 ----------------
