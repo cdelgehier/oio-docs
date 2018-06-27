@@ -9,6 +9,7 @@ by showing how to perform various administration tasks.
 .. toctree::
    :maxdepth: 1
 
+   troubleshooting_deployment
    troubleshooting_elections
    troubleshooting_invalid_databases
 
