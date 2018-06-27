@@ -1,8 +1,8 @@
 .. _ref-admin-guide:
 
-=====================================
-Tweak the variables of your namespace
-=====================================
+==================================
+Namespace configuration (sds.conf)
+==================================
 
 Service locations
 ~~~~~~~~~~~~~~~~~
@@ -32,8 +32,7 @@ service to be used.
 zookeeper
 ---------
 
-Tells all the sqlitrepo-based service to connection string to be used to connect
-the Zookeeper cluster. Are concerned the meta0, meta1, meta2 and sqlx services.
+The ZooKeeper cluster connection string to use for all sqliterepo-based services. Applies to meta0, meta1, meta2 and sqlx services.
 
 .. code-block:: text
 
@@ -43,10 +42,9 @@ the Zookeeper cluster. Are concerned the meta0, meta1, meta2 and sqlx services.
 zookeeper.$SRVTYPE
 ------------------
 
-Under certain circumstances, it is necessary to insulte the elections of a
-particuler service type into its own Zookeeper. E.g. because it is too critical
-or space consuming. The `zookeeper.$SRVTYPE` is dedicated to override the global
-`zookeeper` configuration.
+Overrides the global `zookeeper` setting for a specific service type.
+In some cases, it is necessary to provide a dedicated ZooKeeper cluster to a service type.
+E.g. because it is too critical or space consuming.
 
 .. code-block:: text
 
@@ -58,8 +56,7 @@ or space consuming. The `zookeeper.$SRVTYPE` is dedicated to override the global
 proxy-local
 -----------
 
-When it is necessary to make the C SDK use local sockets to the local proxy,
-this is the parameter to be configured.
+The optional socket path to connect to the local `oio-proxy`. Used by the C SDK.
 
 .. code-block:: text
 
@@ -80,11 +77,12 @@ complex task of computing the erasure code on the data.
 event-agent
 -----------
 
-That directove tells the services the protocol and the endpoint to deposit
-notifications. Two implementations are currently available: the default solution
-is `beanstalkd` (and is identified by `beanstalkd://` endpoints), and the other
-is a ZeroMQ Request/Reply service (identified by `ipc://` and `tcp://`
-endpoints).
+The event-agent connection string to use to produce notifications.
+The connection string includes the protocol and the endpoint of the notification backend.
+Valid backends are:
+
+* `beanstalkd`: protocol `beanstalk://` (default backend)
+* `ZeroMQ`: protocols `ipc://` or `tcp://`.
 
 .. code-block:: text
 
@@ -95,6 +93,9 @@ endpoints).
     event-agent=ipc:///path/to/event-agent.sock
     event-agent=tcp://IP:PORT
 
+
+Other
+~~~~~
 
 meta1_digits
 ------------
