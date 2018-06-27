@@ -51,10 +51,11 @@ Global Task Status for CentOS Troubleshooting:
 Cause: These packages are on `epel-repo` but it’s not installed on each nodes
 
 Resolving the problem:
-* However, if you should use this role, you must add to the top of the packages
-list epel-release because iftop, atop, python2-pip packages are on this
-repository.
-* Patch(s) to add for resolve the above cases.
+
+- Add `epel-release` to the top of the packages list because `iftop`, `atop`
+  and `python2-pip` packages are on this repository.
+- Patch(s) to add for resolve the above cases.
+
 
 ::
 
@@ -79,29 +80,30 @@ Cause: One of the configured repositories failed (Cent0S-7 - QEMU EV)
 
 Resolving the problem:
 The following workaround explain on patch is needed for resolved these errors.
-* Patch(s) to add for resolve the above cases.
-* One of the configured repositories failed (CentOS-7 - QEMU EV),
-  and yum doesn't have enough cached data to continue. At this point the only
+
+- Patch(s) to add for resolve the above cases.
+- One of the configured repositories failed (CentOS-7 - QEMU EV), and yum
+  doesn't have enough cached data to continue. At this point the only
   safe thing yum can do is fail. There are a few ways to work "fix" this:
 
-  * Contact the upstream for the repository and get them to fix the problem.
-  * Reconfigure the baseurl/etc. for the repository, to point to a working
-    upstream. This is most often useful if you are using a newer distribution
-    release than is supported by the repository (and the packages for the
-    previous distribution release still work).
-  * Run the command with the repository temporarily disabled
-    yum --disablerepo=centos-qemu-ev ...
-  * Disable the repository permanently, so yum won't use it by default. Yum
-    will then just ignore the repository until you permanently enable it again
-    or use --enablerepo for temporary usage:
-    yum-config-manager --disable centos-qemu-ev
-    or
-    subscription-manager repos --disable=centos-qemu-ev
-  * Configure the failing repository to be skipped, if it is unavailable.
-    Note that yum will try to contact the repo. when it runs most commands,
-    so will have to try and fail each time (and thus. yum will be be much
-    slower). If it is a very temporary problem though, this is often a nice
-    compromise:
+   - Contact the upstream for the repository and get them to fix the problem.
+   - Reconfigure the baseurl/etc. for the repository, to point to a working
+     upstream. This is most often useful if you are using a newer distribution
+     release than is supported by the repository (and the packages for the
+     previous distribution release still work).
+   - Run the command with the repository temporarily disabled
+     yum --disablerepo=centos-qemu-ev ...
+   - Disable the repository permanently, so yum won't use it by default. Yum
+     will then just ignore the repository until you permanently enable it again
+     or use --enablerepo for temporary usage:
+     yum-config-manager --disable centos-qemu-ev
+     or
+     subscription-manager repos --disable=centos-qemu-ev
+   - Configure the failing repository to be skipped, if it is unavailable.
+     Note that yum will try to contact the repo. when it runs most commands,
+     so will have to try and fail each time (and thus. yum will be be much
+     slower). If it is a very temporary problem though, this is often a nice
+     compromise:
 
 .. code-block:: console
 
@@ -121,9 +123,10 @@ Wait for Zookeeper to be online.
 Cause: Netcat is not installed
 
 Resolving the problem:
-* Install should be done before
-* Wait for Zookeeper to be online
-* Patch(s) to add for resolve the above cases.
+
+- Install should be done before
+- Wait for Zookeeper to be online
+- Patch(s) to add for resolve the above cases.
 
 
 TASK [Gathering Facts]
@@ -136,8 +139,9 @@ TASK [Gathering Facts]
 Cause: Python is not installed on remote node.
 
 Resolving the problem:
-* Install python on each nodes manually, with the following command line: `# apt-get -y install python`
-* Patch(s) to add for resolve the above cases.
+
+- Install python on each nodes manually, with the following command line: `# apt-get -y install python`
+- Patch(s) to add for resolve the above cases.
 
 
 TASK [survivalkit: Install packages]
@@ -147,11 +151,13 @@ TASK [survivalkit: Install packages]
 
   failed: [xx.xx.xx.xx] (item=tdpdump) => {"changed": false, "msg": "No package matching 'tdpdump' is available", "pkg": "tdpdump"}
 
+
 Cause: Syntax error!
 
 Resolving the problem:
-* Replace tdpdump by tcpdump.
-* Patch(s) to add for resolve the above cases.
+
+- Replace tdpdump by tcpdump.
+- Patch(s) to add for resolve the above cases.
 
 ::
 
@@ -172,8 +178,9 @@ that we have tcp buffer errors.
 Cause: OpenIO set variables
 
 Resolving the problem:
-* Kernel should be set variables.
-* Patch(s) to add for resolve the above cases.
+
+- Kernel should be set variables.
+- Patch(s) to add for resolve the above cases.
 
 
 TASK [openio-sds: Install OpenIO puppet module]
@@ -183,11 +190,13 @@ TASK [openio-sds: Install OpenIO puppet module]
 
   fatal: [192.168.1.138]: FAILED! => {"changed": false, "msg": "No package matching 'puppet-module-openio- openiosds' is available »}
 
+
 Cause: Repositories are not deployed.
 
 Resolving the problem:
-* Use the playbook `install_basic_needs.yml`, and define `openio_sds_version`
-* Patch(s) to add for resolve the above cases.
+
+- Use the playbook `install_basic_needs.yml`, and define `openio_sds_version`
+- Patch(s) to add for resolve the above cases.
 
 
 TASK [repositories: Configure repositories for Ubuntu xenial]
@@ -197,13 +206,15 @@ TASK [repositories: Configure repositories for Ubuntu xenial]
 
   fatal: [192.168.1.116]: FAILED! => {"msg": "{u'sds': {u'release': u'{{ openio_sds_release }}'}}: 'openio_sds_release' is undefined"}
 
+
 Cause: The `openio_sds_release` is not set correctly. E.g. it might happen when
 we deploy a `{RELEASE}` instead of `{RELEASE} sys` release)
 
 Resolving the problem:
-* Remove the wrong repository,
-* Patch(s) to add for resolve the above cases.
-* Add a check release (wget or curl), before deployed the repository
+
+- Remove the wrong repository,
+- Patch(s) to add for resolve the above cases.
+- Add a check release (wget or curl), before deployed the repository
   configuration on each nodes.
 
 
@@ -214,10 +225,12 @@ TASK [survivalkit: Include Ubuntu variables]
 
   fatal: [192.168.1.116]: FAILED! => {"msg": "The conditional check 'install_survival_kit' failed. The error was: error while evaluating conditional (install_survival_kit): 'install_survival_kit' is undefined\n\nThe error appears to have been in '/root/customer-ubuntu/ansible/deployment/roles/survivalkit/tasks/main.yml': line 3, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n---\n- name: \"Include {{ ansible_distribution }} variables\"\n ^ here\nWe could be wrong, but this one looks like it might be an issue with\nmissing quotes. Always quote template expression brackets when they\nstart a value. For instance:\n\n with_items:\n - {{ foo }}\n\nShould be written as:\n\n with_items: \n - \"{{ foo }}\ »\n"}
 
+
 Cause: Wrong syntax!
 
 Resolving the problem:
-* As reminder, this list of installed packages is slated to disappear, so that
+
+- As reminder, this list of installed packages is slated to disappear, so that
   we  disable it.
-* Patch(s) to add for resolve the above cases.
- 
+- Patch(s) to add for resolve the above cases.
+
