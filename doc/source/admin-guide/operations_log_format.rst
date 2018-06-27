@@ -1,3 +1,5 @@
+.. _label-log-format:
+
 =================================
 Understand the format of the logs
 =================================

@@ -9,6 +9,7 @@ by showing how to perform various administration tasks.
 .. toctree::
    :maxdepth: 1
 
+   configuration_layout
    configuration_conscience
    configuration_storagepolicies
    configuration_ec

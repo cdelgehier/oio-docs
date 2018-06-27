@@ -1058,3 +1058,11 @@ a.footer__community:after {
 table.s3-table {
     width: 400px;
 }
+
+cite {
+    background-color: AliceBlue;
+    font-family: Courier New, Courier, monospace;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 80%;
+}
