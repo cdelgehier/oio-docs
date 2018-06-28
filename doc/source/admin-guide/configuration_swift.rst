@@ -1,74 +1,71 @@
-====================================
-Configure an Openstack Swift gateway
-====================================
+========================
+Configure Swift/S3 proxy
+========================
 
-Description
-~~~~~~~~~~~
+About the Swift/S3 proxy
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-The OpenIO flavor of the OpenStack Swift gateway that you are about to configure
-is in facts a `WSGI <http://wsgi.org>`_ middleware placed in the pipeline,
-before the vanilla swift service, to intercept and mangle the requests. If you
-lack basic knowledge about Swift itself, please refer to the configuration guide
-of `Openstack Swift <https://docs.openstack.org/kilo/config-reference/content/swift-general-service-configuration.html>`_.
+OpenIO SDS can be accessed with any application using the Amazon S3 API or the OpenStack Swift API.
+To enable this, OpenIO provides a Swift/S3 proxy (project `oio-swift`).
 
+The `oio-swift` project relies on the `OpenStack Swift <https://docs.openstack.org/swift/pike/getting_started.html>`_ proxy that is modified to integrate directly with OpenIO SDS.
 
-Prerequisites
-~~~~~~~~~~~~~
-
-In this guide we suppose you have an OpenIO SDS namespace that is ready to use,
-in version **{{OIO_SDS_BRANCHNAME}}**, and then an oio-swift gateway service in
-version **{{OIO_SWIFT_BRANCHNAME}}**.
-
-Its name is **OPENIO** and it is accessible through an `oio-proxy` at
-**127.0.0.1:6000**.
-
-If you do not have such an installation, please refer to the guide
-":ref:`label-intall-guide`" for a production-grade installation, or to the
-guide ":ref:`label-sandbox-guide`" for an installation "the hard way" (with
-all the control you might dream of).
-
-
-Common swift configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The goal of the present guide is not to detail how to configure OpenStack Swift.
-For more informatio feel free to read the document of the swift version you are
-deploying. We'll present only the directives you cannot avoid.
+Section DEFAULT
+~~~~~~~~~~~~~~~
 
 bind_ip
 -------
 
-Restrict the address used to listen for incoming connections.
+IP address for server to bind to.
 The address must be mounted on a local interface.
 
 * Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address
 * Default: `0.0.0.0`
-* Context: `DEFAULT` << `app:*`
 
 .. code-block:: ini
    :caption: example
 
-   bind_ip = 127.0.0.1
+   bind_ip = 0.0.0.0
 
 
 bind_port
 ---------
 
-Specifies the TCP port to bind to, and listen to incoming connections.
-Obviously, in order to run the oio-swift server bound to this port, no other
-process must be bound on it.
-Please refer to the documentation of your operating system for the restrictions
-on some ranges of ports that could require *ad hoc* authorizing.
+Port for server to bind to.
 
 * Format: positive integer less than 65535
-* Default: None
-* Context: `DEFAULT` << `app:*`
+* Default: 8080
 
 .. code-block:: ini
    :caption: example
 
-   bind_port = 5999
+   bind_port = 8080
 
+bind_timeout
+------------
+
+Time in seconds to attempt server bind before timeout.
+
+* Format: positive integer
+* Default: 30
+
+.. code-block:: ini
+   :caption: example
+
+   bind_timeout = 30
+
+backlog
+-------
+
+Maximum number of allowed pending TCP connections.
+
+* Format: positive integer
+* Default: 4096
+
+.. code-block:: ini
+   :caption: example
+
+   bind_port = 4096
 
 workers
 -------
@@ -79,39 +76,52 @@ When a child dies, it is spawned again.
 
 * Format: positive integer
 * Default: 1
-* Context: `DEFAULT`
 
 .. code-block:: ini
    :caption: example
 
-   workers = 10
+   workers = 4
+
+
+max_clients
+-----------
+
+Maximum number of clients a single worker can process simultaneously.
+
+* Format: positive integer
+* Default: 1024
+
+.. code-block:: ini
+   :caption: example
+
+   max_clients = 1024
+
 
 
 user
 ----
 
-If oio-swift is started as **root**, you can specify a user name or ID
+User to run the server as.
+If oio-swift is started as **root**, you can specify a user name or uid
 to `setuid()`.
 
-* Format: a declared user name or a positive integer
+* Format: a declared user name or uid
 * Default: None
-* Context: `DEFAULT`
 
 .. code-block:: ini
    :caption: example
 
-   user = nobody
+   user = openio
 
 
 log_facility
 ------------
 
-Tells which **syslog** facility has to be used for both the access log and the error log.
+**syslog** log facility to use for both the access log and the error log.
 Please refer to the syslog man page for more information.
 
 * Format: a valid syslog facility name.
 * Default: **LOG_LOCAL0**
-* Context: `DEFAULT`
 
 .. code-block:: ini
    :caption: example
@@ -122,11 +132,10 @@ Please refer to the syslog man page for more information.
 log_address
 -----------
 
-Tells where the logs (access and error) should be sent to.
+Location where syslog sends the logs to (both access and error).
 
 * Format: a TCP/IP address or the path to a AF_LOCAL socket
 * Default: **/dev/log**
-* Context: `DEFAULT`
 
 .. TODO AF_LOCAL .. . SOCK_STREAM or SOCK_DGRAM (connected or not) ?
 
@@ -139,24 +148,25 @@ Tells where the logs (access and error) should be sent to.
 log_name
 --------
 
-Tells which syslog ID has to be used for both the access log and the error log.
-This tag is part of the syslog protocol and is present on each line.
+Label used for logging.
+This label is part of the syslog protocol and is present on each line.
 
 * Format: a printable string with space
 * Default: None
-* Context: `DEFAULT`
 
 .. code-block:: ini
    :caption: example
 
-   log_name = OIO,DAILYMOTION,oioswift,1
+   log_name = OIO,OPENIO,oioswift,1
 
 
 eventlet_debug
 --------------
 
-Turn `eventlet_debug` to `true` to make the python package `eventlet` output
-more traces about its internal activity.
+If `true`, turn on debug logging for the python library `eventlet`.
+
+* Format: boolean
+* Default: false
 
 .. code-block:: ini
    :caption: example
@@ -164,11 +174,10 @@ more traces about its internal activity.
    eventlet_debug = false
 
 
-Specific oio-swift configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 sds_namespace
 -------------
+
+OpenIO SDS namespace to use.
 
 .. code-block:: ini
    :caption: example
@@ -179,6 +188,8 @@ sds_namespace
 sds_proxy_url
 -------------
 
+OpenIO SDS `oio-proxy` url to connect to cluster.
+
 .. code-block:: ini
    :caption: example
 
@@ -187,6 +198,8 @@ sds_proxy_url
 
 sds_default_account
 -------------------
+
+Default account name to use in OpenIO SDS.
 
 .. code-block:: ini
    :caption: example
@@ -266,22 +279,30 @@ auto_storage_policies
    auto_storage_policies=EC,THREECOPIES:1,EC:262144
 
 
+Section [pipeline:main]
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The pipeline defines which middleware to use, and their invocation order.
+
 pipeline
 --------
-
-.. note:: context
-
-   pipeline
-
 
 .. code-block:: ini
    :caption: example
 
-   pipeline = catch_errors hashedcontainer gatekeeper healthcheck proxy-logging cache bulk tempurl ratelimit  container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
+   pipeline = catch_errors gatekeeper healthcheck proxy-logging cache tempurl ratelimit authtoken swift3 s3token copy container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
 
+
+Section [app:proxy-server]
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 allow_account_management
 ------------------------
+
+If `true`, allow PUT and DELETE on accounts.
+
+* Format: boolean
+* Default: false
 
 .. code-block:: ini
    :caption: example
@@ -292,31 +313,156 @@ allow_account_management
 account_autocreate
 ------------------
 
+If `true`, authorized accounts will be automatically created in OpenIO SDS.
+
+* Format: boolean
+* Default: false
+
 .. code-block:: ini
    :caption: example
 
    account_autocreate = true
 
+Section: [filter:catch_errors]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configuration: [filter:copy]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#catch_errors
+
+Section: [filter:proxy-logging]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#proxy_logging
+
+Section: [filter:tempurl]
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#tempurl
+
+Section: [filter:authtoken]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#authtoken
+   paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+   auth_url =  http://127.0.0.1:35357
+   auth_type = password
+   project_domain_id = default
+   user_domain_id = default
+   project_name = service
+   username = swift
+   password = password
+
+Section: [filter:keystoneauth]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#keystoneauth
+   reseller_prefix = AUTH
+   operator_roles = admin, swiftoperator
+   reseller_admin_role = ResellerAdmin
+   allow_overrides = true
+
+Section: [filter:healthcheck]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#healthcheck
+   disable_path =
+
+Section: [filter:cache]
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#cache
+   memcache_servers = 127.0.0.1:11211
+   memcache_max_connections = 2
+
+Section: [filter:ratelimit]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#ratelimit
+
+Section: [filter:copy]
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: ini
    :caption: example
 
    use = egg:swift#copy
    object_post_as_copy = false
+
+Section: [filter:dlo]
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#dlo
+
+Section: [filter:slo]
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#slo
+   max_manifest_segments = 1000
+   max_manifest_size = 2097152
+
+Section: [filter:container-quotas]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#container_quotas
+
+Section: [filter:account-quotas]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#account_quotas
+
+Section: [filter:gatekeeper]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: ini
+   :caption: example
+
+   use = egg:swift#gatekeeper
  
-Configuration: [filter:hashedcontainer]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Section: [filter:hashedcontainer]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: ini
    :caption: example
 
    use = egg:oioswift#hashedcontainer
 
-Additional notes
-~~~~~~~~~~~~~~~~
+Sample configuration
+~~~~~~~~~~~~~~~~~~~~
 
 Please find here a sample configuration:
 
@@ -325,25 +471,32 @@ Please find here a sample configuration:
 
    [DEFAULT]
    bind_port = 5999
-   workers = 10
-   user = jfs
+   workers = 4
+   user = openio
    log_facility = /dev/log
+   log_level = INFO
    eventlet_debug = false
+
    sds_namespace = OPENIO
    sds_proxy_url = http://127.0.0.1:6000
    sds_default_account = ACCT
+
    sds_connection_timeout = 5
    sds_read_timeout = 35
    sds_write_timeout = 35
+
    sds_pool_connections = 500
    sds_pool_maxsize = 500
    sds_max_retries = 1
+
    oio_storage_policies=SINGLE,THREECOPIES,EC
    auto_storage_policies=EC,THREECOPIES:1,EC:262144
 
    [pipeline:main]
-   #pipeline = catch_errors hashedcontainer gatekeeper healthcheck proxy-logging cache bulk tempurl ratelimit  container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
-   pipeline = catch_errors gatekeeper healthcheck proxy-logging cache bulk tempurl ratelimit  container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
+   # For keystone auth
+   pipeline = catch_errors gatekeeper healthcheck proxy-logging cache tempurl ratelimit authtoken swift3 s3token copy container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
+   # For tempauth
+   # pipeline = catch_errors gatekeeper healthcheck proxy-logging cache tempurl ratelimit tempauth copy container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
 
    [app:proxy-server]
    use = egg:oioswift#main
@@ -351,46 +504,74 @@ Please find here a sample configuration:
    object_post_as_copy = false
    allow_account_management = true
    account_autocreate = true
-   log_name = OIO,DAILYMOTION,oioswift,1
-   [filter:bulk]
-   use = egg:swift#bulk
+
    [filter:slo]
    use = egg:swift#slo
+
    [filter:dlo]
    use = egg:swift#dlo
-   [filter:staticweb]
-   use = egg:swift#staticweb
+
    [filter:account-quotas]
    use = egg:swift#account_quotas
+
    [filter:container-quotas]
    use = egg:swift#container_quotas
+
    [filter:versioned_writes]
    use = egg:swift#versioned_writes
    allow_versioned_writes = true
+
    [filter:crossdomain]
    use = egg:swift#crossdomain
+
    [filter:gatekeeper]
    use = egg:swift#gatekeeper
+
+   [filter:tempauth]
+   use = egg:swift#tempauth
+   user_test_tester=testing .admin
+
    [filter:proxy-logging]
    use = egg:swift#proxy_logging
    access_log_headers = false
    access_log_headers_only =
+
+   [filter:authtoken]
+   paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+   auth_url =  http://127.0.0.1:35357
+   auth_type = password
+   project_domain_id = default
+   user_domain_id = default
+   project_name = service
+   username = swift
+   password = password
+
+   delay_auth_decision = True
+   include_service_catalog = False
+   memcached_servers = 127.0.0.1:11211
+
+   [filter:s3token]
+   use = egg:swift#s3token
+   auth_uri = http://127.0.0.1:35357/v3
+   reseller_prefix = AUTH_
+
    [filter:tempurl]
    use = egg:swift#tempurl
+
    [filter:catch_errors]
    use = egg:swift#catch_errors
+
    [filter:ratelimit]
    use = egg:swift#ratelimit
+
    [filter:healthcheck]
    use = egg:swift#healthcheck
+
    [filter:cache]
    use = egg:swift#memcache
-   memcache_servers = 10.195.3.24:6019
-   memcache_max_connections = 500
+   memcache_servers = 127.0.0.1:11211
+   memcache_max_connections = 2
+
    [filter:copy]
    use = egg:swift#copy
    object_post_as_copy = false
-   [filter:hashedcontainer]
-   use = egg:oioswift#hashedcontainer
-
-
