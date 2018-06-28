@@ -78,6 +78,8 @@ if [[ -z "$OIO_DOCS_LIGHT" && -d "$BUILD/oio-sds/oio" ]] ; then
     sphinx-apidoc --ext-autodoc -o doc2/source/sdk-guide/python-api "$BUILD/oio-sds/oio"
 fi
 
+# Many macros must be replaced, let's use a sed script to manage
+# all the patterns, with a short sed command.
 echo '#!/bin/sed' > $BUILD/macros.ss
 while read K V ; do
   echo "s,{{$K}},$V,g" >> $BUILD/macros.ss
@@ -85,15 +87,6 @@ done < "${BUILD}/vars.export"
 find doc2/ -type f -name '*.rst' | while read P ; do
   /bin/sed -i -f $BUILD/macros.ss "$P"
 done
-
-#SED='sed -i '
-#while read K V ; do
-#  SED="${SED}-e s,{{$K}},$V,g "
-#done < "${BUILD}/vars.export"
-#
-#find doc2/ -type f -name '*.rst' | while read P ; do
-#  $SED "$P"
-#done
 
 # Patch conf.py with components.json
 if cat components.json | python -mjson.tool | grep stable | grep true; then
