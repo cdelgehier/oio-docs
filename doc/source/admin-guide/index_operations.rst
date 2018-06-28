@@ -13,6 +13,7 @@ by showing how to perform various administration tasks.
    troubleshooting_elections
    troubleshooting_invalid_databases
 
+   operations_log_agregation
    operations_log_format
    operations_backup_restore
    operations_configure_monitoring
