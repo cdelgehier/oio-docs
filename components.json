@@ -183,9 +183,7 @@
             "doc": false,
             "repository":"git@github.com:open-io/puppet-openiosds.git",
             "id":"4.0.25"
-        }
-    },
-    "deps": {
+        },
         "asn1c": {
             "repository": "https://github.com/open-io/asn1c.git",
             "id": "v0.9.27.1"
