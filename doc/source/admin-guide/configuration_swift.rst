@@ -258,7 +258,7 @@ sds_max_retries
 .. code-block:: ini
    :caption: example
 
-   sds_max_retries = 1
+   sds_max_retries = 0
 
 
 oio_storage_policies
@@ -487,7 +487,7 @@ Please find here a sample configuration:
 
    sds_pool_connections = 500
    sds_pool_maxsize = 500
-   sds_max_retries = 1
+   sds_max_retries = 0
 
    oio_storage_policies=SINGLE,THREECOPIES,EC
    auto_storage_policies=EC,THREECOPIES:1,EC:262144
