@@ -13,6 +13,7 @@ by showing how to perform various administration tasks.
    configuration_conscience
    configuration_storagepolicies
    configuration_ec
+   configuration_ecd
    configuration_swift
    configuration_oiofs
    configuration_rawx
