@@ -4,10 +4,7 @@
 Try OpenIO SDS
 ==============
 
-This guide documents setting up a sandbox for OpenIO SDS development.
-OpenIO SDS software will be installed directly from official sources.
-
-The sandbox will emulate a 4 nodes cluster.
+This guide documents how to install and try OpenIO SDS.
 
 .. toctree::
    :maxdepth: 2
