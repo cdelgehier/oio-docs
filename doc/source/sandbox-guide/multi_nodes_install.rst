@@ -103,12 +103,12 @@ Setup
   .. code-block:: shell
 
     # RedHat
-    sudo yum install git python-netaddr-y 
+    sudo yum install git python-netaddr -y 
 
   .. code-block:: shell
 
     # Ubuntu
-    sudo apt install git python-netaddr-y 
+    sudo apt install git python-netaddr -y 
 
 Architecture
 ============
