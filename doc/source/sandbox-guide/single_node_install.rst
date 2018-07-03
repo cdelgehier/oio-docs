@@ -1,5 +1,5 @@
 ===================
-Multi nodes install
+Single node install
 ===================
 
 Requirements
