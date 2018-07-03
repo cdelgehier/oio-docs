@@ -11,7 +11,6 @@ It includes these manuals:
  * User Guide
  * CLI Guide
  * Docker Image Guide
- * Vagrant Box Guide
 
 
 Building
