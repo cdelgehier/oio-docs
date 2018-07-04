@@ -12,7 +12,7 @@
         },
         "swift3":{
             "repository":"https://github.com/open-io/swift3",
-            "id":"1.12.4-openio"
+            "id":"1.12.5-openio"
         },
         "oio-api-java":{
             "repository":"https://github.com/open-io/oio-api-java",
