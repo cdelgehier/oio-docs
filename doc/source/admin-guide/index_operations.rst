@@ -21,6 +21,7 @@ by showing how to perform various administration tasks.
    operations_keystone_swift_integration
    operations_scale_cluster
    operations_decommission_rawx
+   operations_decommission_meta1
    operations_rebuild_rawx
    operations_rebalance_meta1
    operations_rebalance_meta2
