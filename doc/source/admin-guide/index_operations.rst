@@ -25,5 +25,6 @@ by showing how to perform various administration tasks.
    operations_rebalance_meta1
    operations_rebalance_meta2
    operations_check_directory
-      
+   operations_audit_rawx
+
 .. end of contents
