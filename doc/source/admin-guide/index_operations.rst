@@ -26,5 +26,6 @@ by showing how to perform various administration tasks.
    operations_rebalance_meta2
    operations_check_directory
    operations_audit_rawx
-
+   operations_conscience_persistence
+	      
 .. end of contents
