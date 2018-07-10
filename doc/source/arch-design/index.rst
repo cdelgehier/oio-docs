@@ -12,5 +12,6 @@ Solution
    fs_overview
    sds_concepts
    sds_services
+   s3_compliancy
 
 .. end of contents
