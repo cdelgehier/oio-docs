@@ -24,7 +24,8 @@ by showing how to perform various administration tasks.
    operations_decommission_meta1
    operations_move_meta2	      
    operations_rebuild_rawx
-   operations_rebuild_meta
+   operations_rebuild_meta1
+   operations_rebuild_meta2
    operations_rebalance_meta1
    operations_rebalance_meta2
    operations_check_directory
