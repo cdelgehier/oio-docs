@@ -19,6 +19,8 @@ Operating system
 System
 ------
 
+-  root privileges are required (using sudo)
+
 -  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled
 
   .. code-block:: shell
@@ -33,13 +35,6 @@ System
     # Ubuntu
     sudo systemctl stop apparmor.service
     sudo update-rc.d -f apparmor remove
-
--  root privileges are required (using sudo)
-
-  .. code-block:: shell
-
-    # /etc/sudoers
-    john    ALL=(ALL)    NOPASSWD: ALL
 
 -  All nodes must have different hostnames
 -  ``/var/lib`` partition must support Extended Attributes: XFS is recommended
@@ -89,12 +84,10 @@ Network
 Setup
 -----
 
-You only need to do this setup on the node (or your laptop) that will install the cluster
+You only need to perform this setup on one of the node involved in the cluster (or your laptop)
 
 -  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
--  Install git for download requirements
--  Clone the OpenIO ansible playbook deployment repository (or download it with wget and unzip)
--  Install ``python-netaddr``
+-  Install ``git`` and ``python-netaddr``
 
   .. code-block:: shell
 
@@ -106,15 +99,16 @@ You only need to do this setup on the node (or your laptop) that will install th
     # Ubuntu
     sudo apt install git python-netaddr -y
 
+-  Clone the OpenIO ansible playbook deployment repository
+
   .. code-block:: shell
 
-    # Both
-    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git oiosds
+    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git oiosds && cd oiosds/products/sds
 
 Architecture
 ============
 
-This playbook will deploy a multi nodes cluster like below
+This playbook will deploy a multi nodes cluster as below
 
   .. code-block:: shell
 
@@ -136,30 +130,28 @@ This playbook will deploy a multi nodes cluster like below
 Installation
 ============
 
-If you don't have physical nodes to test our solution, you can spawn some *docker* containers with the script provided
+First you need to fill the inventory accordingly to your environment:
+
+- Edit the ``inventories/n-nodes/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/01_inventory.ini>`__)
 
   .. code-block:: shell
 
-    $ ./spawn_my_lab.sh
-    Replace with the following in the file named "01_inventory.ini"
     [all]
-    node1 ansible_host=3a67d33f8f13 ansible_user=root ansible_connection=docker
-    node2 ansible_host=deda882da891 ansible_user=root ansible_connection=docker
-    node3 ansible_host=83d6ece9ee9d ansible_user=root ansible_connection=docker
+    node1 ansible_host=$IP1 # IP of the first server
+    node2 ansible_host=$IP2 # IP of the second server
+    node3 ansible_host=$IP3 # IP of the third server
+    ...
+    
+  .. code-block:: shell
 
-    Change the variables in group_vars/openio.yml and adapt to your host capacity
+    [all:vars]
+    ansible_user=$USER # SSH user to connect to the nodes 
 
-After filling the inventory:
-
-- `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/01_inventory.ini>`__ (Adapt IP address and user ssh)
-- `OpenIO configuration <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/group_vars/openio.yml>`__
-
-You can check your customization like this:
+You can check that everything is well configured using this command:
 
   .. code-block:: shell
 
     ansible all -i inventories/n-nodes -bv -m ping
-
 
 Run these commands:
 
@@ -180,17 +172,13 @@ Post-install Checks
 
 All the nodes are configured to easily use the openio-cli and aws-cli.
 
-Log into one node and run the after install check script ``/root/checks.sh``
-
+Run this check script on one of the node invovled in the cluster ``sudo /root/checks.sh``
 
 Sample output:
 
-
 ::
 
-  [root@5bdc8fbc3ceb ~]# pwd
-  /root
-  [root@5bdc8fbc3ceb ~]# ./checks.sh
+  [centos@node1 ~]# sudo /root/checks.sh
   ## OPENIO
    Status of services.
   KEY                       STATUS      PID GROUP
