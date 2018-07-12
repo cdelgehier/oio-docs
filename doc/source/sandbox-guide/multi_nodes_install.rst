@@ -137,15 +137,15 @@ First you need to fill the inventory accordingly to your environment:
   .. code-block:: shell
 
     [all]
-    node1 ansible_host=$IP1 # IP of the first server
-    node2 ansible_host=$IP2 # IP of the second server
-    node3 ansible_host=$IP3 # IP of the third server
+    node1 ansible_host=10.0.0.1 # Change it with the IP of the first server
+    node2 ansible_host=10.0.0.2 # Change it with the IP of the second server
+    node3 ansible_host=10.0.0.3 # Change it with the IP of the third server
     ...
     
   .. code-block:: shell
 
     [all:vars]
-    ansible_user=$USER # SSH user to connect to the nodes 
+    ansible_user=root # Change it accordingly
 
 You can check that everything is well configured using this command:
 
@@ -172,13 +172,13 @@ Post-install Checks
 
 All the nodes are configured to easily use the openio-cli and aws-cli.
 
-Run this check script on one of the node invovled in the cluster ``sudo /root/checks.sh``
+Run this check script on one of the node involved in the cluster ``sudo /root/checks.sh``
 
 Sample output:
 
 ::
 
-  [centos@node1 ~]# sudo /root/checks.sh
+  [centos@node1 ~]$ sudo /root/checks.sh
   ## OPENIO
    Status of services.
   KEY                       STATUS      PID GROUP
