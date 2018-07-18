@@ -148,6 +148,14 @@ described here-below.
 .. contents::
    :local:
 
+active_mode
+-----------
+
+Set to true to flush chunks to oio-sds.
+
+* **OPTIONAL**
+* Format: a boolean
+* Default: **true**
 
 attributes_timeout
 ------------------
@@ -216,17 +224,25 @@ the cache.
 * Format: a positive integer
 * Default: None
 
+cache_size_for_flush_activation
+-------------------------------
+
+To set the high water mark. This is the size that will start a flush of the
+cache when reached:
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: 80% of `cache_size`
 
 cache_size_on_flush
 -------------------
 
-On `cache full` events, `oio-fs` will flush the cache until its size reaches a
-value below the threshold set by `cache_size_on_flush`.
+On `cache reach flush activation` events, `oio-fs` will flush the cache until
+its size reaches a value below the threshold set by `cache_size_on_flush`.
 
 * **MANDATORY**
 * Format: a positive integer
-* Default: None
-
+* Default: 50% of `cache_size`
 
 cache_timeout
 -------------
@@ -237,8 +253,35 @@ Set how many seconds happen between periodic flush of the cache.
 * Format: a positive integer
 * Default: **5**
 
+chunk_part_size
+---------------
+To set the size of a chunk part, this is only use when updating the
+recovery cache:
 
-fuse_max_retry
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **1048576**
+
+chunk_readahead
+---------------
+
+To set the chunk numbers to read ahead
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **0**
+
+full_cache_timeout
+------------------
+
+On a full cache, if a request need to retrieve a chunk it will wait until
+some space are freed or it reach a timeout defined by the following option
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **0**
+
+fuse_max_retries
 --------------
 
 The maximal number of rewrite (`auto_retry` must be set to `true`).
@@ -247,12 +290,35 @@ The maximal number of rewrite (`auto_retry` must be set to `true`).
 * Format: a positive integer
 * Default: **10**
 
+ha_write_timeout
+----------------
+
+To set the write timeout of the distance cache (in milliseconds and > 0):
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default 500
+
+http_server
+------------
+
+The adress of the internal HTTP server that exhibit some metrics about the behavior
+of the current oiofs-fuse. If no address is explicitely configured, no internal stats
+server is started and no socket is exposed.
+
+Please refer to that :ref:`section <ref-oiofs-sample-stat>` for an example output of
+the internal http server.
+
+* **MANDATORY**
+* Format: an ASCII string, the dot-decimal representation of an IPv4 address or a
+  colon-hexadecimal representation of an IPv6 address, followed by a colon then the TCP port.
+* Default: None
 
 ignore_flush
 ------------
 
 When using an asynchronous cache, it is possible to postpone the `flush()`
-commands by setting `ignore_flush` to `true`. 
+commands by setting `ignore_flush` to `true`.
 
 * **OPTIONAL**
 * Format: **true** or **false**
@@ -270,6 +336,15 @@ of flood.
 * Format: a string among "TRACE2", "TRACE", "DEBUG", "INFO", "NOTICE", "WARN" and "ERROR"
 * Default: **"NOTICE"**
 
+max_flush_threads
+-----------------
+
+To improve the overall performance it is also necessary to avoid the connection to `oio-sds`
+to become the bottleneck. `oio-fs` manage a pool of thread, the threads are created on demand until `max_flush_threads` is reached. Any more demand will be blocked until a thread finishes its job (threads are reused).
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **10**
 
 max_packed_chunks
 -----------------
@@ -281,6 +356,18 @@ This is the maximum number of chunks per upload.
 * Format: a positive integer
 * Default: **10**
 
+max_redis_connections
+---------------------
+
+To improve the overall performance it is necessary to avoid the connection to Redis
+(Single or Sentinel) to become the bottleneck. `oio-fs` has been adapted to manage
+a pool of connections, the connections are created on demand until `max_redis_connections`
+is reached. Any attempt to get an outstanding connection is blocked until a connection
+is released in the pool.
+
+* **OPTIONAL**
+* Format: a positive integer
+* Default: **30**
 
 recovery_cache_directory
 ------------------------
@@ -293,18 +380,6 @@ to the operators to deploy that second partition with the suitable technology.
 * Format: an ASCII string, as a local path
 * Default: None
 
-
-redis_sentinel_server
----------------------
-
-Set the locations of the Redis Sentinel services to target, when not using
-`redis_server`.
-
-* **MANDATORY** (if not using `redis_server`)
-* Format: a array of ASCII strings representing valid network locations, i.e. a dot-decimal representations of IPv4 addresses or a colon-hexadecimal representations of an IPv6 addresses, followed by a colon then the TCP port.
-* Default: None
-
-
 redis_sentinel_name
 -------------------
 
@@ -313,6 +388,17 @@ not using `redis_server`.
 
 * **MANDATORY** (if not using `redis_server`)
 * Format: an ASCII string
+* Default: None
+
+
+redis_sentinel_servers
+----------------------
+
+Set the locations of the Redis Sentinel services to target, when not using
+`redis_server`.
+
+* **MANDATORY** (if not using `redis_server`)
+* Format: a array of ASCII strings representing valid network locations, i.e. a dot-decimal representations of IPv4 addresses or a colon-hexadecimal representations of an IPv6 addresses, followed by a colon then the TCP port.
 * Default: None
 
 
@@ -330,48 +416,8 @@ not use the `redis_server` configuration and rather use the couple
 * Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address, followed by a colon the the TCP port.
 * Default: None
 
-
-stats_server
-------------
-
-The adress of the internal HTTP server that exhibit some metrics about the behavior
-of the current oiofs-fuse. If no address is explicitely configured, no internal stats
-server is started and no socket is exposed.
-
-Please refer to that :ref:`section <ref-oiofs-sample-stat>` for an example output of
-the internal stats server.
-
-* **OPTIONAL**
-* Format: an ASCII string, the dot-decimal representation of an IPv4 address or a
-  colon-hexadecimal representation of an IPv6 address, followed by a colon then the TCP port.
-* Default: None
-
-
-max_redis_connections
----------------------
-
-To improve the overall performance it is necessary to avoid the connection to Redis
-(Single or Sentinel) to become the bottleneck. `oio-fs` has been adapted to manage
-a pool of connections, the connections are created on demand until `max_redis_connections`
-is reached. Any attempt to get an outstanding connection is blocked until a connection
-is released in the pool.
-
-* **OPTIONAL**
-* Format: a positive integer
-* Default: **30**
-
-max_flush_thread
-----------------
-
-To improve the overall performance it is also necessary to avoid the connection to `oio-sds`
-to become the bottleneck. `oio-fs` manage a pool of thread, the threads are created on demand until `max_flush_thread` is reached. Any more demand will be blocked until a thread finishes its job (threads are reused).
-
-* **OPTIONAL**
-* Format: a positive integer
-* Default: **10**
-
-upload_retry_upload
--------------------
+sds_retry_delay
+---------------
 
 In some cases `oio-fs` may be too fast for `oio-sds`, for example when there is a lot of `oio-fs`
 instances on only one cluster. So to not overload `oio-sds` of requests there is a parameter to wait after a request failed.
@@ -379,6 +425,16 @@ instances on only one cluster. So to not overload `oio-sds` of requests there is
 * **OPTIONAL**
 * Format: a positive integer
 * Default: **0**
+
+sync_ha
+-------
+
+To only flush to the "recovery_cache_directory" on sync you need to change this value
+
+* **OPTIONAL**
+* Format: a boolean
+* Default: **true**
+
 
 Additional notes
 ~~~~~~~~~~~~~~~~
@@ -411,7 +467,7 @@ Conservative setups
      "cache_directory": "/var/tmpfs/oiofs-cache",
      "cache_size": 1073741824,
      "cache_size_on_flush": 536870912,
-     "stats_server": "127.0.0.1:8081",
+     "http_server": "127.0.0.1:8081",
      "log_level": "NOTICE",
      "auto_retry": true,
      "retry_delay": 500,
@@ -531,4 +587,50 @@ actual production deployments.
        "sds_upload_succeeded": 56,
        "sds_upload_total_byte": 2952790016,
        "sds_upload_total_ms": 360419378625
+   }
+
+Sample configuration from the http server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can retrieve the running configuration from the http server using the '/conf' route
+
+.. code-block:: http
+
+   GET /conf HTTP/1.0
+   Content-Length: 0
+
+.. code-block:: http
+
+   HTTP/1.0 200 OK
+   Content-Type: application/json
+   Content-Length: 731
+
+   {
+       "active_mode": true,
+       "attributes_timeout": 0,
+       "auto_retry": true,
+       "cache_asynchronous": true,
+       "cache_directory": "/tmp/oiofs",
+       "cache_size": 1073741824,
+       "cache_size_for_flush_activation": 858993459,
+       "cache_size_on_flush": 536870912,
+       "cache_timeout": 5,
+       "chunk_part_size": 1048576,
+       "chunk_readahead": 5,
+       "full_cache_timeout": 0,
+       "fuse_max_retries": 10,
+       "ha_write_timeout": 500,
+       "http_server": "127.0.0.1:8081",
+       "ignore_flush": false,
+       "log_level": "NOTICE",
+       "max_flush_threads": 10,
+       "max_packed_chunks": 10,
+       "max_redis_connections": 30,
+       "recovery_cache_directory": "",
+       "redis_sentinel_name": "",
+       "redis_sentinel_servers": "",
+       "redis_server": "127.0.0.1:6379",
+       "retry_delay": 500,
+       "sds_retry_delay": 100,
+       "sync_ha": true
    }
