@@ -141,11 +141,21 @@ First you need to fill the inventory accordingly to your environment:
     node2 ansible_host=10.0.0.2 # Change it with the IP of the second server
     node3 ansible_host=10.0.0.3 # Change it with the IP of the third server
     ...
-    
+
   .. code-block:: shell
 
     [all:vars]
     ansible_user=root # Change it accordingly
+
+If you need a custom deployment (per node typically): you can override the default values in each file ``host_vars/nodeX.yml`` like `here <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/host_vars/node1.yml>`__.
+
+.. code-block:: shell
+
+  [all]
+  node1 ansible_host=10.0.0.1 # Change it with the IP of the first server
+  node2 ansible_host=10.0.0.2 # Change it with the IP of the second server
+  node3 ansible_host=10.0.0.3 # Change it with the IP of the third server
+  ...
 
 You can check that everything is well configured using this command:
 
