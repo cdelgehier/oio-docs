@@ -91,7 +91,7 @@ Setup
 
 You only need to do this setup on the node (or your laptop) that will install the cluster
 
--  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
+-  Install Ansible (versions 2.4 or 2.5) (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
 -  Install git for download requirements
 -  Clone the OpenIO ansible playbook deployment repository (or download it with wget and unzip)
 -  Install ``python-netaddr``

@@ -86,7 +86,7 @@ Setup
 
 You only need to perform this setup on one of the node involved in the cluster (or your laptop)
 
--  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
+-  Install Ansible (versions 2.4 or 2.5) (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
 -  Install ``git`` and ``python-netaddr``
 
   .. code-block:: shell
