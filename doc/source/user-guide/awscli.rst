@@ -27,8 +27,8 @@ You can also set specific parameters for the S3 commands:
    .. code-block:: console
 
      # echo "[default]
+     region = RegionOne
      s3 =
-      region = RegionOne
       signature_version = s3
       max_concurrent_requests = 10
       max_queue_size = 100
