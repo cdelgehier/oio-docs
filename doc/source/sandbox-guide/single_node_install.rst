@@ -19,29 +19,8 @@ Operating system
 System
 ------
 
--  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled
-
-  .. code-block:: shell
-
-    # RedHat
-    sudo sed -i -e 's@^SELINUX=enforcing$@SELINUX=disabled@g' /etc/selinux/config
-    sudo setenforce 0
-    sudo systemctl disable selinux.service
-
-  .. code-block:: shell
-
-    # Ubuntu
-    sudo systemctl stop apparmor.service
-    sudo update-rc.d -f apparmor remove
-
 -  root privileges are required (using sudo)
-
-  .. code-block:: shell
-
-    # /etc/sudoers
-    john    ALL=(ALL)    NOPASSWD: ALL
-
--  All nodes must have different hostnames
+-  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment)
 -  ``/var/lib`` partition must support Extended Attributes: XFS is recommended
 
   .. code-block:: shell
@@ -70,95 +49,71 @@ System
 Network
 -------
 
--  All nodes connected to the same LAN through the specified interface (first one by default)
--  Firewall is disabled
-
-  .. code-block:: shell
-
-    # RedHat
-    sudo systemctl stop firewalld.service
-    sudo systemctl disable firewalld.service
-
-  .. code-block:: shell
-
-    # Ubuntu
-    sudo sudo ufw disable
-    sudo systemctl disable ufw.service
-
+-  Firewall is disabled (managed at deployment)
 
 Setup
 -----
 
-You only need to do this setup on the node (or your laptop) that will install the cluster
+You only need to perform this setup on one of the node involved in the cluster (or your laptop)
 
--  Install Ansible (versions 2.4 or 2.5) (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
--  Install git for download requirements
--  Clone the OpenIO ansible playbook deployment repository (or download it with wget and unzip)
--  Install ``python-netaddr``
+-  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
+-  Install ``git`` and ``python-netaddr`` (this one is managed at deployment)
 
   .. code-block:: shell
 
     # RedHat
-    sudo yum install git python-netaddr -y
+    sudo yum install git -y
 
   .. code-block:: shell
 
     # Ubuntu
-    sudo apt install git python-netaddr -y
+    sudo apt install git -y
+
+-  Clone the OpenIO ansible playbook deployment repository
 
   .. code-block:: shell
 
-    # Both
-    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git oiosds
+    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git oiosds && cd oiosds/products/sds
 
 Architecture
 ============
 
-This playbook will deploy a single node like below
+This playbook will deploy a multi nodes cluster as below
 
   .. code-block:: shell
 
     +-----------------+
-    |     KEYSTONE    |
-    |                 |
-    +-----------------+
-    |     DATABASE    |
-    +-----------------+
     |     OIOSWIFT    |
-    |                 |
+    |      FOR S3     |
     +-----------------+
     |      OPENIO     |
     |       SDS       |
     +-----------------+
 
-
-
-
 Installation
 ============
 
-If you don't have physical node to test our solution, you can spawn one *docker* container with the script provided
+First you need to fill the inventory accordingly to your environment:
+
+- Edit the ``inventories/standalone/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/standalone/01_inventory.ini>`__)
 
   .. code-block:: shell
 
-    $ ./spawn_my_lab.sh 1
-    Replace with the following in the file named "01_inventory.ini"
     [all]
-    node1 ansible_host=11ce9e9fe3de ansible_user=root ansible_connection=docker
+    node1 ansible_host=10.0.0.1 # Change it with the IP of the single server
 
-    Change the variables in group_vars/openio.yml and adapt to your host capacity
+    ...
 
-After filling the inventory:
+  .. code-block:: shell
 
-- `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/standalone/01_inventory.ini>`__ (Adapt IP address and user ssh)
-- `OpenIO configuration <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/standalone/group_vars/openio.yml>`__
+    [all:vars]
+    ansible_user=root # Change it accordingly
 
-You can check your customization like this:
+You can check that everything is well configured using this command:
 
   .. code-block:: shell
 
     ansible all -i inventories/standalone -bv -m ping
-
 
 Run these commands:
 
@@ -173,7 +128,6 @@ Run these commands:
   .. code-block:: shell
 
     ansible-playbook -i inventories/standalone main.yml
-
 
 Single node feature
 ===================
@@ -227,63 +181,55 @@ The RDIR location is 'None'. You have to force association of the RDIR with the 
     | 172.17.0.2:6301 | 172.17.0.2:6201 | 11ce9e9fe3de  | 11ce9e9fe3de  |
     +-----------------+-----------------+---------------+---------------+
 
-
-
 Post-install Checks
 ===================
 
 The node is configured to easily use the openio-cli and aws-cli.
 
-Log into the node and run the after install check script ``/root/checks.sh``
-
+Run this check script on one of the node involved in the cluster ``sudo /root/checks.sh``
 
 Sample output:
 
-
 ::
 
-  [root@11ce9e9fe3de ~]# ./checks.sh
+  root@node1:~# ./checks.sh
   ## OPENIO
    Status of services.
   KEY                       STATUS      PID GROUP
-  OPENIO-account-0          UP        17493 OPENIO,account,0
-  OPENIO-beanstalkd-1       UP        17489 OPENIO,beanstalkd,beanstalkd-1
-  OPENIO-conscience-1       UP        17480 OPENIO,conscience,conscience-1
-  OPENIO-conscienceagent-1  UP        17491 OPENIO,conscienceagent,conscienceagent-1
-  OPENIO-ecd-0              UP        17479 OPENIO,ecd,0
-  OPENIO-keystone-0.0       UP        17477 OPENIO,keystone,0,keystone-wsgi-public
-  OPENIO-keystone-0.1       UP        17476 OPENIO,keystone,0,keystone-wsgi-admin
-  OPENIO-memcached-0        UP        17478 OPENIO,memcached,0
-  OPENIO-meta0-1            UP        17488 OPENIO,meta0,meta0-1
-  OPENIO-meta1-1            UP        17487 OPENIO,meta1,meta1-1
-  OPENIO-meta2-1            UP        17486 OPENIO,meta2,meta2-1
-  OPENIO-oio-blob-indexer-1 UP        17481 OPENIO,oio-blob-indexer,oio-blob-indexer-1
-  OPENIO-oio-event-agent-0  UP        17490 OPENIO,oio-event-agent,oio-event-agent-0
-  OPENIO-oioproxy-1         UP        17492 OPENIO,oioproxy,oioproxy-1
-  OPENIO-oioswift-0         UP        17475 OPENIO,oioswift,0
-  OPENIO-rawx-1             UP        17483 OPENIO,rawx,rawx-1
-  OPENIO-rdir-1             UP        17482 OPENIO,rdir,rdir-1
-  OPENIO-redis-1            UP        17484 OPENIO,redis,redis-1
-  OPENIO-redissentinel-1    UP        17485 OPENIO,redissentinel,redissentinel-1
-  OPENIO-zookeeper-0        UP        17494 OPENIO,zookeeper,0
+  OPENIO-account-0          UP         7576 OPENIO,account,0
+  OPENIO-beanstalkd-1       UP        10327 OPENIO,beanstalkd,beanstalkd-1
+  OPENIO-conscience-1       UP        10518 OPENIO,conscience,conscience-1
+  OPENIO-conscienceagent-1  UP        10368 OPENIO,conscienceagent,conscienceagent-1
+  OPENIO-memcached-0        UP        11858 OPENIO,memcached,0
+  OPENIO-meta0-1            UP        11031 OPENIO,meta0,meta0-1
+  OPENIO-meta1-1            UP        11065 OPENIO,meta1,meta1-1
+  OPENIO-meta2-1            UP        10614 OPENIO,meta2,meta2-1
+  OPENIO-oio-blob-indexer-1 UP        10359 OPENIO,oio-blob-indexer,oio-blob-indexer-1
+  OPENIO-oio-event-agent-0  UP        10498 OPENIO,oio-event-agent,oio-event-agent-0
+  OPENIO-oioproxy-1         UP        10657 OPENIO,oioproxy,oioproxy-1
+  OPENIO-oioswift-0         UP        14245 OPENIO,oioswift,0
+  OPENIO-rawx-1             UP        10401 OPENIO,rawx,rawx-1
+  OPENIO-rdir-1             UP        10515 OPENIO,rdir,rdir-1
+  OPENIO-redis-1            UP        10491 OPENIO,redis,redis-1
+  OPENIO-redissentinel-1    UP        10406 OPENIO,redissentinel,redissentinel-1
   --
    Display the cluster status.
-  +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
-  | Type    | Addr            | Service Id | Volume                          | Location     | Slots | Up   | Score |
-  +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
-  | account | 172.17.0.2:6009 | n/a        | n/a                             | 11ce9e9fe3de | n/a   | True |    53 |
-  | meta0   | 172.17.0.2:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | 11ce9e9fe3de | n/a   | True |    74 |
-  | meta1   | 172.17.0.2:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | 11ce9e9fe3de | n/a   | True |    56 |
-  | meta2   | 172.17.0.2:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | 11ce9e9fe3de | n/a   | True |    56 |
-  | rawx    | 172.17.0.2:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | 11ce9e9fe3de | n/a   | True |    56 |
-  | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | 11ce9e9fe3de | n/a   | True |    53 |
-  +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
+  +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
+  | Type    | Addr            | Service Id | Volume                          | Location | Slots | Up   | Score |
+  +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
+  | account | 172.17.0.2:6009 | n/a        | n/a                             | node1    | n/a   | True |    99 |
+  | meta0   | 172.17.0.2:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | node1    | n/a   | True |    99 |
+  | meta1   | 172.17.0.2:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | node1    | n/a   | True |    73 |
+  | meta2   | 172.17.0.2:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node1    | n/a   | True |    72 |
+  | rawx    | 172.17.0.2:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node1    | n/a   | True |    73 |
+  | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node1    | n/a   | True |    99 |
+  +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
   --
    Upload the /etc/passwd into the bucket MY_CONTAINER of the MY_ACCOUNT project.
   +--------+------+----------------------------------+--------+
   | Name   | Size | Hash                             | Status |
   +--------+------+----------------------------------+--------+
-  | passwd | 1273 | 217F67C9C35A6C84B58B852DBF0C4BA2 | Ok     |
+  | passwd | 1803 | 342A63A4789FE6E4C03DB859DAE4E207 | Ok     |
   +--------+------+----------------------------------+--------+
   --
    Get some informations about your object.
@@ -292,9 +238,9 @@ Sample output:
   +----------------+--------------------------------------------------------------------+
   | account        | MY_ACCOUNT                                                         |
   | base_name      | 7B1F1716BE955DE2D677B68819836E4F75FD2424F6D22DB60F9F2BB40331A741.1 |
-  | bytes_usage    | 1.273KB                                                            |
+  | bytes_usage    | 1.803KB                                                            |
   | container      | MY_CONTAINER                                                       |
-  | ctime          | 1530658716                                                         |
+  | ctime          | 1532612697                                                         |
   | max_versions   | Namespace default                                                  |
   | objects        | 1                                                                  |
   | quota          | Namespace default                                                  |
@@ -306,7 +252,7 @@ Sample output:
   +--------+------+----------------------------------+------------------+
   | Name   | Size | Hash                             |          Version |
   +--------+------+----------------------------------+------------------+
-  | passwd | 1273 | 217F67C9C35A6C84B58B852DBF0C4BA2 | 1530658716068342 |
+  | passwd | 1803 | 342A63A4789FE6E4C03DB859DAE4E207 | 1532612738265829 |
   +--------+------+----------------------------------+------------------+
   --
    Find the services involved for your container.
@@ -324,15 +270,15 @@ Sample output:
   --
    Save the data stored in the given object to the --file destination.
   root:x:0:0:root:/root:/bin/bash
-  bin:x:1:1:bin:/bin:/sbin/nologin
-  daemon:x:2:2:daemon:/sbin:/sbin/nologin
-  adm:x:3:4:adm:/var/adm:/sbin/nologin
-  lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-  sync:x:5:0:sync:/sbin:/bin/sync
-  shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-  halt:x:7:0:halt:/sbin:/sbin/halt
-  mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-  operator:x:11:0:operator:/root:/sbin/nologin
+  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+  sync:x:4:65534:sync:/bin:/bin/sync
+  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
   --
    Delete your object.
   +--------+---------+
@@ -346,6 +292,11 @@ Sample output:
 
   ------
   ## AWS
+   AWSCli credentials used.
+  [default]
+  aws_access_key_id = demo:demo
+  aws_secret_access_key = DEMO_PASS
+  --
    Create a bucket mybucket.
   make_bucket: mybucket
   --
@@ -353,23 +304,23 @@ Sample output:
   upload: ../etc/passwd to s3://mybucket/passwd
   --
    List your buckets.
-  2018-07-04 00:58:41    1.2 KiB passwd
+  2018-07-26 15:45:41    1.8 KiB passwd
 
   Total Objects: 1
-     Total Size: 1.2 KiB
+     Total Size: 1.8 KiB
   --
    Save the data stored in the given object into the file given.
   download: s3://mybucket/passwd to ../tmp/passwd.aws
   root:x:0:0:root:/root:/bin/bash
-  bin:x:1:1:bin:/bin:/sbin/nologin
-  daemon:x:2:2:daemon:/sbin:/sbin/nologin
-  adm:x:3:4:adm:/var/adm:/sbin/nologin
-  lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-  sync:x:5:0:sync:/sbin:/bin/sync
-  shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-  halt:x:7:0:halt:/sbin:/sbin/halt
-  mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-  operator:x:11:0:operator:/root:/sbin/nologin
+  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+  sync:x:4:65534:sync:/bin:/bin/sync
+  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
   --
    Delete your object.
   delete: s3://mybucket/passwd
@@ -386,3 +337,7 @@ Disclaimer
 Please keep in mind that this guide is not intended for production, use it for demo/POC/development purposes only.
 
 **Don't go in production with this setup.**
+
+.. include:: manual_requirements.rst
+
+.. include:: custom_deployment.rst
