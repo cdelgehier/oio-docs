@@ -27,13 +27,13 @@ You can also set specific parameters for the S3 commands:
    .. code-block:: console
 
      # echo "[default]
+     region = us-east-1
      s3 =
-      signature_version = s3
-     	max_concurrent_requests = 10
-     	max_queue_size = 100
-     	multipart_threshold = 1GB
-     	multipart_chunksize = 10MB" >~/.aws/config
-     	region = RegionOne
+      signature_version = s3v4
+      max_concurrent_requests = 10
+      max_queue_size = 100
+      multipart_threshold = 1GB
+      multipart_chunksize = 10MB" >~/.aws/config
 
 Keystone
 --------
@@ -78,10 +78,12 @@ Configure your crediantials to the *~/.aws/credantials* and configure the defaul
 
     [default]
     s3 =
+      signature_version = s3v4
       max_concurrent_requests = 20
       max_queue_size = 100
       multipart_threshold = 10GB
       multipart_chunksize = 10MB
+    region = us-east-1
 
 Usage
 =====
@@ -102,7 +104,7 @@ Create a bucket
 
   .. code-block:: console
 
-    # aws --endpoint-url http://localhost:6007 --no-verify-ssl s3api create-bucket --bucket test1
+    # aws --endpoint-url http://localhost:6007 --no-verify-ssl s3 mb s3://test1
 
 List buckets
 ------------

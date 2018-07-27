@@ -32,3 +32,4 @@ To enable persistence launch:
      # oio-daemon <conscience configuration path> -O PersistencePath=<persistence file path>
 
 The status are written every 30 seconds by default but you can change this value with option ``-O PersistencePeriod=N`` with N the period in seconds.
+
