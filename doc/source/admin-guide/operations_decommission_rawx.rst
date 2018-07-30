@@ -53,6 +53,11 @@ Create a configuration file with the following template:
 Launch decommissioning
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Run ``oio-blob-mover -v <CONFIGURATION FILE>`` (the `-v` is to log to stderr in addition to syslog).
+You can launch decommissioning using configuration file with ``oio-blob-mover -v <CONFIGURATION FILE>`` (the `-v` is to log to stderr in addition to syslog).
 
-The process does not stop by itself (it was designed as a daemon). Hit Ctrl-C when you don't see any update for 30s.
+If you don't have configuration file you can run ``oio-blob-mover -v --generate-config <FILE> --namespace <NAMESPACE> --volume <VOLUME> --user <USER>``
+
+The `--generate-config` is to generate configuration file with namespace, volume and user given. If FILE don't exist, it will be created, else, file content will be deleted and replace by configuration.
+
+You can also add option on existing configuration file using `--edit-config` option.
+`--daemon` option can be used to run mover as daemon
