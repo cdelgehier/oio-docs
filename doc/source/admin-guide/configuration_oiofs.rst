@@ -2,6 +2,8 @@
 Configure an OpenIO Filesystem connector
 ========================================
 
+.. include:: ../business_oiofs.rst
+
 Description
 ~~~~~~~~~~~
 

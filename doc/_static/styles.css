@@ -1066,3 +1066,22 @@ cite {
     font-weight: normal;
     font-size: 80%;
 }
+
+.tip {
+    background-color: white;
+    border: 8px dashed pink;
+    text-align: center;
+    padding: 20px;
+    margin: 30px;
+}
+.tip .first {
+    display: none;
+    visibility: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+.tip p {
+    padding: 0px;
+    margin: 0px;
+}

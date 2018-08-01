@@ -2,6 +2,8 @@
 OpenIO FS architecture
 ======================
 
+.. include:: ../business_oiofs.rst
+
 .. contents::
    :local:
 
