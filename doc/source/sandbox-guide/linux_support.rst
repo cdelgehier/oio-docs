@@ -9,8 +9,9 @@ Ubuntu 16.04 (Xenial Xerus)
 OpenIO supports Ubuntu 16.04 for all the components of its architecture.
 
 Repository:
-`reference <https://mirror.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial/>`_
-`mirror <https://mirror2.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial/>`_
+
+* `Reference repository for Ubuntu 16.04 <https://mirror.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial/>`_
+* `Mirror repository for Ubuntu 16.04 <https://mirror2.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial/>`_
 
 Centos 7
 ++++++++
@@ -19,8 +20,9 @@ OpenIO supports Centos 7 (since 7.4) for all the components of its
 architecture.
 
 Repository:
-`reference <https://mirror.openio.io/pub/repo/openio/sds/18.04/centos/7/>`_
-`mirror <https://mirror2.openio.io/pub/repo/openio/sds/18.04/centos/7/>`_
+
+* `Reference repository for Centos 7 <https://mirror.openio.io/pub/repo/openio/sds/18.04/centos/7/>`_
+* `Mirror repository for Centos 7 <https://mirror2.openio.io/pub/repo/openio/sds/18.04/centos/7/>`_
 
 Unsupported distributions
 +++++++++++++++++++++++++
