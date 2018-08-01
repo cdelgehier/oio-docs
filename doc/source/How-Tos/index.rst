@@ -11,8 +11,7 @@ common tools of the industry.
    Cloudberry-backup
    cookbook_rclone
    cookbook_cyberduck
-   cookbook_vmware
+   cookbook_flussonic
    ../arch-design/s3_compliancy
 
 .. end of contents
-

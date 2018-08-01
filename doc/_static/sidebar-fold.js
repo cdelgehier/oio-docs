@@ -168,9 +168,9 @@ $(document).ready(function() {
     var path = window.location.pathname.split('/');
     var sel;
     if(window.location.pathname.split('/').length) {
-        sel = $('#opt-' + path[1].replace('/', '-'));
+        sel = $('#opt-' + path[1].replace('/', '-').replace('.', '-'));
         if(sel.length)
-            $('#opt-' + path[1].replace('/', '-')).prop('selected', 'selected');
+            sel.prop('selected', 'selected');
     }
 
     // Display warning if version is marked as "unstable"

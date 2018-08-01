@@ -27,9 +27,9 @@ You can also set specific parameters for the S3 commands:
    .. code-block:: console
 
      # echo "[default]
-     region = RegionOne
+     region = us-east-1
      s3 =
-      signature_version = s3
+      signature_version = s3v4
       max_concurrent_requests = 10
       max_queue_size = 100
       multipart_threshold = 1GB
@@ -43,6 +43,7 @@ Your need to install the `Openstack command line interface`_.
 Export these variables to use the S3 CLI. Create a file `~/keystonerc_demo` containing:
 
    .. code-block:: console
+      :caption: Required environment
 
     export OS_TENANT_NAME=demo
     export OS_USERNAME=demo
@@ -65,6 +66,7 @@ Configure your crediantials to the *~/.aws/credantials* and configure the defaul
     # vi ~/.aws/credentials
 
    .. code-block:: console
+      :caption: ~/.aws/credentials
 
     [default]
     aws_access_key_id=ACCESS_KEY
@@ -75,9 +77,12 @@ Configure your crediantials to the *~/.aws/credantials* and configure the defaul
     # vi ~/.aws/config
 
    .. code-block:: console
+      :caption: ~/.aws/config
 
     [default]
+    region = us-east-1
     s3 =
+      signature_version = s3v4
       max_concurrent_requests = 20
       max_queue_size = 100
       multipart_threshold = 10GB
@@ -102,7 +107,7 @@ Create a bucket
 
   .. code-block:: console
 
-    # aws --endpoint-url http://localhost:6007 --no-verify-ssl s3api create-bucket --bucket test1
+    # aws --endpoint-url http://localhost:6007 --no-verify-ssl s3 mb s3://test1
 
 List buckets
 ------------

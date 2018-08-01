@@ -4,7 +4,7 @@
     "repositories":{
         "oio-sds":{
             "repository":"https://github.com/open-io/oio-sds",
-            "id":"4.2.0.b2"
+            "id":"4.2.0"
         },
         "oio-swift":{
             "repository":"https://github.com/open-io/oio-swift",
@@ -12,7 +12,7 @@
         },
         "swift3":{
             "repository":"https://github.com/open-io/swift3",
-            "id":"1.12.4-openio"
+            "id":"1.12.5-openio"
         },
         "oio-api-java":{
             "repository":"https://github.com/open-io/oio-api-java",

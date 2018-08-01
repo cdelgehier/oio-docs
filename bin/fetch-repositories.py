@@ -22,6 +22,12 @@ def clone_project(destdir, repository, url, id):
         os.chdir(destdir)
         exec_commands(["git clone %s" % url])
         os.chdir(src)
+    else:
+        src = os.getcwd()
+        os.chdir(repodir)
+        exec_commands(["git fetch --tags"])
+        os.chdir(src)
+
     src = os.getcwd()
     os.chdir(repodir)
     exec_commands(["git checkout %s" % id], exit=False)

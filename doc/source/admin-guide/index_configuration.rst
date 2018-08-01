@@ -18,8 +18,8 @@ by showing how to perform various administration tasks.
    configuration_oiofs
    configuration_rawx
    configuration_rdir
-   configuration_container
    configuration_account
+   configuration_container
    configuration_zk
    configuration_gridinit
    configuration_namespace

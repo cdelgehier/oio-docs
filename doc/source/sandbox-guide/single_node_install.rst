@@ -1,5 +1,5 @@
 ===================
-Multi nodes install
+Single node install
 ===================
 
 Requirements
@@ -21,7 +21,6 @@ System
 
 -  root privileges are required (using sudo)
 -  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment)
--  All nodes must have different hostnames
 -  ``/var/lib`` partition must support Extended Attributes: XFS is recommended
 
   .. code-block:: shell
@@ -50,15 +49,7 @@ System
 Network
 -------
 
--  All nodes connected to the same LAN through the specified interface (first one by default)
 -  Firewall is disabled (managed at deployment)
-
-  .. code-block:: shell
-
-    # Ubuntu
-    sudo sudo ufw disable
-    sudo systemctl disable ufw.service
-
 
 Setup
 -----
@@ -91,30 +82,26 @@ This playbook will deploy a multi nodes cluster as below
 
   .. code-block:: shell
 
-
-    +-----------------+   +-----------------+   +-----------------+
-    |     OIOSWIFT    |   |     OIOSWIFT    |   |     OIOSWIFT    |
-    |      FOR S3     |   |      FOR S3     |   |      FOR S3     |
-    +-----------------+   +-----------------+   +-----------------+
-    |      OPENIO     |   |      OPENIO     |   |      OPENIO     |
-    |       SDS       |   |       SDS       |   |       SDS       |
-    +-----------------+   +-----------------+   +-----------------+
-
-
+    +-----------------+
+    |     OIOSWIFT    |
+    |      FOR S3     |
+    +-----------------+
+    |      OPENIO     |
+    |       SDS       |
+    +-----------------+
 
 Installation
 ============
 
 First you need to fill the inventory accordingly to your environment:
 
-- Edit the ``inventories/n-nodes/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/01_inventory.ini>`__)
+- Edit the ``inventories/standalone/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/standalone/01_inventory.ini>`__)
 
   .. code-block:: shell
 
     [all]
-    node1 ansible_host=10.0.0.1 # Change it with the IP of the first server
-    node2 ansible_host=10.0.0.2 # Change it with the IP of the second server
-    node3 ansible_host=10.0.0.3 # Change it with the IP of the third server
+    node1 ansible_host=10.0.0.1 # Change it with the IP of the single server
+
     ...
 
   .. code-block:: shell
@@ -126,7 +113,7 @@ You can check that everything is well configured using this command:
 
   .. code-block:: shell
 
-    ansible all -i inventories/n-nodes -bv -m ping
+    ansible all -i inventories/standalone -bv -m ping
 
 Run these commands:
 
@@ -140,12 +127,64 @@ Run these commands:
 
   .. code-block:: shell
 
-    ansible-playbook -i inventories/n-nodes main.yml
+    ansible-playbook -i inventories/standalone main.yml
+
+Single node feature
+===================
+
+By default, OpenIO does not support the installation of all its services on the same server.
+The most problematic part is that a RAWX service can not be on the same server as the service.
+It's a protection because:
+
+- RAWX stores the data
+- RDIR stores information about the data stored in a given RAWX
+
+So if RAWX does not respond, its data can be reconstructed elsewhere.
+If both services are on the same server, the data is lost and the informations about this data is lost too !
+
+  .. code-block:: shell
+
+    [root@11ce9e9fe3de ~]# openio cluster list
+    +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
+    | Type    | Addr            | Service Id | Volume                          | Location     | Slots | Up   | Score |
+    +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
+    | account | 172.17.0.2:6009 | n/a        | n/a                             | 11ce9e9fe3de | n/a   | True |    89 |
+    | meta0   | 172.17.0.2:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | 11ce9e9fe3de | n/a   | True |    94 |
+    | meta1   | 172.17.0.2:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | 11ce9e9fe3de | n/a   | True |    65 |
+    | meta2   | 172.17.0.2:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | 11ce9e9fe3de | n/a   | True |    65 |
+    | rawx    | 172.17.0.2:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | 11ce9e9fe3de | n/a   | True |    63 |
+    | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | 11ce9e9fe3de | n/a   | True |    89 |
+    +---------+-----------------+------------+---------------------------------+--------------+-------+------+-------+
+
+    [root@11ce9e9fe3de ~]# openio volume assignation
+    +------+-----------------+---------------+---------------+
+    | Rdir | Rawx            | Rdir location | Rawx location |
+    +------+-----------------+---------------+---------------+
+    | n/a  | 172.17.0.2:6201 | None          | 11ce9e9fe3de  |
+    +------+-----------------+---------------+---------------+
+
+The RDIR location is 'None'. You have to force association of the RDIR with the RAWX:
+
+.. code-block:: shell
+
+    [root@11ce9e9fe3de ~]# openio reference create --oio-account _RDIR 172.17.0.2:6201
+    +-----------------+---------+
+    | Name            | Created |
+    +-----------------+---------+
+    | 172.17.0.2:6201 | True    |
+    +-----------------+---------+
+    [root@11ce9e9fe3de ~]# openio reference force --oio-account _RDIR 172.17.0.2:6201 172.17.0.2:6301 rdir
+    [root@11ce9e9fe3de ~]# openio volume assignation
+    +-----------------+-----------------+---------------+---------------+
+    | Rdir            | Rawx            | Rdir location | Rawx location |
+    +-----------------+-----------------+---------------+---------------+
+    | 172.17.0.2:6301 | 172.17.0.2:6201 | 11ce9e9fe3de  | 11ce9e9fe3de  |
+    +-----------------+-----------------+---------------+---------------+
 
 Post-install Checks
 ===================
 
-All the nodes are configured to easily use the openio-cli and aws-cli.
+The node is configured to easily use the openio-cli and aws-cli.
 
 Run this check script on one of the node involved in the cluster ``sudo /root/checks.sh``
 
@@ -153,57 +192,44 @@ Sample output:
 
 ::
 
-  [root@node1 ~]# ./checks.sh
+  root@node1:~# ./checks.sh
   ## OPENIO
    Status of services.
   KEY                       STATUS      PID GROUP
-  OPENIO-account-0          UP         2585 OPENIO,account,0
-  OPENIO-beanstalkd-1       UP         4932 OPENIO,beanstalkd,beanstalkd-1
-  OPENIO-conscienceagent-1  UP         4916 OPENIO,conscienceagent,conscienceagent-1
-  OPENIO-ecd-0              UP         7303 OPENIO,ecd,0
-  OPENIO-memcached-0        UP         7706 OPENIO,memcached,0
-  OPENIO-meta0-1            UP         5977 OPENIO,meta0,meta0-1
-  OPENIO-meta1-1            UP         5994 OPENIO,meta1,meta1-1
-  OPENIO-meta2-1            UP         5111 OPENIO,meta2,meta2-1
-  OPENIO-oio-blob-indexer-1 UP         5091 OPENIO,oio-blob-indexer,oio-blob-indexer-1
-  OPENIO-oio-event-agent-0  UP         4985 OPENIO,oio-event-agent,oio-event-agent-0
-  OPENIO-oioproxy-1         UP         5112 OPENIO,oioproxy,oioproxy-1
-  OPENIO-oioswift-0         UP         9163 OPENIO,oioswift,0
-  OPENIO-rawx-1             UP         5005 OPENIO,rawx,rawx-1
-  OPENIO-rdir-1             UP         5108 OPENIO,rdir,rdir-1
-  OPENIO-redis-1            UP         5002 OPENIO,redis,redis-1
-  OPENIO-redissentinel-1    UP         4984 OPENIO,redissentinel,redissentinel-1
-  OPENIO-zookeeper-0        UP         3914 OPENIO,zookeeper,0
+  OPENIO-account-0          UP         7576 OPENIO,account,0
+  OPENIO-beanstalkd-1       UP        10327 OPENIO,beanstalkd,beanstalkd-1
+  OPENIO-conscience-1       UP        10518 OPENIO,conscience,conscience-1
+  OPENIO-conscienceagent-1  UP        10368 OPENIO,conscienceagent,conscienceagent-1
+  OPENIO-memcached-0        UP        11858 OPENIO,memcached,0
+  OPENIO-meta0-1            UP        11031 OPENIO,meta0,meta0-1
+  OPENIO-meta1-1            UP        11065 OPENIO,meta1,meta1-1
+  OPENIO-meta2-1            UP        10614 OPENIO,meta2,meta2-1
+  OPENIO-oio-blob-indexer-1 UP        10359 OPENIO,oio-blob-indexer,oio-blob-indexer-1
+  OPENIO-oio-event-agent-0  UP        10498 OPENIO,oio-event-agent,oio-event-agent-0
+  OPENIO-oioproxy-1         UP        10657 OPENIO,oioproxy,oioproxy-1
+  OPENIO-oioswift-0         UP        14245 OPENIO,oioswift,0
+  OPENIO-rawx-1             UP        10401 OPENIO,rawx,rawx-1
+  OPENIO-rdir-1             UP        10515 OPENIO,rdir,rdir-1
+  OPENIO-redis-1            UP        10491 OPENIO,redis,redis-1
+  OPENIO-redissentinel-1    UP        10406 OPENIO,redissentinel,redissentinel-1
   --
    Display the cluster status.
   +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
   | Type    | Addr            | Service Id | Volume                          | Location | Slots | Up   | Score |
   +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
-  | account | 172.17.0.4:6009 | n/a        | n/a                             | node3    | n/a   | True |    98 |
-  | account | 172.17.0.3:6009 | n/a        | n/a                             | node2    | n/a   | True |    96 |
-  | account | 172.17.0.2:6009 | n/a        | n/a                             | node1    | n/a   | True |    98 |
-  | meta0   | 172.17.0.3:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | node2    | n/a   | True |    99 |
-  | meta0   | 172.17.0.4:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | node3    | n/a   | True |    99 |
+  | account | 172.17.0.2:6009 | n/a        | n/a                             | node1    | n/a   | True |    99 |
   | meta0   | 172.17.0.2:6001 | n/a        | /var/lib/oio/sds/OPENIO/meta0-1 | node1    | n/a   | True |    99 |
-  | meta1   | 172.17.0.3:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | node2    | n/a   | True |    69 |
-  | meta1   | 172.17.0.4:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | node3    | n/a   | True |    69 |
-  | meta1   | 172.17.0.2:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | node1    | n/a   | True |    69 |
-  | meta2   | 172.17.0.3:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node2    | n/a   | True |    69 |
-  | meta2   | 172.17.0.4:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node3    | n/a   | True |    69 |
-  | meta2   | 172.17.0.2:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node1    | n/a   | True |    69 |
-  | rawx    | 172.17.0.3:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node2    | n/a   | True |    69 |
-  | rawx    | 172.17.0.4:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node3    | n/a   | True |    69 |
-  | rawx    | 172.17.0.2:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node1    | n/a   | True |    69 |
-  | rdir    | 172.17.0.3:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node2    | n/a   | True |    98 |
-  | rdir    | 172.17.0.4:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node3    | n/a   | True |    98 |
-  | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node1    | n/a   | True |    98 |
+  | meta1   | 172.17.0.2:6111 | n/a        | /var/lib/oio/sds/OPENIO/meta1-1 | node1    | n/a   | True |    73 |
+  | meta2   | 172.17.0.2:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node1    | n/a   | True |    72 |
+  | rawx    | 172.17.0.2:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node1    | n/a   | True |    73 |
+  | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node1    | n/a   | True |    99 |
   +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
   --
    Upload the /etc/passwd into the bucket MY_CONTAINER of the MY_ACCOUNT project.
   +--------+------+----------------------------------+--------+
   | Name   | Size | Hash                             | Status |
   +--------+------+----------------------------------+--------+
-  | passwd | 1246 | D39F219BF5875D561DAFB2B789CD1C6C | Ok     |
+  | passwd | 1803 | 342A63A4789FE6E4C03DB859DAE4E207 | Ok     |
   +--------+------+----------------------------------+--------+
   --
    Get some informations about your object.
@@ -212,9 +238,9 @@ Sample output:
   +----------------+--------------------------------------------------------------------+
   | account        | MY_ACCOUNT                                                         |
   | base_name      | 7B1F1716BE955DE2D677B68819836E4F75FD2424F6D22DB60F9F2BB40331A741.1 |
-  | bytes_usage    | 1.246KB                                                            |
+  | bytes_usage    | 1.803KB                                                            |
   | container      | MY_CONTAINER                                                       |
-  | ctime          | 1532608812                                                         |
+  | ctime          | 1532612697                                                         |
   | max_versions   | Namespace default                                                  |
   | objects        | 1                                                                  |
   | quota          | Namespace default                                                  |
@@ -226,7 +252,7 @@ Sample output:
   +--------+------+----------------------------------+------------------+
   | Name   | Size | Hash                             |          Version |
   +--------+------+----------------------------------+------------------+
-  | passwd | 1246 | D39F219BF5875D561DAFB2B789CD1C6C | 1532608905500461 |
+  | passwd | 1803 | 342A63A4789FE6E4C03DB859DAE4E207 | 1532612738265829 |
   +--------+------+----------------------------------+------------------+
   --
    Find the services involved for your container.
@@ -235,24 +261,24 @@ Sample output:
   +-----------+--------------------------------------------------------------------+
   | account   | MY_ACCOUNT                                                         |
   | base_name | 7B1F1716BE955DE2D677B68819836E4F75FD2424F6D22DB60F9F2BB40331A741.1 |
-  | meta0     | 172.17.0.3:6001, 172.17.0.4:6001, 172.17.0.2:6001                  |
-  | meta1     | 172.17.0.2:6111, 172.17.0.3:6111, 172.17.0.4:6111                  |
-  | meta2     | 172.17.0.4:6121, 172.17.0.2:6121, 172.17.0.3:6121                  |
+  | meta0     | 172.17.0.2:6001                                                    |
+  | meta1     | 172.17.0.2:6111                                                    |
+  | meta2     | 172.17.0.2:6121                                                    |
   | name      | MY_CONTAINER                                                       |
   | status    | Enabled                                                            |
   +-----------+--------------------------------------------------------------------+
   --
    Save the data stored in the given object to the --file destination.
   root:x:0:0:root:/root:/bin/bash
-  bin:x:1:1:bin:/bin:/sbin/nologin
-  daemon:x:2:2:daemon:/sbin:/sbin/nologin
-  adm:x:3:4:adm:/var/adm:/sbin/nologin
-  lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-  sync:x:5:0:sync:/sbin:/bin/sync
-  shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-  halt:x:7:0:halt:/sbin:/sbin/halt
-  mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-  operator:x:11:0:operator:/root:/sbin/nologin
+  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+  sync:x:4:65534:sync:/bin:/bin/sync
+  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
   --
    Delete your object.
   +--------+---------+
@@ -278,23 +304,23 @@ Sample output:
   upload: ../etc/passwd to s3://mybucket/passwd
   --
    List your buckets.
-  2018-07-26 14:41:48    1.2 KiB passwd
+  2018-07-26 15:45:41    1.8 KiB passwd
 
   Total Objects: 1
-     Total Size: 1.2 KiB
+     Total Size: 1.8 KiB
   --
    Save the data stored in the given object into the file given.
   download: s3://mybucket/passwd to ../tmp/passwd.aws
   root:x:0:0:root:/root:/bin/bash
-  bin:x:1:1:bin:/bin:/sbin/nologin
-  daemon:x:2:2:daemon:/sbin:/sbin/nologin
-  adm:x:3:4:adm:/var/adm:/sbin/nologin
-  lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-  sync:x:5:0:sync:/sbin:/bin/sync
-  shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-  halt:x:7:0:halt:/sbin:/sbin/halt
-  mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-  operator:x:11:0:operator:/root:/sbin/nologin
+  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+  bin:x:2:2:bin:/bin:/usr/sbin/nologin
+  sys:x:3:3:sys:/dev:/usr/sbin/nologin
+  sync:x:4:65534:sync:/bin:/bin/sync
+  games:x:5:60:games:/usr/games:/usr/sbin/nologin
+  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+  mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+  news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
   --
    Delete your object.
   delete: s3://mybucket/passwd
