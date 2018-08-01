@@ -1,3 +1,5 @@
+.. _label-oiofs-configuration:
+
 ========================================
 Configure an OpenIO Filesystem connector
 ========================================
@@ -8,7 +10,8 @@ Description
 ~~~~~~~~~~~
 
 OpenIO proposes a FUSE implementation to connect an OpenIO SDS namespace as
-backend for a file system.
+backend for a file system. Please refer to ":ref:`label-oiofs-architecture`"
+for more information.
 
 Prerequisites
 ~~~~~~~~~~~~~

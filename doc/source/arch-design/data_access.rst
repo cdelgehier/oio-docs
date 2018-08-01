@@ -36,6 +36,9 @@ High availability extensions are available on top of these protocols for a best
 in class integration with a legacy filesystem architecture, while opening to
 all the benefits of the OpenIO suite.
 
+Please refer to ":ref:`label-oiofs-architecture`" or ":ref:`label-oiofs-configuration`"
+for more information.
+
 Client SDKs
 +++++++++++
 With the benefit of gateways, clients are easy to write. They all make use of

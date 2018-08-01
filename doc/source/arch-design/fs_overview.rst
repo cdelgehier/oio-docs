@@ -1,3 +1,5 @@
+.. _label-oiofs-architecture:
+
 ======================
 OpenIO FS architecture
 ======================
@@ -56,4 +58,7 @@ Architecture specifics
 •	**Samba**: In order to store the file system on a network, OpenIO supports SMB for access from computers running Windows or macOS. Generally, each OIO-FS volume is mounted once then exported to each client.
 •	**NFS**: OIO-FS also supports this standard file sharing protocol, which is mainly used by industrial applications and Linux/UNIX computers.
 
+Useful links
+++++++++++++
 
+* :ref:`label-oiofs-configuration`
