@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
-set -e
 set -x
 
-TARGET=$(readlink --canonicalize result-docs)
-BUILD=$(readlink --canonicalize "$1")
-[[ -n "$BUILD" ]]
+case $(uname -s) in
+	Darwin)
+		TARGET="$PWD/result-docs"
+		BUILD="$PWD/$1"
+		SED="/usr/bin/sed -i ''"
+		;;
+	Linux)
+		set -e
+		TARGET=$(readlink --canonicalize result-docs)
+		BUILD=$(readlink --canonicalize "$1")
+		SED="/bin/sed -i"
+		set -e
+		[[ -n "$BUILD" ]]
+		;;
+	*)
+		echo "Platform not supported"
+		exit 1
+		;;
+esac
 
 mkdir -p "$TARGET"
 mkdir -p "$BUILD"
@@ -80,17 +95,16 @@ fi
 
 # Many macros must be replaced, let's use a sed script to manage
 # all the patterns, with a short sed command.
-echo '#!/bin/sed' > $BUILD/macros.ss
 while read K V ; do
   echo "s,{{$K}},$V,g" >> $BUILD/macros.ss
 done < "${BUILD}/vars.export"
 find doc2/ -type f -name '*.rst' | while read P ; do
-  /bin/sed -i -f $BUILD/macros.ss "$P"
+  $SED -f $BUILD/macros.ss "$P"
 done
 
 # Patch conf.py with components.json
 if cat components.json | python -mjson.tool | grep stable | grep true; then
-    sed -i 's/\(.*stable.*\)\(False\)\(.*\)/\1True\3/g' doc2/conf.py
+    $SED 's/\(.*stable.*\)\(False\)\(.*\)/\1True\3/g' doc2/conf.py
 fi
 
 sphinx-build -v -E -d /tmp/sphinx doc2 $TARGET
@@ -100,6 +114,6 @@ sphinx-build -v -E -d /tmp/sphinx doc2 $TARGET
 set +x
 for file in $(find $TARGET -name "*.html")
 do
-    sed -i '/basic\.css/d' $file
+    $SED '/basic\.css/d' $file
 done
 set -x
