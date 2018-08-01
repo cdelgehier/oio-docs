@@ -19,10 +19,11 @@ by showing how to perform various administration tasks.
    operations_backup_restore
    operations_configure_monitoring
    operations_keystone_swift_integration
-   operations_scale_cluster
+   operations_add_rawx
+   operations_add_meta2
    operations_decommission_rawx
    operations_decommission_meta1
-   operations_move_meta2	      
+   operations_move_meta2
    operations_rebuild_rawx
    operations_rebuild_meta1
    operations_rebuild_meta2
@@ -30,5 +31,5 @@ by showing how to perform various administration tasks.
    operations_rebalance_meta2
    operations_check_directory
    operations_audit_rawx
-	      
+
 .. end of contents
