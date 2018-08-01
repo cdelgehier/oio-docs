@@ -25,7 +25,7 @@ Repository:
 Unsupported distributions
 +++++++++++++++++++++++++
 
-All the distribution not explicitely mentionned as supported must be
+All the distribution not explicitely mentioned as supported must be
 considered unsupported, e.g.:
 
 * Debian 8 *"jessie"*: not supported
