@@ -15,5 +15,7 @@ This guide documents how to install and try OpenIO SDS.
    multi_nodes_install
    single_node_install
    build_from_source
+   linux_support
+   openstack_support
 
 .. end of contents
