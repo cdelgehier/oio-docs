@@ -20,5 +20,6 @@ doc2/
 
 # Tox
 .tox/
+env/
 vars.export
 
