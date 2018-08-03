@@ -49,7 +49,7 @@ OpenIO SDS is available on `GitHub <https://github.com/open-io/oio-sds>`_.
 Learn
 -----
 
-Read about :ref:`OpenIO SDS architecture <ref-user-guide>` and make yourself familiar with the terminology.
+Read about the :ref:`Solution <ref-solution-key-characteristics>` or the :ref:`Core concepts <ref-solution-core-concepts>` and make yourself familiar with the terminology.
 
 
 Develop

@@ -1,3 +1,4 @@
+.. _ref-solution-core-concepts:
 =========================
 OpenIO SDS: Core concepts
 =========================
@@ -28,8 +29,6 @@ Containers
 ----------
 Object buckets. They keep track of object locations.
 A container belongs to one (and only one) account.
-
-TODO More details in `Object Storage`_ section.
 
 Objects
 -------
@@ -145,7 +144,7 @@ Metadata proxy
 Whichever protocol is in used by the internal services (directories), all clients rely on a layer of gateways that provides a simple REST API for metadata accesses. This API provides high-level operations that encapsulate all the underlying logic behind the management of accounts, containers, and their contents. Gateways are also the ideal place for shared cache mechanisms, similar to the way name service cache daemon works on Linux hosts.
 
 .. image:: ../../../images/openio-client-with-proxy.svg
-   :width: 500 px
+   :width: 400 px
    :align: center
 
 Self-healing / Integrity loop
@@ -173,8 +172,6 @@ Erasure Coding
 .. image:: ../../../images/openio-arch-erasure-coding-split.png
    :width: 600 px
 
-TODO Schema à modifier
-
 
 OpenIO internally uses the liberasurecode and allows the administrator to
 configure the algorithm and its K and M parameters.
@@ -189,7 +186,6 @@ configure the algorithm and its K and M parameters.
 
 Replication
 ~~~~~~~~~~~
-TODO
 
 Container replication is performed using the same mechanism as the Service
 Directory replication. Each container has its own replication cluster. The
@@ -220,5 +216,3 @@ data geo-distribution needs. There is no classic subdirectory tree. Objects
 are stored in a flat structure at the container level. As with many other
 object storage solutions, it is possible to emulate a filesystem tree,
 but it has no physical reality.
-
-
