@@ -277,4 +277,4 @@ Key characteristics :
 
 WebUI
 -----
-TODO
+Graphical User Interface that offers an overview of cluster status and enables easy monitoring for day-to-day operations without using the CLI.
