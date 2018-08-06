@@ -62,11 +62,12 @@ The following configuration must be adapted to your new service:
 - port        
 - type: volume, path
 
-Then, to make your new meta2 service available, you have to reload the configuration:
+Then, to make your new meta2 service available, you have to reload the configuration and start the service:
 
 .. code-block:: text
 
     $ gridinit_cmd reload
+    $ gridinit_cmd start OPENIO-meta2-2
 
 And to restart the conscience agent:
 
@@ -102,7 +103,6 @@ You can check that your new service is available using the ``openio cluster list
     | meta2   | 10.0.0.38:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node-3     | n/a   | True |    91 |
     | meta2   | 10.0.0.36:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node-1     | n/a   | True |    90 |
     | meta2   | 10.0.0.37:6121 | n/a        | /var/lib/oio/sds/OPENIO/meta2-1 | node-2     | n/a   | True |    92 |
-    | rawx    | 10.0.0.36:6211 | n/a        | /var/lib/oio/sds/OPENIO/rawx-2  | node-1     | n/a   | True |    95 |
     | rawx    | 10.0.0.38:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node-3     | n/a   | True |    92 |
     | rawx    | 10.0.0.36:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node-1     | n/a   | True |    90 |
     | rawx    | 10.0.0.37:6201 | n/a        | /var/lib/oio/sds/OPENIO/rawx-1  | node-2     | n/a   | True |    91 |

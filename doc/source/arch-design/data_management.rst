@@ -103,9 +103,6 @@ Automations can be set to move, compress, delete data by age, last modified
 date and many other characteristics, improving system efficiency and data
 placement for best performance and capacity utilization.
 
-Dynamic data protection
------------------------
-
 No SPOF architecture
 --------------------
 Every service used to serve data is redundant. From the top level of
@@ -138,6 +135,10 @@ APIs.
 
 Container snapshots
 -------------------
+OpenIO SDS provides tools to make container snapshots.
+The new container is built by duplicating meta data and links to the original data chunks at the moment of snapshot creation.
+Practically you can create a new container, starting from an existing one, which points to the same data chunks as the original container. Every operation performed on the new container do not affect original data but creates new objects or data chunks for their updated parts. 
+Snapshots are synchronous operations, during which the container is in readonly mode.
 
 Data integrity checks
 ---------------------
@@ -150,5 +151,3 @@ OpenIO SDS allows storage policies and data to be distributed across
 multiple datacenters. Depending on distance and latency requirements, data
 storage clusters can be stretched over multiple locations synchronously,
 or replicated to a different site asynchronously.
-
-

@@ -1,3 +1,4 @@
+.. _ref-solution-key-characteristics:
 ===================
 Key characteristics
 ===================
@@ -88,4 +89,3 @@ With Conscience Technology, OpenIO SDS is able to detect the efficiency
 of each node deployed in the infrastructure and use it at its true capacity.
 The load can be balanced on heterogeneous nodes, the Conscience will consider
 this to get the best performance from each node.
-
