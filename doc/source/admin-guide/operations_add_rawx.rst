@@ -14,7 +14,7 @@ In this example, we will add a new rawx service (rawx-2) in the namespace OPENIO
 Furthermore, to secure your new rawx service, you will have two options:
   - assign an existing rdir to your new rawx
   - install a new rdir service (rdir-2) and assign it to your new rawx
-Both options will be detailled here after.
+Both options will be detailed here after.
 
 Prerequisites
 -------------
@@ -298,7 +298,7 @@ Then, you will have to unlock your new service:
 Rdir assignation
 ++++++++++++++++
 
-In order to secure the new rawx, you must asign your new rawx to a rdir service.
+In order to secure the new rawx, you must assign your new rawx to a rdir service.
 
 In the example below, you can see that the new rawx (10.0.0.36:6211) has no rdir assignation, and your new rdir (10.0.0.39:6302) does not manage any rawx:
 
