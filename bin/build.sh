@@ -46,6 +46,10 @@ if [[ -z "$OIO_DOCS_LIGHT" ]]; then
       $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
       > doc/source/sdk-guide/proxy_container_api_calls.rst
 
+    ./bin/extract-doc.py --tag=CONTENT \
+      $(find $BUILD/oio-sds/proxy -type f -name '*.c' -or -name '*.h') \
+      > doc/source/sdk-guide/proxy_content_api_calls.rst
+
     ./bin/extract-doc.py --tag=RDIR \
       $(find $BUILD/oio-sds/rdir -type f -name '*.c' -or -name '*.h') \
       > doc/source/sdk-guide/rdir_api_calls.rst
