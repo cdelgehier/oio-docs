@@ -35,7 +35,7 @@
         "oio-fs":{
             "doc": false,
             "repository":"git@github.com:open-io/oio-fs.git",
-            "id":"2.0.0"
+            "id":"2.1.1"
         },
         "oio-replicator":{
             "doc": false,
