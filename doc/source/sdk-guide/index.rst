@@ -23,6 +23,7 @@ documentation.
    proxy_cs_api
    proxy_dir_api
    proxy_container_api
+   proxy_content_api
    acct_api
    rdir_api
 
