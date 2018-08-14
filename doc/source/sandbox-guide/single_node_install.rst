@@ -2,6 +2,10 @@
 Single node install
 ===================
 
+.. contents::
+   :depth: 1
+   :local:
+
 Requirements
 ============
 
