@@ -1,6 +1,54 @@
 Custom your deployment
 ======================
 
+Manage NTP configuration
+------------------------
+
+You can set the time settings in the `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/sds/inventories/n-nodes/group_vars/all.yml>`__ file.
+By default, the deployment dont change your timezone but enable the NTP service and set 4 NTP servers
+
+.. code-block:: yaml
+   :caption: all.yml
+
+   ---
+   # NTP
+   ntp_enabled: true
+   ntp_manage_config: true
+   ntp_manage_timezone: false
+   ntp_timezone: "Etc/UTC"
+   ntp_area: ""
+   ntp_servers:
+     - "0{{ ntp_area }}.pool.ntp.org iburst"
+     - "1{{ ntp_area }}.pool.ntp.org iburst"
+     - "2{{ ntp_area }}.pool.ntp.org iburst"
+     - "3{{ ntp_area }}.pool.ntp.org iburst"
+   ntp_restrict:
+     - "127.0.0.1"
+     - "::1"
+   ...
+
+If needed, you can set your own settings:
+
+.. code-block:: yaml
+   :caption: all.yml
+
+   ---
+   # NTP
+   ntp_enabled: true
+   ntp_manage_config: true
+   ntp_manage_timezone: true
+   ntp_timezone: "Europe/Paris"
+   ntp_area: ".fr"
+   ntp_servers:
+     - "0{{ ntp_area }}.pool.ntp.org iburst"
+     - "1{{ ntp_area }}.pool.ntp.org iburst"
+     - "2{{ ntp_area }}.pool.ntp.org iburst"
+     - "3{{ ntp_area }}.pool.ntp.org iburst"
+   ntp_restrict:
+     - "127.0.0.1"
+     - "::1"
+   ...
+
 Manage storage volume
 ---------------------
 
