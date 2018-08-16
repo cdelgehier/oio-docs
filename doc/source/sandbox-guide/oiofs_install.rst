@@ -1,6 +1,6 @@
-===================
-OIOFS node install
-===================
+=======================
+OIOFS Node Installation
+=======================
 
 .. contents::
    :depth: 1
@@ -28,9 +28,9 @@ Operating system
 System
 ------
 
--  root privileges are required (using sudo)
--  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment)
--  System must be up-to-date
+-  Root privileges are required (using sudo).
+-  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment).
+-  The system must be up to date.
 
   .. code-block:: shell
 
@@ -48,23 +48,23 @@ System
 Network
 -------
 
--  This node connected to the same OIOSDS's lan
+-  This node connected to the same OIOSDS's lan.
 
 SDS
 ---
 
--  The conscience IP address
--  The namespace used
--  The redis sentinels addresses and the redis cluster name
+-  The conscience IP address.
+-  The namespace used.
+-  The redis sentinels addresses and the redis cluster name.
 
 
 Setup
 -----
 
-You only need to perform this setup on the node involved in the install (or your laptop)
+You only need to perform this setup on one of the nodes in the cluster (or your laptop).
 
--  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
--  Install ``git``
+-  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__).
+-  Install ``git``.
 
   .. code-block:: shell
 
@@ -76,7 +76,7 @@ You only need to perform this setup on the node involved in the install (or your
     # Ubuntu
     sudo apt install git -y
 
--  Clone the OpenIO ansible playbook deployment repository
+-  Clone the OpenIO ansible playbook deployment repository.
 
   .. code-block:: shell
 
@@ -85,7 +85,7 @@ You only need to perform this setup on the node involved in the install (or your
 Architecture
 ============
 
-This playbook will deploy a oiofs mount connected to a SDS cluster
+This playbook will deploy an oiofs mount connected to a SDS cluster as shown below:
 
   .. code-block:: shell
 
@@ -111,10 +111,9 @@ This playbook will deploy a oiofs mount connected to a SDS cluster
 
 Installation
 ============
+First, fill the inventory according to your environment:
 
-First you need to fill the inventory accordingly to your environment:
-
-- Edit the ``inventories/01_oiofs.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/oiofs/inventories/01_oiofs.ini>`__)
+- Edit the ``inventories/01_oiofs.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/oiofs/inventories/01_oiofs.ini>`__).
 
   .. code-block:: shell
 
@@ -122,7 +121,7 @@ First you need to fill the inventory accordingly to your environment:
     node_oiofs ansible_host=10.0.0.1 ansible_user=root # Change it with the IP of the server
     ...
 
-You can check that everything is well configured using this command:
+You can check that everything is configured correctly using this command:
 
   .. code-block:: shell
 
@@ -145,9 +144,9 @@ Run these commands:
 Post-install Checks
 ===================
 
-The node is configured and the filesystem is mounted
+The node is configured and the filesystem is mounted.
 
-Run these commands on the node ``gridinit_cmd status`` and ``df -h``
+Run these commands on the node: ``gridinit_cmd status`` and ``df -h``.
 
 Sample output:
 
@@ -186,9 +185,9 @@ You can set your credentials in the `oiofs.yml <https://github.com/open-io/ansib
 SDS informations
 ----------------
 
-You can set all your SDS informations in the  `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/group_vars/oiofs.yml>`__ file.
+You can set all your SDS information in the  `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/group_vars/oiofs.yml>`__ file.
 
-By default, an ``ecd`` and an ``oioproxy`` are deployed on the target node and bind the default IP address.
+By default, an ``ecd`` and an ``oioproxy`` are deployed on the target node and binded the default IP address.
 
 .. code-block:: yaml
    :caption: oiofs.yml
@@ -228,7 +227,7 @@ All mounts are defined in the `oiofs.yml <https://github.com/open-io/ansible-pla
        max_flush_thread: "{{ ansible_processor_vcpus / 2 | int }}"
    ...
 
-The ``node_oiofs.yml`` matches information defined in the ``oiofs.yml``
+The ``node_oiofs.yml`` matches information defined in the ``oiofs.yml``.
 
 .. code-block:: yaml
    :caption: node_oiofs.yml
@@ -246,4 +245,3 @@ The ``node_oiofs.yml`` matches information defined in the ``oiofs.yml``
        redis_sentinel_name: "{{ openio_sds_sentinels_name }}"
        state: present
    ...
-

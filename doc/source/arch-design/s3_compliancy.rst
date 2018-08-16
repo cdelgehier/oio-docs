@@ -4,13 +4,13 @@
 S3 Compliancy
 =============
 
-OpenIO SDS {{RELEASE}} is compliant with the most recent standards of requests signatures:
+OpenIO SDS {{RELEASE}} is compliant with the most recent standards of request signatures:
 
 - `Amazon S3 Signature v2 <https://docs.aws.amazon.com/fr_fr/general/latest/gr/signature-version-2.html>`_
 - `Amazon S3 Signature v4 <https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html>`_
 
-In addition to the traditional path-style bucket naming, OpenIO SDS also
-complies with the host-style bucket naming as described in
+In addition to traditional path-style bucket naming, OpenIO SDS also
+complies with host-style bucket naming as described in
 `Virtual Hosting of Buckets <https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html>`_.
 
 Here is the detail of supported operations.
@@ -186,4 +186,3 @@ Here is the detail of supported operations.
      - ✅
    * - Upload Part - Copy
      - ✅
-

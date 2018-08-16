@@ -3,27 +3,27 @@
 SDS on a Raspberry PI
 ====================================
 
-This guide will show you how to install OpenIO SDS in standalone mode on a Raspberry Pi 3B running Ubuntu Xenial 64bits.
+This guide explains how to install OpenIO SDS in standalone mode on a Raspberry Pi 3 Model B running Ubuntu Xenial 64 bit.
 
 Requirements
 ~~~~~~~~~~~~
 
-- Raspberry Pi Model 3B
+- Raspberry Pi 3 Model B
 - SD Card with at least 2GB free space
 - Host Machine running Linux
-- Basic ethernet cable setup with a DHCP server (to provide an IP for the Raspberry PI)
+- Basic Ethernet cable setup with a DHCP server (to provide an IP address for the Raspberry PI)
 
-Prepare SD Card
-~~~~~~~~~~~~~~~
+Prepare the SD Card
+~~~~~~~~~~~~~~~~~~~
 
-On your host machine, get an already preinstalled OpenIO SDS image.
+Download an OpenIO SDS image to your host machine.
 
    .. code-block:: shell
 
     $ wget http://mirror.openio.io/pub/images/openio/sds/17.04/ubuntu/xenial/oio-sds-17.04-ubuntu-xenial-arm64-rpi3b.zip -O openio.img.zip
     $ unzip openio.img.zip
 
-Now insert your SD card into your host machine and write the image onto it.
+Insert the SD card into your host machine and write the image onto it.
 
    .. code-block:: shell
 
@@ -35,23 +35,21 @@ Now insert your SD card into your host machine and write the image onto it.
 Boot the Raspberry Pi
 ~~~~~~~~~~~~~~~~~~~~~
 
-Remove the SD card from the host machine, insert it into the Raspberry Pi. Plug in the ethernet cable.
-You might also plug in an HDMI cable, although it's not necessary.
-Finally plug in the power cable and let the Raspberry Pi boot.
+Remove the SD card from the host machine and insert it into the Raspberry Pi. Plug in the Ethernet cable. You might also plug in an HDMI cable, although this isn’t necessary. Finally, plug in the power cable and let the Raspberry Pi boot.
 
-Let the first time setup complete, the Raspberry will have to reboot once
-(in order to resize its partition to the size of the SD card). This should take about 3 minutes.
+Let the first-time setup complete. The Raspberry Pi will have to reboot once in order to resize its partition to the size of the SD card. This should take a few minutes.
+
 
 Test OpenIO
 ~~~~~~~~~~~
 
-You can now use OpenIO via all 3 options listed below. `RPI_IP` is the IP address given to your Raspberry PI by your
+You can now use OpenIO via any of the 3 options listed below. `RPI_IP` is the IP address given to your Raspberry PI by your
 DHCP server.
 
 - **Using the OpenIO CLI**
 
 
-Login into your Raspberry Pi (Login: root, Password: root) via SSH and create an object:
+Login into your Raspberry Pi (login: root; password: root) via SSH and create an object:
 
    .. code-block:: shell
 
@@ -67,7 +65,7 @@ Login into your Raspberry Pi (Login: root, Password: root) via SSH and create an
 - **Using Swift**
 
 
-Install python-swiftclient on your host machine and upload a file
+Install python-swiftclient on your host machine and upload a file:
 
    .. code-block:: shell
 
@@ -79,7 +77,7 @@ Install python-swiftclient on your host machine and upload a file
 - **Using S3**
 
 
-For example, using awsclis
+For example, using awsclis:
 
    .. code-block:: shell
 
@@ -98,9 +96,6 @@ For example, using awsclis
 Known limitations
 ~~~~~~~~~~~~~~~~~
 
-- One major limitation of the current setup is that your IP given to the Raspberry Pi should always stay the same.
-  You can always etch the image again onto the SD card and start over with a new IP, which will result in data loss.
+- One major limitation of the current setup is that the Raspberry Pi must have a fixed IP address. If you write the image onto the SD card again, and start over with a new IP address, this will result in data loss.
 
-- Another limitation is that the current setup is not designed to be scalable, and is provided as is,
-  i.e. as a standalone node, meant solely for testing purposes.
-  Please refer to our other guides to learn how to setup a scalable OpenIO cluster.
+- Another limitation is that the current setup is not designed to be scalable, and is provided as is, as a standalone node, meant solely for testing purposes. Please refer to our other guides to learn how to set up a scalable OpenIO cluster.

@@ -1,17 +1,17 @@
 ======================
-Rebuild a volume: rawx
+Rebuild a Volume: Rawx
 ======================
 
 Preparation
 ~~~~~~~~~~~
 
 Find information about the service you want to rebuild.
-By running ``openio cluster list rawx`` you will get the list of all rawx service IDs accompanied by their volume path.
+By running ``openio cluster list rawx`` you will get a list of all rawx service IDs accompanied by their volume paths.
 
 Verify that the service was automatically scored to zero by running ``openio cluster list rawx``.
 
-If not, lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``. Where RAWX_ID is the network address of the service (ip:port).
-This will prevent the service from getting upload requests, and will reduce the number of download requests.
+If not, lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``, where RAWX_ID is the network address of the service (ip:port).
+This will prevent the service from receiving upload requests, and will reduce the number of download requests.
 
 Set the incident date
 ~~~~~~~~~~~~~~~~~~~~~
@@ -22,9 +22,9 @@ Set an incident on the target rawx service by running the ``openio volume admin`
 
      # openio volume admin incident <RAWX_ID>
 
-By default, the incident date is the current timestamp. You can tune this incident date by using the parameter ``--date <TIMESTAMP>``.
+By default, the incident date is the current timestamp. You can change this incident date by using the parameter ``--date <TIMESTAMP>``.
 
-Check that the incident is actually set:
+Check that the incident date is correctly set:
 
   .. code-block:: console
 

@@ -1,14 +1,14 @@
 ==========
-Audit rawx
+Audit Rawx
 ==========
 
-The rawx auditor will parse every chunks to detect faulty, corrupted and orphan chunk.
+The rawx auditor parses every chunk to detect faulty, corrupted, and orphaned chunks.
 
 Preparation
 ~~~~~~~~~~~
 
 Find information about the service you want to audit.
-By running ``openio cluster list rawx`` you will get the list of all rawx service ids accompanied by their volume path.
+By running ``openio cluster list rawx`` you will get the list of all rawx service ids accompanied by their volume paths.
 
 Configuration
 ~~~~~~~~~~~~~
@@ -47,13 +47,13 @@ Launch audit
 Run ``oio-blob-auditor -v <CONFIGURATION FILE>`` (the `-v` is to log to stderr in addition to syslog).
 
 
-The process does not stop by itself (it was designed as a daemon). Hit Ctrl-C when you don't see any update for 30s.
+The process does not stop by itself (it was designed as a daemon). Hit Ctrl-C when you don't see any updates for 30s.
 
 
 Audit example
 ~~~~~~~~~~~~~
 
-The following trace show an audit with an error on chunk position.
+The following trace shows an audit with an error in chunk position.
 
   .. code-block:: text
 

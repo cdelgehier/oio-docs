@@ -1,10 +1,10 @@
 =============
-Health checks
+Health Checks
 =============
 
 This page contains steps to verify the overall health of an OpenIO SDS cluster.
 
-If experiencing issues, use the checks provided below to diagnose any problems.
+If experiencing issues, use the checks below to diagnose any problems.
 
 Environment health
 ------------------
@@ -24,7 +24,7 @@ To verify the end-to-end functionality of an OpenIO SDS cluster, create, downloa
 
     $ openio --oio-account health container show test
 
-  List containers in account:
+  List the containers in an account:
 
   .. code-block:: console
 
@@ -137,7 +137,7 @@ A basic ZooKeeper health check can be done with:
     $ echo ruok | nc 10.0.2.15 6005
     imok
 
-  Retrieve the correct ip and port for ZooKeeper in `/etc/oio/sds.conf.d/NAMESPACE`.
+  Retrieve the correct IP address and port for ZooKeeper in `/etc/oio/sds.conf.d/NAMESPACE`.
 
 To get more information about the ZooKeeper cluster:
 
@@ -163,7 +163,7 @@ To get more information about the ZooKeeper cluster:
 
 **Storage**
 
-Check disk usage of a host using `df`:
+Check the disk usage of a host using `df`:
 
   .. code-block:: console
 

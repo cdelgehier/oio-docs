@@ -1,29 +1,29 @@
 .. _ref-build-from-source:
 
 =================
-Build From Source
+Build from Source
 =================
 
-This sections describes how to compile OpenIO SDS from the official source fetched from GitHub.
+This section describes how to compile OpenIO SDS from the official source downloaded from GitHub.
 
 The build procedure is available for:
 
 * Ubuntu 16.04
 
-Setup the $SDS variable
------------------------
+Set the $SDS variable
+---------------------
 
 Throughout this guide, the environment variable `SDS` will be used several times. You should ensure this variable is always defined.
-It should be set to the name of directory where you will be building OpenIO SDS.
+It should be set to the name of directory where you are building OpenIO SDS.
 
    .. code-block:: shell
 
       export SDS=$HOME/local
 
 
-Repository Configuration
-------------------------
-We provide easy access to build and runtime dependencies versions not available in common distributions.
+Configure Repository
+--------------------
+We provide easy access to build and runtime dependency versions not available in common distributions.
 
    .. code-block:: shell
 
@@ -66,10 +66,10 @@ Build dependencies
           python-setuptools \
           libleveldb-dev
 
-Fetch Source
-------------
+Download Source Code
+--------------------
 
-Official OpenIO SDS source is available from Github.
+The official OpenIO SDS source code is available from Github.
 
    .. code-block:: shell
 
@@ -79,7 +79,7 @@ Official OpenIO SDS source is available from Github.
 Build
 -----
 
-We perform build in a separate folder from sources.
+Perform the build in a separate folder from sources.
 
    .. code-block:: shell
 
@@ -111,7 +111,7 @@ Sandbox Setup
 Environment
 ^^^^^^^^^^^
 
-We need to setup a few environment variables so everything we built previously is correctly found and used.
+Set a few environment variables so everything we built previously is correctly found and used.
 
    .. code-block:: shell
 
@@ -123,13 +123,13 @@ We need to setup a few environment variables so everything we built previously i
 Runtime Dependencies
 ^^^^^^^^^^^^^^^^^^^^
 
-To run the sandbox, we need additional runtime dependencies:
+To run the sandbox, you need additional runtime dependencies:
 
 External services:
 
-* Redis: advanced key-value store used by Account services
+* Redis: advanced key-value store used by account services.
 
-* Beanstalkd: simple and fast work queue used by OpenIO to run background jobs
+* Beanstalkd: simple and fast work queue used by OpenIO to run background jobs.
 
 Libraries:
 

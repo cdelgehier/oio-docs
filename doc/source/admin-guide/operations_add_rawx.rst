@@ -1,5 +1,5 @@
 ==================
-Add a rawx service
+Add a Rawx Service
 ==================
 
 .. contents::
@@ -7,48 +7,48 @@ Add a rawx service
 
 Description
 -----------
-In this documentation, you will find the different steps to add a new rawx service on your cluster.
+This documentation explains how to add a new Rawx service to your cluster.
 
-In this example, we will add a new rawx service (rawx-2) in the namespace OPENIO on an existing server:
+This example shows how to add a new rawx service (rawx-2) in the namespace OPENIO on an existing server.
 
 Furthermore, to secure your new rawx service, you will have two options:
-  - assign an existing rdir to your new rawx
-  - install a new rdir service (rdir-2) and assign it to your new rawx
-Both options will be detailed here after.
+  - Assign an existing Rdir to the new Rawx.
+  - Install a new Rdir service (rdir-2) and assign it to the new Rawx.
+
+Both options will be explained below.
 
 Prerequisites
 -------------
 
-You must have the IPs and PORTs that will be used for your new services.
-In this example:
+You must know the IP addresses and ports that will be used for your new services. In this example, we will use the following:
 
-- the new rawx will listen on ``10.0.0.36:6211``
-- the new rdir will listen on ``10.0.0.39:6302``
+- The new Rawx will listen on ``10.0.0.36:6211``
+- The new Rdir will listen on ``10.0.0.39:6302``
 
 Configuration
 -------------
 
-Configure a new rawx
+Configure a new Rawx
 ++++++++++++++++++++
 
-Create an new directory ``/rawx-2`` in ``/var/lib/oio/sds/OPENIO/``
+Create a new directory ``/rawx-2`` in ``/var/lib/oio/sds/OPENIO/``
 
-Give the rights on this directory to the openio user:
-
-.. code-block:: text
-
-    $ chown openio.openio rawx-2/
-
-
-Create an new directory ``/rawx-2`` in ``/etc/oio/sds/OPENIO/``
-
-Give the rights on this directory to the openio user:
+Give the rights for this directory to the openio user:
 
 .. code-block:: text
 
-    $ chown openio.openio rawx-2/
+    $ chown openio:openio rawx-2/
 
-Create a new configuration file (``rawx-2-httpd.conf``) in your new created directory ``/etc/oio/sds/OPENIO/rawx-2``:
+
+Create a new directory ``/rawx-2`` in ``/etc/oio/sds/OPENIO/``.
+
+Give the rights for this directory to the openio user:
+
+.. code-block:: text
+
+    $ chown openio:openio rawx-2/
+
+Create a new configuration file (``rawx-2-httpd.conf``) in your new directory ``/etc/oio/sds/OPENIO/rawx-2``:
 
 .. code-block:: shell
    :caption: /etc/oio/sds/OPENIO/rawx-2/rawx-2-httpd.conf
@@ -190,14 +190,14 @@ The following configuration must be adapted to your new service:
 - port        
 - type: volume, path
 
-Then, to make your new rawx service available, you have to reload the configuration and start the service:
+Then, to make your new rawx service available, you must reload the configuration and start the service:
 
 .. code-block:: text
 
     $ gridinit_cmd reload
     $ gridinit_cmd start OPENIO-rawx-2
 
-And to restart the conscience agent:
+And restart the conscience agent:
 
 .. code-block:: text
 
@@ -205,29 +205,29 @@ And to restart the conscience agent:
 
 
 
-Configure a new rdir (optionnal)
+Configure a new Rdir (optional)
 ++++++++++++++++++++++++++++++++
 
 In order to secure the new rawx, you can install a new rdir service on another server.
 
-Create an new directory ``/rdir-2`` in ``/var/lib/oio/sds/OPENIO/``
+Create an new directory ``/rdir-2`` in ``/var/lib/oio/sds/OPENIO/``.
 
-Give the rights on this directory to the openio user:
-
-.. code-block:: text
-
-    $ chown openio.openio rdir-2/
-
-
-Create an new directory ``/rdir-2`` in ``/etc/oio/sds/OPENIO/``
-
-Give the rights on this directory to the openio user:
+Give the rights for this directory to the openio user:
 
 .. code-block:: text
 
-    $ chown openio.openio rdir-2/
+    $ chown openio:openio rdir-2/
 
-Create a new configuration file (``rdir-2.conf``) in your new created directory ``/etc/oio/sds/OPENIO/rdir-2``:
+
+Create a new directory ``/rdir-2`` in ``/etc/oio/sds/OPENIO/``
+
+Give the rights for this directory to the openio user:
+
+.. code-block:: text
+
+    $ chown openio:openio rdir-2/
+
+Create a new configuration file (``rdir-2.conf``) in your newly created directory ``/etc/oio/sds/OPENIO/rdir-2``:
 
 .. code-block:: shell
    :caption: /etc/oio/sds/OPENIO/rdir-2/rdir-2.conf
@@ -275,20 +275,20 @@ Create a new configuration file (``rdir-2.yml``) in the ``/etc/oio/sds/OPENIO/wa
       - {type: http, path: /status, parser: json}
       - {type: system}
 
-Then, to make your new rdir service available, you have to reload the configuration and start the service:
+Then, to make your new rdir service available, you must reload the configuration and start the service:
 
 .. code-block:: text
 
     $ gridinit_cmd reload
     $ gridinit_cmd start OPENIO-rdir-2
 
-And to restart the conscience agent:
+And restart the conscience agent:
 
 .. code-block:: text
 
     $ gridinit_cmd restart @conscienceagent
 
-Then, you will have to unlock your new service:
+Then, you must unlock your new service:
 
 .. code-block:: text
 
@@ -315,7 +315,7 @@ In the example below, you can see that the new rawx (10.0.0.36:6211) has no rdir
     | n/a            |               1 | 10.0.0.36:6211 |
     +----------------+-----------------+----------------+
 
-Whether you have installed a new rdir or not, you will have to launch the following command to create the assignation:
+Whether you have installed a new rdir or not, you will must launch the following command to create the assignation:
 
 .. code-block:: text
 
@@ -333,7 +333,7 @@ Whether you have installed a new rdir or not, you will have to launch the follow
 Finalize the installation
 +++++++++++++++++++++++++
 
-Finally, you will have to unlock your new service:
+Finally, you must unlock your new service:
 
 .. code-block:: text
 
