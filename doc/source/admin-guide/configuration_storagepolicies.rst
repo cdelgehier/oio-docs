@@ -2,11 +2,11 @@
 Declare Storage Policies
 ========================
 
-Storage Policies are the way to describe different storage tiers in your storage platform.
+Storage policies are the way to define different storage tiers in your platform.
 
-Each storage policy must at least contain a Data Security policy, and can be used to target only certain pools.
+Each storage policy must at least contain a data security policy and can be used to target only certain pools.
 
-Storage policies are defined for the Conscience service, and are thus available at the Namespace level.
+Storage policies are defined for the Conscience service, and are thus available at the namespace level.
 
 .. note::
 
@@ -15,7 +15,7 @@ Storage policies are defined for the Conscience service, and are thus available 
 Configuration
 -------------
 
-Suppose we have configured the following pool in /etc/oio/sds/[NS]/conscience-X/conscience-X-services.conf
+Suppose you have configured the following pool in /etc/oio/sds/[NS]/conscience-X/conscience-X-services.conf
 
 .. code-block:: text
 
@@ -23,7 +23,7 @@ Suppose we have configured the following pool in /etc/oio/sds/[NS]/conscience-X/
     targets=2,rawx-site1,rawx;1,rawx-site2,rawx
 
 
-We can then define a storage policy that uses this pool to replicate chunks 3 times on 2 different sites following the 2+1 model.
+You can then define a storage policy that uses this pool to replicate chunks 3 times on 2 different sites following the 2+1 model.
 
 .. code-block:: text
 
@@ -41,15 +41,15 @@ See also: `Conscience`_.
 Data Security
 -------------
 
-The Data Security describes the way an object is stored on the storage pool.
+Data security describes the way an object is stored in the storage pool.
 
-Each data security policy is derived from one of the supported security types. For the moment being, these are:
+Each data security policy is derived from one of the supported security types. For the moment, these are:
 
-* ``plain`` replication security (replicated data chunks)
+* ``plain``: replication security (replicated data chunks).
 
-* ``ec`` erasure coding security (data chunks + parity chunks)
+* ``ec``: erasure coding security (data chunks + parity chunks).
 
-By default, you have 3 data security policies available:
+By default, there are 3 data security policies available:
 
 .. code-block:: text
 
@@ -60,7 +60,7 @@ By default, you have 3 data security policies available:
 
 The policies defined above can be interpreted as the following:
 
-- 2 replication policies (THREECOPIES/TWOCOPIES for 2x/3x replication),
+- 2 replication policies (THREECOPIES/TWOCOPIES for 2x/3x replication).
 - a 6+3 Erasure Coding policy (6 data chunks + 3 parity chunks using Reed Solomon with liberasurecode).
 
 You can add more data security policies on top of the existing ones, or even alter the ones provided by default.
@@ -73,17 +73,17 @@ the corresponding Storage Policy, as it may result in data loss.
    * - Option
      - Description
    * - ``nb_copy``
-     - replication only: defines the number of copy to store
+     - replication only: defines the number of copies to store.
    * - ``distance``
-     - defines the minimum distance between chunks to ensure security
+     - defines the minimum distance between chunks to ensure security.
    * - ``algo``
-     - erasure coding only: defines the erasure coding algorithm to use
+     - erasure coding only: defines the erasure coding algorithm to use.
    * - ``k``
-     - erasure coding only: defines the number of data chunks
+     - erasure coding only: defines the number of data chunks.
    * - ``m``
-     - erasure coding only: defines the number of parity chunks
+     - erasure coding only: defines the number of parity chunks.
 
-See also: `Erasure Coding`_ section.
+See also: `Erasure Coding`_.
 
 .. _`Erasure Coding`: ./configuration_ec.html
 
@@ -92,9 +92,9 @@ Usage
 
 When an object is pushed, the storage policy is chosen in the following order:
 
-- Object-level: when the Storage Policy is explicitely specified when pushing
+- Object-level: when the Storage Policy is explicitly specified when pushing
 - Container-level: when the container where the object is created specifies a Storage Policy to use
-- Namespace-level: default behavior, will use the policy defined in /etc/oio/sds/[NS]/conscience-X/conscience-X.conf
+- Namespace-level: default behavior, uses the policy defined in /etc/oio/sds/[NS]/conscience-X/conscience-X.conf
 
 See also: `OpenIO SDS Configuration`_.
 

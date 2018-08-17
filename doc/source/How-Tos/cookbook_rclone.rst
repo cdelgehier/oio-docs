@@ -6,8 +6,8 @@ Description
 -----------
 
 Rclone is a cloud backup tool.
-It can sync to and from various cloud storage backends, and can be used on Windows/OSX/Linux.
-It supports the OpenIO object storage via S3.
+It can sync to and from various cloud storage backends, and can be used on Windows/macOS/Linux.
+It supports OpenIO object storage via S3.
 
 This guide will explain how to setup a new remote in Rclone to use OpenIO.
 
@@ -16,14 +16,14 @@ Prerequisites
 
 In the present guide, we expect **Rclone** to be installed.
 
-We also expect you have a configured access to an OpenIO cluster with S3 gateway.
-We must know your S3 credentials (access_key and secret_access_key) and the S3 endpoint URL.
+It also expects that you have configured access to an OpenIO cluster with the S3 gateway.
+You must know your S3 credentials (access_key and secret_access_key) and the S3 endpoint URL.
 
-These values are when using the openio/sds docker container:
+Use these values with the openio/sds docker container:
 
-* endpoint URL (http://localhost:6007)
-* access key (demo:demo)
-* secret access key (DEMO_PASS)
+* Endpoint URL (http://localhost:6007)
+* Access key (demo:demo)
+* Secret access key (DEMO_PASS)
 
 Please `contact us <https://info.openio.io/request-information>`_ for additional information
 about our preferred S3 setup.
@@ -32,18 +32,18 @@ about our preferred S3 setup.
 Configuration
 -------------
 
-Let’s configure a new openio remote. First, we call the `rclone` configuration tool.
+Configure a new openio remote. First, we call the `rclone` configuration tool:
 
 .. code-block:: console
 
    $ rclone config
    Current remotes:
-   
+
    Name                 Type
    ====                 ====
    gcs                  google cloud storage
    s3                   s3
-   
+
    e) Edit existing remote
    n) New remote
    d) Delete remote
@@ -52,13 +52,13 @@ Let’s configure a new openio remote. First, we call the `rclone` configuration
    s) Set configuration password
    q) Quit config
 
-Let's add a new remote
+Add a new remote:
 
 .. code-block:: console
 
    e/n/d/r/c/s/q> n
 
-Let's name the new remote
+Name the new remote:
 
 .. code-block:: console
 
@@ -102,7 +102,7 @@ Let's name the new remote
    18 / http Connection
       \ "http"
 
-The new remote uses the S3 protocol
+The new remote uses the S3 protocol:
 
 .. code-block:: console
 
@@ -115,7 +115,7 @@ The new remote uses the S3 protocol
       \ "true"
 
 
-Explicit the S3 credentials
+Explicit the S3 credentials:
 
 .. code-block:: console
 
@@ -176,7 +176,7 @@ Explicit the S3 credentials
    16 | and make sure you set the endpoint.
       \ "other-v4-signature"
 
-We must explicit the S3 endpoint
+Explicit the S3 endpoint:
 
 .. code-block:: console
 
@@ -216,7 +216,7 @@ We must explicit the S3 endpoint
    14 / South America (Sao Paulo) Region.
       \ "sa-east-1"
 
-No region set by default, we will explicit it here-after
+No region is set by default; you must explicit it here:
 
 .. code-block:: console
 
@@ -241,7 +241,7 @@ No region set by default, we will explicit it here-after
       \ "bucket-owner-full-control"
 
 
-We must explicit the S3 endpoint ... and have full control on its location.
+Next, explicit the S3 endpoint, and you will have full control over its location.
 
 .. code-block:: console
 
@@ -253,7 +253,7 @@ We must explicit the S3 endpoint ... and have full control on its location.
     2 / AES256
       \ "AES256"
 
-Choose the approriate encryption algorithm
+Choose the appropriate encryption algorithm:
 
 .. code-block:: console
 
@@ -291,7 +291,7 @@ No storage class is necessary at this point.
    e) Edit this remote
    d) Delete this remote
 
-We are done!
+You are done.
 
 .. code-block:: console
 
@@ -345,8 +345,4 @@ Sync a bucket from a different remote to OpenIO
 
    $ rclone sync remote:myoldbucket openio:mybucket
 
-Note that this require to download and upload the data from the machine running Rclone.
-
-Additional notes
-----------------
-
+Note that this requires downloading and uploading the data from the machine running Rclone.

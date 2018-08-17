@@ -1,12 +1,14 @@
 =============================
-Configure the account service
+Configure the Account Service
 =============================
 
 Description
 -----------
 
-The account service stores account related information such as the containers list, the number of objects and the number of bytes occupied by all objects.
-Following an operation on a container (PUT, DELETE), events are created and consume by the account service in order to update the account information asynchronously.
+The account service stores account-related information such as the container
+list, the number of objects, and the number of bytes occupied by all objects.
+Following an operation on a container (PUT, DELETE), events are created and
+consumed by the account service in order to update account information asynchronously.
 
 Prerequisites
 -------------

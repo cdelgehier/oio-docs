@@ -1,3 +1,3 @@
 =============================
-Configure a container service
+Configure a Container Service
 =============================

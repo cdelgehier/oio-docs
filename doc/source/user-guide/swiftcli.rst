@@ -2,15 +2,17 @@
 Openstack Swift CLI
 ===================
 
-This guide provides a few hints to help users getting started with the Openstack Swift command line client.  
-The Openstack Swift command line client support different authentication methods, the way to use the client depends on the choice made to deploy the OpenIO Swift gateway.
+This guide provides a few tips to help users getting started with the Openstack Swift command line client.
+The Openstack Swift command line client supports different authentication methods; the way to use the client
+depends on how the OpenIO Swift gateway is deployed.
 
 TempAuth
 ========
 
-TempAuth is used on test environments, it is a simple way to try Swift.  
-You will need the Swift endpoint address and the port of the OpenIO Swift gateway (defaults to 6007). The user is defined as *project*:*user*.  
-In OpenIO SDS example, simply check the account informations:  
+TempAuth is used on test environments; it is a simple way to try out Swift.
+You will need the Swift endpoint address and the port of the OpenIO Swift gateway (the default port is 6007).
+The user is defined as *project*:*user*.
+In OpenIO SDS, simply check the account information:
 
    .. code-block:: console
 
@@ -21,7 +23,7 @@ Keystone
 ========
 
 In production environments, it is recommended to use Openstack Keystone to authenticate your users.
-You will need the Keystone endpoint URL (port defaults to 5000) as well as a project (or tenant), username and password. It is common use to create a file *keystonerc_username* with the following content:  
+You will need the Keystone endpoint URL (the default port is 5000) as well as a project (or tenant), username and password. It is common use to create a file *keystonerc_username* with the following content:
 
    .. code-block:: console
      :caption: keystone v2
@@ -45,13 +47,13 @@ You will need the Keystone endpoint URL (port defaults to 5000) as well as a pro
      export OS_IMAGE_API_VERSION=2
 
 
-Source the file:  
+Source the file:
 
    .. code-block:: console
 
      # source keystonerc_demo
 
-You can check the account informations using the stat command:
+You can check the account information using the stat command:
 
    .. code-block:: console
 

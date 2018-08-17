@@ -1,11 +1,11 @@
 =============================
-Configure a Zookeeper service
+Configure a Zookeeper Service
 =============================
 
 Description
 -----------
 
-This service is used to store the directory services election statuses.
+This service is used to store directory services election status.
 
 Prerequisites
 -------------

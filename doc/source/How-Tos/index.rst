@@ -1,6 +1,6 @@
-=======================
-High-Level integrations
-=======================
+======================
+High-Level integration
+======================
 
 A set of guides about high-level integration of the OpenIO ecosystem with
 common tools of the industry.
@@ -12,6 +12,5 @@ common tools of the industry.
    cookbook_rclone
    cookbook_cyberduck
    cookbook_flussonic
-   ../arch-design/s3_compliancy
 
 .. end of contents

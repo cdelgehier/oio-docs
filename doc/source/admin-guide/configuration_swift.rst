@@ -1,5 +1,5 @@
 ========================
-Configure Swift/S3 proxy
+Configure Swift/S3 Proxy
 ========================
 
 About the Swift/S3 proxy
@@ -16,8 +16,8 @@ Section DEFAULT
 bind_ip
 -------
 
-IP address for server to bind to.
-The address must be mounted on a local interface.
+IP address for the server to bind to.
+The server must be mounted on a local interface.
 
 * Format: dot-decimal representation of an IPv4 address or a colon-hexadecimal representation of an IPv6 address
 * Default: `0.0.0.0`
@@ -31,7 +31,7 @@ The address must be mounted on a local interface.
 bind_port
 ---------
 
-Port for server to bind to.
+Port for the server to bind to.
 
 * Format: positive integer less than 65535
 * Default: 8080
@@ -70,8 +70,8 @@ Maximum number of allowed pending TCP connections.
 workers
 -------
 
-Describes the number of children processes. These children workers manage the
-incoming requests while the master process monitor its worker children.
+Describes the number of child processes. These child workers manage incoming
+requests while the master process monitors its worker children.
 When a child dies, it is spawned again.
 
 * Format: positive integer
@@ -132,7 +132,7 @@ Please refer to the syslog man page for more information.
 log_address
 -----------
 
-Location where syslog sends the logs to (both access and error).
+Location where syslog sends logs to (both access and error).
 
 * Format: a TCP/IP address or the path to a AF_LOCAL socket
 * Default: **/dev/log**
@@ -188,7 +188,7 @@ OpenIO SDS namespace to use.
 sds_proxy_url
 -------------
 
-OpenIO SDS `oio-proxy` url to connect to cluster.
+OpenIO SDS `oio-proxy` URL to connect to cluster.
 
 .. code-block:: ini
    :caption: example
@@ -452,7 +452,7 @@ Section: [filter:gatekeeper]
    :caption: example
 
    use = egg:swift#gatekeeper
- 
+
 Section: [filter:hashedcontainer]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -464,7 +464,7 @@ Section: [filter:hashedcontainer]
 Sample configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-Please find here a sample configuration:
+Here is a sample configuration:
 
 .. code-block:: ini
    :caption: Complete example

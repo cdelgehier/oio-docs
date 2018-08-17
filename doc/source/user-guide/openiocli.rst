@@ -1,7 +1,7 @@
 .. _ref-user-guide:
 
 ===================
-OpenIO End User CLI
+OpenIO End-User CLI
 ===================
 
 Using the command line
@@ -36,8 +36,8 @@ To list available commands run ``openio help``:
     Commands:
     [...]
 
-Help on specific command
-------------------------
+Help on specific commands
+-------------------------
 
 To get help on any command, use the ``help`` command.
 
@@ -72,7 +72,7 @@ Most storage operations also need an account name:
 
     # export OIO_ACCOUNT=my_account
 
-Note here that we use environment variables but we could also use the
+Note here that we use environment variables but you could also use the
 command-line arguments ``--oio-ns`` and ``--oio-account``.
 
 
@@ -83,24 +83,24 @@ The following environment variables are accepted by the `openio` command
 
 * ``OIO_NS`` The namespace name.
 * ``OIO_ACCOUNT`` The account name to use.
-* ``OIO_PROXYD_URL`` Proxyd URL to connect to.
+* ``OIO_PROXYD_URL`` Proxied URL to connect to.
 
 Configuration files
 -------------------
 
 By default, the ``openio`` command line looks for its configuration in
-``/etc/oio/sds`` and in the directory ``.oio`` within your ``$HOME``.
+``/etc/oio/sds`` and in the ``.oio`` directory within your ``$HOME``.
 
 
 Account
 =======
 
-Accounts track usage about storage, they are automatically created.
+Accounts track usage about storage; they are automatically created.
 
-Information about account
--------------------------
+Information about accounts
+--------------------------
 
-  To show informations about an account: number of containers, number of objects and total storage usage.
+  To show information about an account, the number of containers, the number of objects, and total storage usage:
 
    .. code-block:: console
 
@@ -137,7 +137,7 @@ List containers
 Use multiple accounts
 ---------------------
 
-Specify in which account to execute the actions by adding the
+Specify in which account to execute actions by adding the
 ``--oio-account <account_name>`` parameter to your commands:
 
    .. code-block:: console
@@ -217,7 +217,7 @@ You can override the storage policy for a given container on the fly:
 Locate container
 ----------------
 
-To find the services involved for a given container:
+To find the services used by a given container:
 
    .. code-block:: console
 
@@ -269,7 +269,7 @@ Delete container
 
     # openio container delete my_container
 
-Note : It is not possible to delete a non empty container.
+Note : only empty containers can be deleted.
 
    .. code-block:: console
 
@@ -277,7 +277,7 @@ Note : It is not possible to delete a non empty container.
 
 There are still objects in the container.
 
-First to delete all objects stored in the container.
+First, delete all objects stored in the container.
 
    .. code-block:: console
 
@@ -292,8 +292,8 @@ And finally delete the container.
 Object
 ======
 
-Create object
--------------
+Create an object
+----------------
 
    .. code-block:: console
 
@@ -331,14 +331,14 @@ filter the results.
 
 Here are the optional arguments which can be used:
 
-- ``--marker`` : Indicates where to start the listing from.
-- ``--end_marker`` : Indicates where to stop the listing.
-- ``--prefix`` : If set, the listing only includes objects whose name begin with its value.
-- ``--delimiter`` : If set, excludes the objects whose name contains its value.
+- ``--marker``: Indicates where to start the listing from.
+- ``--end_marker``: Indicates where to end the listing.
+- ``--prefix``: If set, the listing only includes objects whose name begin with its value.
+- ``--delimiter``: If set, excludes objects whose name contains its value.
   Only takes a single character. It can also be combined with the ``--prefix`` for advanced listings.
-- ``--limit`` : Indicates the maximum number of objects to return in the listing.
+- ``--limit``: Indicates the maximum number of objects to return in the listing.
 
-To illustrate these features, create those files and store them in a container
+To illustrate these features, create these files and store them in a container
 
    .. code-block:: console
 
@@ -346,7 +346,7 @@ To illustrate these features, create those files and store them in a container
     # openio object create my_container folder_1 folder_2 folder_3_0 file1 file2 config1 config2
     [...]
 
-To list all the objects :
+To list all the objects:
 
    .. code-block:: console
 
@@ -365,7 +365,7 @@ To list all the objects :
     | test.txt   |   14 | 9EB03B6E836CEAE565BA79F76C821DDA |
     +------------+------+----------------------------------+
 
-Let's use the filtering features:
+Try the filtering features.
 
 This only outputs a maximum of three objects whose names are lexically greater than ``e``:
 
@@ -410,7 +410,7 @@ This excludes all the objects whose names contain a ``_`` character:
     | test.txt |   14 | 9EB03B6E836CEAE565BA79F76C821DDA |
     +----------+------+----------------------------------+
 
-This collects all the objects whose names begin with ``folder_``
+This collects all the objects whose names begin with ``folder_``,
 and then excludes all those whose names contain a ``_`` character after the prefix:
 
    .. code-block:: console
@@ -429,13 +429,13 @@ Note that this can be used to emulate a hierarchy with directories.
 Save object
 -----------
 
-Saves the data stored in the given object to the ``--file`` destination :
+Saves the data stored in the given object to the ``--file`` destination:
 
    .. code-block:: console
 
     # openio object save my_container test.txt --file /tmp/test.txt
 
-If the destination file already exists, its content will be deleted and replaced with this new one.
+If the destination file already exists, its content is deleted and replaced with this new one.
 
 You can also save all the objects from a container to your working directory in a single command:
 
@@ -474,7 +474,7 @@ Display the information about an object:
 Locate object
 -------------
 
-To find the actual location of a given object:
+To find the precise location of a given object:
 
    .. code-block:: console
 
@@ -489,11 +489,11 @@ To find the actual location of a given object:
     +-----+------------------------------------------+------+----------------------------------+
 
 ``Pos`` integer represents the position of the given chunk in the object.
-In case of replication, you can have multiple chunks at the same position (3 times replication mode in this example).
+In case of replication, you can have multiple chunks at the same position (3 x replication mode in this example).
 
-``Id`` is the url to access to the given chunk.
+``Id`` is the URL to access to the given chunk.
 
-``Size`` is the actual size of the given chunk.
+``Size`` is the size of the given chunk.
 
 ``Hash`` is the hash of the given chunk.
 
@@ -527,8 +527,8 @@ To delete a property:
 
     # openio object unset my_container test.txt --property size
 
-Delete object
--------------
+Delete objects
+--------------
 
    .. code-block:: console
 
@@ -587,7 +587,7 @@ To list running services in the namespace:
 
 
 
-By default ``cluster list`` command displays all known services.
+By default, ``cluster list`` displays all known services.
 
 To list only specific types of services:
 
