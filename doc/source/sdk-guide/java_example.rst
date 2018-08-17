@@ -9,7 +9,7 @@ This sections describes how to install and use the `OpenIO Java API <../../oio-a
 Install
 -------
 
-Last version on `Maven Repository`_.
+Download the latest version from the `Maven Repository`_.
 
 .. _Maven Repository: https://mvnrepository.com/artifact/io.openio.sds/openio-api/0.7.1
 
@@ -18,21 +18,21 @@ Basic Concepts
 
 An Object Storage API differs from a conventional filesystem: instead of directories and files, you manipulate containers where you store objects. A container can hold millions of objects.
 
-Note that there is no hierarchy notion with containers: you cannot nest a container within an other, however you can emulate a nested folder structure with a naming convention for your objects. For example with an object name such as "documents/work/2015/finance/report.pdf" you can retrieve your files using the appropriate "path" prefix.
+There is no notion of hierarchy with containers: you cannot nest a container within an other, however you can emulate a nested folder structure with a naming convention for your objects. For example, with an object name such as "documents/work/2015/finance/report.pdf" you can retrieve your files using the appropriate "path" prefix.
 
-In this SDK, you manipulate Container and Object, all you need is to initialize an ``Client`` object. To initialize it, you need the namespace name.
+In this SDK, to manipulate Containers and Objects, all you need to do is to initialize a ``Client`` object. To initialize it, you need the namespace name.
 Endpoint URLs and all other configuration options will be loaded from ``/etc/oio/sds.conf.d/NAMESPACE`` (or ``~/.oio/sds.conf`` if you have deployed from source).
 
    .. code-block:: java
 
       Client client = ClientBuilder.newClient(NAMESPACE, PROXY_URL);
 
-All of the sample code that follows assumes that you have correctly initialized an ``Client`` object.
+All of the sample code that follows assumes that you have correctly initialized a ``Client`` object.
 
 Accounts
 --------
 
-Accounts are a convenient way to manage the storage containers. Containers always belong to a specific Account.
+Accounts are a convenient way to manage storage containers. Containers always belong to a specific Account.
 
 You can list containers for a specified Account. Accounts are also a great way to track your storage usage (Total bytes used, Total number of objects, Total number of containers).
 
@@ -50,7 +50,7 @@ Start by creating a container:
       ContainerInfo container = client.createContainer(url);
       System.out.println(container);
 
-Note that if you try to create a container more than once with the same name, the request is ignored
+Note that if you try to create a container using the name of one that already exists, the request is ignored.
 
 Showing the description of a Container
 --------------------------------------
@@ -83,10 +83,10 @@ This example creates an object named ``object.txt`` with the data provided, in t
 
 Note that if you try to store an object in a non-existent container, a ``ContainerNotFoundException`` exception is raised.
 
-Retrieving Object
------------------
+Retrieving Objects
+------------------
 
-Note that if you try to retrieve a non-existent object, a ``ObjectNotFoundException`` exception is raised.
+Note that if you try to retrieve a non-existent object, an ``ObjectNotFoundException`` exception is raised.
 
 This sample code stores an object and retrieves it using the different parameters.
 
@@ -106,10 +106,10 @@ Example:
       OioUrl url = OioUrl.url(ACCOUNT, CONTAINER, "object.txt");
       client.deleteObject(url);
 
-Note that if you try to delete a non-existent object, a ``ObjectNotFoundException`` exception is raised.
+Note that if you try to delete a non-existent object, an ``ObjectNotFoundException`` exception is raised.
 
-Containers and Objects Metadata
--------------------------------
+Container and Object Metadata
+-----------------------------
 
 The Object Storage API lets you set and retrieve your own metadata on containers and objects.
 
@@ -159,10 +159,10 @@ Filters:
 
 - ``marker`` - Indicates where to start the listing from.
 - ``prefix`` - If set, the listing only includes objects whose name begin with its value.
-- ``delimiter`` - If set, excludes the objects whose name contains its value. delimiter only takes a single character.
+- ``delimiter`` - If set, excludes the objects whose names contain its value. delimiter only takes a single character.
 - ``limit`` - Indicates the maximum number of objects to return in the listing.
 
-To illustrate these features, we create some objects in a container:
+To illustrate these features, you can create some objects in a container:
 
 .. code-block:: java
 
@@ -209,7 +209,7 @@ It should output:
       object3
       object4
 
-Then let's use the paginating features:
+Then use the paginating features:
 
 .. code-block:: java
 
@@ -256,7 +256,7 @@ How to use the ``prefix`` parameter:
           names.add(object.name());
       System.out.println("Objects: " + names);
 
-This only outputs the objects starting with "foo":
+This only outputs objects starting with "foo":
 
 .. code-block:: java
 
@@ -294,6 +294,6 @@ There is several options to delete containers. Example:
       OioUrl url = OioUrl.url(ACCOUNT, CONTAINER);
       client.deleteContainer(url);
 
-You can not delete a container if it still holds objects, if you try to do so a ``ContainerNotEmptyException`` exception is raised.
+You cannot delete a container if it still holds objects, if you try to do so a ``ContainerNotEmptyException`` exception is raised.
 
 Note that if you try to delete a non-existent container, a ``ContainerNotFoundException`` exception is raised.

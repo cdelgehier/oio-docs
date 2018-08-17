@@ -9,7 +9,7 @@ This sections describes how to install and use the `OpenIO SDS C SDK <../../oio-
 Install
 -------
 
-Last version directly from Github:
+Download the latest version directly from GitHub:
 
    .. code-block:: shell
 
@@ -20,9 +20,9 @@ Basic Concepts
 
 An Object Storage API differs from a conventional filesystem: instead of directories and files, you manipulate containers where you store objects. A container can hold millions of objects.
 
-Note that there is no hierarchy notion with containers: you cannot nest a container within an other, however you can emulate a nested folder structure with a naming convention for your objects. For example with an object name such as "documents/work/2015/finance/report.pdf" you can retrieve your files using the appropriate "path" prefix.
+There is no notion of hierarchy with containers: you cannot nest a container within an other, however you can emulate a nested folder structure with a naming convention for your objects. For example with an object name such as "documents/work/2015/finance/report.pdf" you can retrieve your files using the appropriate "path" prefix.
 
-In this SDK, you manipulate Container and Object, all you need is to initialize an ``oio_sds_s`` structure. To initialize it, you need the namespace name.
+In this SDK, you manipulate Containers and Objects, all you need to do is to initialize an ``oio_sds_s`` structure. To initialize it, you need the namespace name.
 Endpoint URLs and all other configuration options will be loaded from ``/etc/oio/sds.conf.d/NAMESPACE`` (or ``~/.oio/sds.conf`` if you have deployed from source).
 
    .. code-block:: c
@@ -32,12 +32,12 @@ Endpoint URLs and all other configuration options will be loaded from ``/etc/oio
       err = oio_sds_init(&client, NAMESPACE);
       g_assert_no_error((GError*)err);
 
-All of the sample code that follows assumes that you have correctly initialized an ``oio_sds_s`` structure.
+All the sample code that follows assumes that you have correctly initialized an ``oio_sds_s`` structure.
 
 Accounts
 --------
 
-Accounts are a convenient way to manage the storage containers. Containers always belong to a specific Account.
+Accounts are a convenient way to manage storage containers. Containers always belong to a specific Account.
 
 You can list containers for a specified Account. Accounts are also a great way to track your storage usage (Total bytes used, Total number of objects, Total number of containers).
 
@@ -60,7 +60,7 @@ Start by creating a container:
       oio_url_clean(url);
       g_assert_no_error((GError*)err);
 
-Note that if you try to create a container more than once with the same name, the request is ignored
+Note that if you try to create a container using the name of one that already exists, the request is ignored.
 
 Showing the description of a Container
 --------------------------------------
@@ -85,7 +85,7 @@ To show the description of a container:
       g_assert_no_error((GError*)err);
 
 
-Note that if you try to get a non-existent container, a ``oio_error_s`` is returned.
+Note that if you try to get a non-existent container, an ``oio_error_s`` is returned.
 
 Storing Objects
 ---------------
@@ -109,12 +109,12 @@ This example creates an object named ``object.txt`` with the data provided, in t
       oio_url_clean(url);
       g_assert_no_error((GError*)err);
 
-Note that if you try to store an object in a non-existent container, a ``oio_error_s`` is returned.
+Note that if you try to store an object in a non-existent container, an ``oio_error_s`` is returned.
 
-Retrieving Object
------------------
+Retrieving Objects
+------------------
 
-Note that if you try to retrieve a non-existent object, a ``oio_error_s`` is returned.
+Note that if you try to retrieve a non-existent object, an ``oio_error_s`` is returned.
 
 This sample code stores an object and retrieves it using the different parameters.
 
@@ -157,10 +157,10 @@ Example:
       oio_url_clean(url);
       g_assert_no_error((GError*)err);
 
-Note that if you try to delete a non-existent object, a ``oio_error_s`` is returned.
+Note that if you try to delete a non-existent object, an ``oio_error_s`` is returned.
 
-Containers and Objects Metadata
--------------------------------
+Container and Object Metadata
+-----------------------------
 
 The Object Storage API lets you set and retrieve your own metadata on containers and objects.
 
@@ -256,12 +256,12 @@ Since containers can hold millions of objects, there are several methods to filt
 Filters:
 
 - ``marker`` - Indicates where to start the listing from.
-- ``end`` - Indicates where to stop the listing.
+- ``end`` - Indicates where to end the listing.
 - ``prefix`` - If set, the listing only includes objects whose name begin with its value.
-- ``delimiter`` - If set, excludes the objects whose name contains its value. delimiter only takes a single character.
+- ``delimiter`` - If set, excludes the objects whose names contain its value. delimiter only takes a single character.
 - ``max_items`` - Indicates the maximum number of objects to return in the listing.
 
-To illustrate these features, we create some objects in a container:
+To illustrate these features, we can create some objects in a container:
 
 .. code-block:: c
 
@@ -341,7 +341,7 @@ It should output:
       foo/b
       foo/a
 
-Then let's use the paginating features:
+Then use the paginating features:
 
 .. code-block:: c
 
@@ -475,7 +475,7 @@ Note that if you try to list a non-existent container, a ``oio_error_s`` is retu
 Deleting Containers
 -------------------
 
-There is several options to delete containers. Example:
+There are several options to delete containers. Example:
 
 .. code-block:: c
 
@@ -489,6 +489,6 @@ There is several options to delete containers. Example:
       g_assert_no_error((GError*)err);
       oio_url_clean(url);
 
-You can not delete a container if it still holds objects, if you try to do so a ``oio_error_s`` is returned.
+You cannot delete a container if it still holds objects, if you try to do so an ``oio_error_s`` is returned.
 
 Note that if you try to delete a non-existent container, a ``oio_error_s`` is returned.
