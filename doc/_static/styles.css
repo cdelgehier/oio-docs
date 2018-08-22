@@ -122,6 +122,10 @@ input[type='text'] {
     outline: none;
 }
 
+input, select {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
 /* Logo */
 
 .logo {
@@ -1032,7 +1036,6 @@ a.footer__community:after {
 
 .footer__license {
     color: #999999;
-    font-family: "Open Sans";
     font-size: 0.8em;
 }
 
