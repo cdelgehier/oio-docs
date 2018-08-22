@@ -925,7 +925,7 @@ blockquote {
     z-index: 200;
 }
 
-div.highlight {
+div.highlight, code {
     width: 100%;
     background: #f8f8f8;
     color: #333333;
@@ -933,10 +933,18 @@ div.highlight {
     white-space: pre;
     position: relative;
     font-size: 0.80em;
+}
+
+div.highlight {
     display: inline-block;
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
+code {
+    padding: 0 5px 0 5px;
+}
+
 
 div.highlight pre {
     padding: 10px;
