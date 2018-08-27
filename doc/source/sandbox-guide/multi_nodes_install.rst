@@ -302,14 +302,6 @@ Sample output:
   remove_bucket: mybucket
 
 
-
-Disclaimer
-==========
-
-Please keep in mind that this guide is not intended for production; use it for demo/PoC/development purposes only.
-
-**Don't go in production with this setup.**
-
 .. include:: manual_requirements.rst
 
 .. include:: custom_deployment.rst
