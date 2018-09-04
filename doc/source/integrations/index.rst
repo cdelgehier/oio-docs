@@ -10,5 +10,6 @@ common tools of the industry.
 
    cloudberry_backup
    cookbook_rclone
+   dovecot_obox
 
 .. end of contents
