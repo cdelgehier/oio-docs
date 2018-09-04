@@ -1,8 +1,8 @@
 .. _ref-use-case:
 
-=============================================
-Configuring Cloudberry Backup with OpenIO SDS
-=============================================
+=================
+Cloudberry Backup
+=================
 
 `CloudBerry Backup <https://www.cloudberrylab.com/backup.aspx>`_ exists in several forms, from a simple and straightforward free version to a complete solution for managed backups designed for service providers.
 
@@ -85,3 +85,4 @@ Give the plan a name, select what you want to back up, how, when, etc., and, in 
 After you click Finish, the backup will start.
 
 .. image:: ./images/picture8.png
+
