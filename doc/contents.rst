@@ -6,7 +6,7 @@
    source/admin-guide/index_operations
    source/admin-guide/index_configuration
    source/user-guide/index
-   source/How-Tos/index
+   source/integrations/index
    source/sdk-guide/index
    source/project-guide/index
 
