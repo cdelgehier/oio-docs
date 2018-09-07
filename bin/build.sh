@@ -24,10 +24,10 @@ esac
 mkdir -p "$TARGET"
 mkdir -p "$BUILD"
 
-if [[ -z "$OIO_DOCS_LIGHT" ]]; then
+# Prepare an environment for the building process
+./bin/gen-vars.py "$BUILD/vars.export"
 
-    # Prepare an environment for the building process
-    ./bin/gen-vars.py "$BUILD/vars.export"
+if [[ -z "$OIO_DOCS_LIGHT" ]]; then
 
     # Generate the RAWX API
     ./bin/extract-doc.py --tag=RAWX \
