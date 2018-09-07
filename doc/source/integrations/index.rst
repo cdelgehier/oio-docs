@@ -11,5 +11,6 @@ common tools of the industry.
    cloudberry_backup
    cookbook_rclone
    dovecot_obox
+   cookbook_nextcloud.rst
 
 .. end of contents
