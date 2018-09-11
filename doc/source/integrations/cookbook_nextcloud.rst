@@ -29,6 +29,9 @@ Use these values with the openio/sds docker container:
 Please `contact us <https://info.openio.io/request-information>`_ for additional information
 about our preferred S3 setup.
 
+****************
+External Storage
+****************
 
 Configuration using CLI
 -----------------------
@@ -88,7 +91,7 @@ Validate your parameters:
      - message
 
 
-Check and update if needed parameters:
+Check and update parameters if needed:
 
 .. code-block:: console
 
@@ -142,7 +145,67 @@ Configure External Storage App:
 
 If there is any error, you will need to check Nextcloud log.
 
+
+************
+Main storage
+************
+
+Configuration (single bucket)
+-----------------------------
+
+Edit your conf/config.php and add
+
+.. code-block:: console
+
+    'objectstore' => array(
+            'class' => 'OC\\Files\\ObjectStore\\S3',
+            'arguments' => array(
+                    'bucket' => 'nextcloud',
+                    'autocreate' => true,
+                    'key'    => 'EJRTZDYZEUH5BGWDRUFY',
+                    'secret' => 'M5MrXTRjkyMaxXPe2FRXMTfTfbKEnZCu+7uRTVSj',
+                    'hostname' => 'openios3.io',
+                    'port' => 443,
+                    'use_ssl' => true,
+                    'region' => 'us-east-1',
+                    'use_path_style' => false
+            ),
+    ),
+
+On next access on Web Interface, Nextcloud will migrate applications on your bucket.
+
+
+Configuration (multi bucket)
+-----------------------------
+
+Edit your conf/config.php and add
+
+.. code-block:: console
+
+	'objectstore_multibucket' =>
+		array (
+			'class' => 'OC\\Files\\ObjectStore\\S3',
+			'arguments' =>
+			array (
+					'bucket' => 'nextcloud-',
+					'autocreate' => true,
+					'key' => 'EJTZDTYZEUH5BGWDRUFY',
+					'secret' => 'M5MrXTRjkyMaxXPe2FRXMTfTfbKEnZCu+7uRTVS',
+					'hostname' => 'openios3.io',
+					'port' => 443,
+					'use_ssl' => true,
+					'num_buckets' => 4,
+					'region' => 'us-east-1',
+					'use_path_style' => false
+			),
+	),
+
+
+On next access on Web Interface, Nextcloud will migrate applications on your bucket.
+
+
+****
 Note
-----
+****
 
 This procedure was tested with Nextcloud 13
