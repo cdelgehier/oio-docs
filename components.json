@@ -1,6 +1,12 @@
 {
     "release": "18.04",
     "stable": true,
+    "centos_repo": "https://mirror.openio.io/pub/repo/openio/sds/18.04/centos/7/",
+    "centos_repo_mirror": "https://mirror.openio.io/pub/repo/openio/sds/18.04/centos/7/",
+    "ubuntu_repo": "http://mirror.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial/",
+    "ubuntu_repo_deb": "http://mirror.openio.io/pub/repo/openio/sds/18.04/Ubuntu/ xenial/",
+    "ubuntu_repo_mirror": "https://mirror2.openio.io/pub/repo/openio/sds/18.04/Ubuntu/xenial",
+    "rpi_image": "http://mirror.openio.io/pub/images/openio/sds/17.04/ubuntu/xenial/oio-sds-17.04-ubuntu-xenial-arm64-rpi3b.zip",
     "repositories":{
         "oio-sds":{
             "repository":"https://github.com/open-io/oio-sds",
