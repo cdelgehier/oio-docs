@@ -1,6 +1,6 @@
 tox>=1.6
 pbr>=1.6
-sphinx>=1.5.2
+sphinx>=1.5.2,<1.8
 Pygments>=2.2
 sphinx_rtd_theme
 doc8
