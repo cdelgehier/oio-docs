@@ -38,7 +38,7 @@ Via the Mattermost WebUI (admin rights required):
 - go to the "System console"
 - on the left panel select "FILES - Storage"
 - change "File Storage System" from "Local File System" to "Amazon S3"
-- fill the Access key, Secret key, Bucket, Region, Endpoint and deactivate SSL if your dont use it on OpenIO. 
+- fill the Access key, Secret key, Bucket, Region, Endpoint and deactivate SSL if you dont use it on OpenIO. 
 
 Mattermost doesn't create the bucket automatically so you will have to create it by using awscli with a cmd like
 .. code-block:: console
