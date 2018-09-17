@@ -153,7 +153,7 @@ Main storage
 Configuration (single bucket)
 -----------------------------
 
-Edit your conf/config.php and add
+Edit your config/config.php and add
 
 .. code-block:: console
 
@@ -178,7 +178,7 @@ On next access on Web Interface, Nextcloud will migrate applications on your buc
 Configuration (multi bucket)
 -----------------------------
 
-Edit your conf/config.php and add
+Edit your config/config.php and add
 
 .. code-block:: console
 
