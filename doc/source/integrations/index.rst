@@ -12,5 +12,6 @@ common tools of the industry.
    cookbook_rclone
    dovecot_obox
    cookbook_nextcloud.rst
+   cookbook_mattermost.rst
 
 .. end of contents
