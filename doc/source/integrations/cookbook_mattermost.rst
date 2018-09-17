@@ -41,7 +41,9 @@ Via the Mattermost WebUI (admin rights required):
 - fill the Access key, Secret key, Bucket, Region, Endpoint and deactivate SSL if you dont use it on OpenIO. 
 
 Mattermost doesn't create the bucket automatically so you will have to create it by using awscli with a cmd like
+
 .. code-block:: console
+
     aws --endpoint-url http://127.0.0.1:6007 --no-verify-ssl s3 mb s3://mattermost-media
 
 .. image:: ./images/mattermost.png
