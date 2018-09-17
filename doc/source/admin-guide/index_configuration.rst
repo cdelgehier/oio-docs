@@ -16,6 +16,7 @@ by showing how to perform various administration tasks.
    configuration_ecd
    configuration_swift
    configuration_oiofs
+   configuration_oiobilling
    configuration_rawx
    configuration_rdir
    configuration_account
