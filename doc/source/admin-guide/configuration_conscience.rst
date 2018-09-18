@@ -1,6 +1,6 @@
-=================================
-Configure the conscience services
-=================================
+=============================
+Configure Conscience Services
+=============================
 
 Description
 -----------
@@ -16,32 +16,33 @@ Installation
 Configuration
 -------------
 
-Persist conscience service status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Persistent conscience service status
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Case of use
-^^^^^^^^^^^
-You can add an option to add persistence for conscience services status.
+Use Case
+^^^^^^^^
+You can specify an option to add persistence for conscience service status.
 
-The goal of this persistence is to unlock services known before restarting conscience, making openio cluster unlockall not necessary.
-New services added while stopped conscience will still requires manual unlock operation.
+The goal of this persistence is to unlock known services before restarting conscience,
+making openio cluster unlockall unnecessary. New services added while conscience is
+stopped still requires a manual unlock operation.
+
 
 Enable persistence
 ^^^^^^^^^^^^^^^^^^
+You must specify the file path to use for persistence. Services status is written in this file
+and conscience reads it at restart to know which services were enabled before conscience was stopped.
 
-You must specify the file path to used for persistence. The services status are written on this file
-and the conscience read it at restart to know what services was enable before conscience stop.
+You can get the conscience status using ``gridinit_cmd status2 @conscience``.
 
-You can get the conscience command using ``gridinit_cmd status2 @conscience``.
-
-To enable persistence launch:
+To enable persistence at launch:
 
   .. code-block:: console
 
      # oio-daemon <conscience configuration path> -O PersistencePath=<persistence file path>
 
-The status are written every 30 seconds by default but you can change this value with option ``-O PersistencePeriod=N`` with N the period in seconds.
-
+Statuses are written every 30 seconds by default, but you can change this value
+with the option ```-O PersistencePeriod=N`` where N is the period in seconds.
 
 Sample configuration file
 -------------------------

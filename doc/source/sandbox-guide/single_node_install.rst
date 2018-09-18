@@ -1,6 +1,10 @@
-===================
-Single node install
-===================
+========================
+Single Node Installation
+========================
+
+.. contents::
+   :depth: 1
+   :local:
 
 Requirements
 ============
@@ -19,9 +23,9 @@ Operating system
 System
 ------
 
--  root privileges are required (using sudo)
--  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment)
--  ``/var/lib`` partition must support Extended Attributes: XFS is recommended
+-  Root privileges are required (using sudo).
+-  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment).
+-  The ``/var/lib`` partition must support Extended Attributes: XFS is recommended.
 
   .. code-block:: shell
 
@@ -31,7 +35,7 @@ System
     [root@centos ~]# file -sL /dev/vda1
     /dev/vda1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
 
--  System must be up-to-date
+-  The system must be up to date.
 
   .. code-block:: shell
 
@@ -49,15 +53,15 @@ System
 Network
 -------
 
--  Firewall is disabled (managed at deployment)
+-  The firewall is disabled (managed at deployment).
 
 Setup
 -----
 
-You only need to perform this setup on one of the node involved in the cluster (or your laptop)
+You only need to perform this setup on one of the nodes in the cluster (or your laptop).
 
--  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
--  Install ``git`` and ``python-netaddr`` (this one is managed at deployment)
+-  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__).
+-  Install ``git`` and ``python-netaddr`` (this one is managed at deployment).
 
   .. code-block:: shell
 
@@ -69,7 +73,7 @@ You only need to perform this setup on one of the node involved in the cluster (
     # Ubuntu
     sudo apt install git -y
 
--  Clone the OpenIO ansible playbook deployment repository
+-  Clone the OpenIO ansible playbook deployment repository.
 
   .. code-block:: shell
 
@@ -78,7 +82,7 @@ You only need to perform this setup on one of the node involved in the cluster (
 Architecture
 ============
 
-This playbook will deploy a multi nodes cluster as below
+This playbook will deploy a multi-node cluster as shown below:
 
   .. code-block:: shell
 
@@ -93,7 +97,7 @@ This playbook will deploy a multi nodes cluster as below
 Installation
 ============
 
-First you need to fill the inventory accordingly to your environment:
+First, fill the inventory accordingly to your environment:
 
 - Edit the ``inventories/standalone/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/standalone/01_inventory.ini>`__)
 
@@ -109,7 +113,7 @@ First you need to fill the inventory accordingly to your environment:
     [all:vars]
     ansible_user=root # Change it accordingly
 
-You can check that everything is well configured using this command:
+You can check that everything is configured correctly using this command:
 
   .. code-block:: shell
 
@@ -129,18 +133,18 @@ Run these commands:
 
     ansible-playbook -i inventories/standalone main.yml
 
-Single node feature
-===================
+Single-Node features
+====================
 
 By default, OpenIO does not support the installation of all its services on the same server.
-The most problematic part is that a RAWX service can not be on the same server as the service.
-It's a protection because:
+The most problematic part is that a RDIR service can not be on the same server as the RAWX service.
+This is for protection, because:
 
-- RAWX stores the data
-- RDIR stores information about the data stored in a given RAWX
+- RAWX stores the data.
+- RDIR stores information about the data stored in a given RAWX.
 
-So if RAWX does not respond, its data can be reconstructed elsewhere.
-If both services are on the same server, the data is lost and the informations about this data is lost too !
+So, if RAWX does not respond, its data can be reconstructed elsewhere.
+If both services are on the same server, the data is lost as is the information about this data.
 
   .. code-block:: shell
 
@@ -163,7 +167,7 @@ If both services are on the same server, the data is lost and the informations a
     | n/a  | 172.17.0.2:6201 | None          | 11ce9e9fe3de  |
     +------+-----------------+---------------+---------------+
 
-The RDIR location is 'None'. You have to force association of the RDIR with the RAWX:
+The RDIR location is None. You have to force the association of the RDIR with the RAWX:
 
 .. code-block:: shell
 
@@ -181,12 +185,12 @@ The RDIR location is 'None'. You have to force association of the RDIR with the 
     | 172.17.0.2:6301 | 172.17.0.2:6201 | 11ce9e9fe3de  | 11ce9e9fe3de  |
     +-----------------+-----------------+---------------+---------------+
 
-Post-install Checks
-===================
+Post-Installation Checks
+========================
 
-The node is configured to easily use the openio-cli and aws-cli.
+The node is configured to easily use openio-cli and aws-cli.
 
-Run this check script on one of the node involved in the cluster ``sudo /root/checks.sh``
+Run this check script on one of the nodes in the cluster: ``sudo /root/checks.sh``.
 
 Sample output:
 
@@ -225,14 +229,14 @@ Sample output:
   | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node1    | n/a   | True |    99 |
   +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
   --
-   Upload the /etc/passwd into the bucket MY_CONTAINER of the MY_ACCOUNT project.
+   Upload the /etc/passwd file to the bucket MY_CONTAINER of the project MY_ACCOUNT.
   +--------+------+----------------------------------+--------+
   | Name   | Size | Hash                             | Status |
   +--------+------+----------------------------------+--------+
   | passwd | 1803 | 342A63A4789FE6E4C03DB859DAE4E207 | Ok     |
   +--------+------+----------------------------------+--------+
   --
-   Get some informations about your object.
+   Get some information about your object.
   +----------------+--------------------------------------------------------------------+
   | Field          | Value                                                              |
   +----------------+--------------------------------------------------------------------+
@@ -248,7 +252,7 @@ Sample output:
   | storage_policy | Namespace default                                                  |
   +----------------+--------------------------------------------------------------------+
   --
-   List object in container.
+   List objects in container.
   +--------+------+----------------------------------+------------------+
   | Name   | Size | Hash                             |          Version |
   +--------+------+----------------------------------+------------------+
@@ -300,7 +304,7 @@ Sample output:
    Create a bucket mybucket.
   make_bucket: mybucket
   --
-   Upload the /etc/passwd into the bucket mybucket.
+   Upload the /etc/passwd file to the bucket mybucket.
   upload: ../etc/passwd to s3://mybucket/passwd
   --
    List your buckets.
@@ -309,7 +313,7 @@ Sample output:
   Total Objects: 1
      Total Size: 1.8 KiB
   --
-   Save the data stored in the given object into the file given.
+   Save the data stored in the given object into the given file.
   download: s3://mybucket/passwd to ../tmp/passwd.aws
   root:x:0:0:root:/root:/bin/bash
   daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -334,7 +338,7 @@ Sample output:
 Disclaimer
 ==========
 
-Please keep in mind that this guide is not intended for production, use it for demo/POC/development purposes only.
+Please keep in mind that this guide is not intended for production; use it for demo/PoC/development purposes only.
 
 **Don't go in production with this setup.**
 

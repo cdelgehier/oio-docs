@@ -1,14 +1,14 @@
 ===========================
-Decommission a rawx service
+Decommission a Rawx Service
 ===========================
 
 Preparation
 ~~~~~~~~~~~
 
 Find information about the service you want to decommission.
-By running ``openio cluster list rawx`` you will get the list of all rawx service ids accompanied by their volume path.
+By running ``openio cluster list rawx`` you will get the list of all Rawx service IDs accompanied by their volume paths.
 
-Lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``. Where RAWX_ID is the network address of the service (ip:port).
+Lock the score of the targeted rawx service to zero by running ``openio cluster lock rawx <RAWX_ID>``, where RAWX_ID is the network address of the service (ip:port).
 This will prevent the service from getting upload requests, and will reduce the number of download requests.
 
 Verify that the service is actually locked by running ``openio cluster list rawx`` again.
@@ -53,11 +53,11 @@ Create a configuration file with the following template:
 Launch decommissioning
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can launch decommissioning using configuration file with ``oio-blob-mover -v <CONFIGURATION FILE>`` (the `-v` is to log to stderr in addition to syslog).
+You can launch decommissioning using a configuration file with ``oio-blob-mover -v <CONFIGURATION FILE>`` (the `-v` is to log to stderr in addition to syslog).
 
-If you don't have configuration file you can run ``oio-blob-mover -v --generate-config <FILE> --namespace <NAMESPACE> --volume <VOLUME> --user <USER>``
+If you don't have a configuration file, you can run ``oio-blob-mover -v --generate-config <FILE> --namespace <NAMESPACE> --volume <VOLUME> --user <USER>``.
 
-The `--generate-config` is to generate configuration file with namespace, volume and user given. If FILE don't exist, it will be created, else, file content will be deleted and replace by configuration.
+The `--generate-config` option is used to generate a configuration file with the namespace, volume, and user specified in the command. If FILE doesn't exist, it will be created; otherwise the file's contents will be deleted and replace by the configuration content.
 
-You can also add option on existing configuration file using `--edit-config` option.
-`--daemon` option can be used to run mover as daemon
+You can also add an option to on existing configuration file using `--edit-config`.
+`--daemon` can be used to run mover as a daemon.

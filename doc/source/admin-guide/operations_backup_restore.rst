@@ -1,6 +1,6 @@
-==========================
-Backup/Restore a container
-==========================
+=============================
+Back Up & Restore a Container
+=============================
 
 Preparation
 ~~~~~~~~~~~
@@ -10,13 +10,13 @@ You must stop all activities on the container during the creation of the backup.
 Backup
 ~~~~~~
 
-A backup of a container can be done with a single operation:
+A container backup can be done with a single operation:
 
 .. code-block:: shell
 
     $ curl 'http://SERVEUR:PORT/v1.0/container/dump?acct=ACCOUNT&ref=CONTAINER' --output CONTAINER.tar
 
-or can be split in several operations:
+Or it can be split in several operations:
 
 .. code-block:: shell
 
@@ -42,7 +42,7 @@ or can be split in several operations:
 Using Backup
 ~~~~~~~~~~~~
 
-A backup can be tested on Linux filesystem with tar utility, with --ignore-zeros option
+A backup can be tested on a Linux filesystem with the tar utility, using the --ignore-zeros option
 
 .. code-block:: shell
 
@@ -94,20 +94,20 @@ To extract a tar and keep properties on files:
 
 **Notes:**
 
-- file `.__oio_container_manifest` describe the mapping of container during download.
-- file `.__oio_container_properties` contains properties applied on container itself.
-- each file has attribute 'mime_type', only used by restore operation.
+- The file `.__oio_container_manifest` describe the mapping of the container during download.
+- The file `.__oio_container_properties` contains properties applied on the container itself.
+- Each file has a mime_type attribute, only used by a restore operation.
 
 Restore
 ~~~~~~~
 
-As backup, restore can be done with a single operation:
+As with backups, a restore can be done with a single operation:
 
 .. code-block:: shell
 
     $ curl -XPUT --data-binary @CONTAINER.tar 'http://SERVEUR:PORT/v1.0/container/restore?acct=ACCOUNT&ref=NEW_CONTAINER'
 
-or can be split in several smaller upload operations (the order must be respected)
+Or it can be split into several smaller upload operations (the order must be respected):
 
 .. code-block:: shell
 
@@ -119,6 +119,6 @@ or can be split in several smaller upload operations (the order must be respecte
 **Notes:**
 
 - Parts must be multiple of 1 MiB. Padding is used in backup files to avoid splitting block headers.
-- The upload of a tar archive without .__oio_container_manifest using multi part upload is unsupported.
+- The upload of a tar archive without .__oio_container_manifest using multi part upload is not supported.
 - it is not recommended to alter a tar archive (extracting then recompressing for example) as `.__oio_container_manifest` will be invalid
-- it is possible to upload any tar archive by using the single shot method. The archive must contain only regular files and directory entries; special files or links are not supported.
+- it is possible to upload any tar archive using the single shot method. The archive must contain only regular files and directory entries; special files or links are not supported.

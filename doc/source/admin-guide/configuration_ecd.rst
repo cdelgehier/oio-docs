@@ -1,11 +1,11 @@
 ========================
-Configure an ecd service
+Configure an ECD Service
 ========================
 
 Description
 -----------
 
-ECD (Erasure Coding Daemon) is used to manage Erasure Coding through C and Java SDKs
+ECD (Erasure Coding Daemon) is used to manage Erasure Coding through C and Java SDKs.
 
 Prerequisites
 -------------

@@ -8,15 +8,16 @@ Services
 Introduction
 ~~~~~~~~~~~~
 
-OpenIO SDS solution is composed of multiple services, running on commodity hardware, from power efficient systems to high performance servers.
-Services are designed to run across multiple nodes and do not require any specific collocation.
+OpenIO SDS is composed of multiple services, running on commodity hardware,
+from power-efficient systems to high-performance servers. Services are designed
+to run across multiple nodes and do not require any specific collocation.
 
-Here are a view of the different services available :
+Here is a view of the different services available:
 
 .. image:: ../../../images/openio-arch-solution.jpg
    :width: 600 px
 
-Front stack
+Front Stack
 ~~~~~~~~~~~
 
 
@@ -25,7 +26,7 @@ OpenIO Swift
 
 The OpenIO Swift service handles Swift/S3 user requests.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU and network intensive
@@ -35,7 +36,7 @@ Openstack Keystone
 
 User authentication and service discovery is done through Openstack Keystone which is accessed directly by the client when using the Swift API, whereas when using S3, Keystone does not need to be publicly exposed.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU intensive
@@ -46,27 +47,27 @@ MySQL
 
 MySQL is used as a backend for Openstack Keystone.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - CPU and network intensive
-- Recommended to be deployed as cluster using MariaDB Galera cluster on at least 3 different servers.
+- Recommended to be deployed as cluster (using MariaDB Galera cluster) on at least 3 different servers.
 
 
 
 OpenIO SDS
 ~~~~~~~~~~
 
-OpenIO SDS core solution is divided in multiple simple and lightweight services, which can be easily distributed on different nodes:
+The OpenIO SDS core solution is divided into multiple simple and lightweight services, which can be easily distributed on different nodes:
 
-- conscience services
-- directory services
-- data services
-- event services
-- account services
+- Conscience services
+- Directory services
+- Data services
+- Event services
+- Account services
 
 
-Conscience services
+Conscience Services
 -------------------
 Conscience services are composed of a conscience service and conscience-agent services.
 
@@ -74,10 +75,10 @@ Conscience services are composed of a conscience service and conscience-agent se
 
 The conscience service has two main functions:
 
-- Service Discovery : To find other services available in the namespace, a service uses the Conscience to discover what kind of services are available and how to contact them.
-- Load Balancing : the Conscience performs load balancing using real time metrics that are collected from the storage nodes. A score between 0 and 100 is computed using a configurable formula and then used to do a weighted random selection
+- Service Discovery: A service uses Conscience to discover what kind of services are available in the namespace and how to contact them.
+- Load Balancing: Conscience performs load balancing using real time metrics that are collected from the storage nodes. A score between 0 and 100 is computed using a configurable formula and then used to make a weighted random selection.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU and network intensive
@@ -85,25 +86,25 @@ Key characteristics :
 
 **Conscience-agent**
 
-This service monitors local services on the machine and also manage service registration in the conscience.
+This service monitors local services on the machine and also manage service registration in Conscience.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - Must be deployed on each server
 
-Directory services
+Directory Services
 ------------------
-Directory services (all the meta0, meta1 and meta2 services), are responsible for handling directory requests and store metadata.
-All of the directory services are replicated.
+Directory services (all the Meta0, Meta1 and Meta2 services), are responsible for handling directory requests and storing metadata.
+All the directory services are replicated.
 
-**META0**
+**Meta0**
 
-The meta0 directory stores for each container his meta1 address.
+The Meta0 directory stores the meta1 address for each container.
 Meta0 handles a very limited and static number of entries (65,536).
-There is only one instance of meta0 per namespace.
+There is only one instance of Meta0 per namespace.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - Very limited and static entries
@@ -111,26 +112,26 @@ Key characteristics :
 - Must be deployed on 3 different servers
 - Recommended to be deployed on high performance storage like SSD or NVMe
 
-**META1**
+**Meta1**
 
-The meta1 directory stores for each container his meta2 address.
-The meta1 can manage several million of container.
+The Meta1 directory stores the Meta2 address for each container.
+The Meta1 directory can manage several millions of containers.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - CPU and network intensive
 - Must be deployed on at least 3 different servers
 - Recommended to be deployed on high performance storage like SSD or NVMe
 
-**META2**
+**Meta2**
 
-The meta2 directory stores for each container the content list and for each content their chunks addresses.
+The Meta2 directory stores the content list for each container, and the chunk address for each piece of content.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
-- CPU, IO and network intensive
+- CPU, I/O, and network intensive
 - Must be deployed on at least 3 different servers
 - Recommended to be deployed on high performance storage like SSD or NVMe
 
@@ -139,16 +140,16 @@ Key characteristics :
 
 This service is used to store the directory services election statuses.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
-- Need a quite high volume of RAM
+- Needs a quite high amount of RAM
 
 **Metadata-proxy**
 
-The metadata-proxy service is a HTTP directory proxy to easily requests conscience/meta0/meta1 and meta2 services through a simple HTTP REST API.
+The metadata-proxy service is an HTTP directory proxy used to request Conscience/Meta0/Meta1/Meta2 services through a simple HTTP REST API.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU intensive
@@ -156,72 +157,71 @@ Key characteristics :
 Data Services
 -------------
 
-Data services are services responsible of storing and serving the data like the rawx, handling part of the metadata depending on it like the rdir and the oio-blob-indexer.
+Data services are responsible for storing and serving the data (like the rawx),
+handling part of the metadata depending on it (like the rdir), and the oio-blob-indexer.
 
 **Rawx**
 
-The RAWX service is a share-nothing service responsible to store the chunks. The interface uses a subset of the WebDAV commands augmented with custom headers.
+The Rawx service is a share-nothing service responsible for storing chunks. The interface uses a subset of WebDAV commands augmented with custom headers.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - IO intensive
-- Must be deployed on every disks of the platform
+- Must be deployed on every disk of the cluster
 
 **Rdir**
 
-Rdir is a reverse directory which stores chunks references of a rawx. This service is useful to rebuild a rawx.
+Rdir is a reverse directory that stores references of chunks in a Rawx. This service is useful for rebuilding a Rawx.
 
-Each rawx has a Rdir instance associated which is not hosted on the same server.
+Each Rawx has an Rdir instance associated that is not hosted on the same server.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - IO intensive
-- Must be deployed on every disks of the platform
+- Must be deployed on every server of the cluster
 
 **oio-blob-indexer**
 
-oio-blob-indexer is a crawler which re-index chunks in the Rdir
+oio-blob-indexer is a crawler that re-indexes chunks in the Rdir
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
-- IO intensive
-- Must be deployed on every disks of the platform
+- I/O intensive
+- Must be deployed on every server of the cluster
 
 **ECD**
 
-ECD (Erasure Coding Daemon) is used to manage Erasure Coding through C and Java SDKs
+ECD (Erasure Coding Daemon) is used to manage Erasure Coding through C and Java SDKs.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU intensive
-- Must be deployed on every servers  of the platform
+- Must be deployed on every server of the cluster
 
-
-
-Event services
+Event Services
 --------------
 
-Event services are services that handle asynchronous jobs, they are composed of the event-agent which relies on a beanstalkd backend to manage jobs.
+Event services handle asynchronous jobs. They are composed of the event-agent, which relies on a beanstalkd backend to manage jobs.
 
 **Event-Agent**
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 - CPU intensive
-- Must be deployed on every disks of the platform
+- Must be deployed on every server of the cluster
 
 
 **Beanstalk**
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
-- IO intensive
+- I/O intensive
 - Recommended to be deployed on high performance storage like SSD or NVMe
 
 
@@ -230,22 +230,24 @@ Account management
 
 **Account**
 
-The account service stores account related information such as the containers list, the number of objects and the number of bytes occupied by all objects.
-Following an operation on a container (PUT, DELETE), events are created and consume by the account service in order to update the account information asynchronously.
+The account service stores account related information such as the container list,
+the number of objects, and the number of bytes occupied by all objects in the cluster.
+Following an operation on a container (PUT, DELETE), events are created and consume
+by the account service in order to update account information asynchronously.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
 - CPU intensive
 
 **REDIS**
 
-Redis is used by the account service to store the accounts information.
+Redis is used by the account service to store account information.
 
-Key characteristics :
+Key characteristics:
 
 - Stateful
-- IO intensive
+- I/O intensive
 - Recommended to be deployed on high performance storage like SSD or NVMe
 
 
@@ -254,24 +256,24 @@ Other Services
 
 Replicator
 ----------
-The replicator service is a work queue consumer process. Its main purpose is to asynchronously replicate objects and container from one local namespace to another geographically distant namespace.
+The replicator service is a work queue consumer process. Its main purpose is to asynchronously replicate objects and containers from one local namespace to another geographically distant namespace.
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 
 
 Billing
 -------
-OIO-Billing is an Http service allowing to retrieve the following information for an account, useful for billing :
+OIO-Billing is an HTTP service that retrieves the following information for an account, useful for billing:
 
-- number of bytes
-- number of objects
-- incoming bandwidth
-- outgoing bandwidth
-- details of selected containers
+- Number of bytes
+- Number of objects
+- Incoming bandwidth
+- Outgoing bandwidth
+- Details of selected containers
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 

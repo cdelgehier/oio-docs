@@ -26,6 +26,6 @@ documentation.
    proxy_content_api
    acct_api
    rdir_api
+   oiobilling_api
 
 .. end of contents
-

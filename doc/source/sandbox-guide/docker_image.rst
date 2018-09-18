@@ -4,15 +4,16 @@
 Docker Image
 ============
 
-This `Docker <http://www.docker.com>`_ image provides an easy way to run an OPENIO namespace.
+This `Docker <http://www.docker.com>`_ image provides an easy way to run an OpenIO namespace.
 It deploys and configure a simple non-replicated namespace in a single container.
 
-OpenIO SDS service discovering and resolution relies on IPs, meaning that you can't change service IPs after they have been registered to the cluster. By default, Docker networking may change you IP when you container restarts which is not compatible with OpenIO SDS at the moment.
+OpenIO SDS service discovery and resolution relies on IP addresses, meaning that you can't change service IPs after they have been registered to the cluster.
+By default, Docker networking may change you IP when your container restarts, and this is not compatible with OpenIO SDS at the moment.
 
 Deploy
 ------
 
-First, pull the `OpenIO Docker image <https://hub.docker.com/r/openio/sds/>`_ from the `Docker Hub <https://hub.docker.com>`_:
+First, download the `OpenIO Docker image <https://hub.docker.com/r/openio/sds/>`_ from the `Docker Hub <https://hub.docker.com>`_:
 
 .. code-block:: console
 
@@ -24,7 +25,7 @@ By default, start a simple namespace listening on 127.0.0.1 inside the container
 
    # docker run -ti --tty openio/sds
 
-You are now able to manipulate your namespace inside your container using the :ref:`OpenIO End User CLI <ref-user-guide>`. For example, put an object :
+You can now manipulate your namespace inside your container using the :ref:`OpenIO End User CLI <ref-user-guide>`. For example, put an object :
 
 .. code-block:: console
 
@@ -33,12 +34,12 @@ You are now able to manipulate your namespace inside your container using the :r
    # openio object create MY_CONTAINER test.txt --oio-ns OPENIO --oio-account MYACCOUNT
 
 
-Deploy the S3/Swift gateway
+Deploy the S3/Swift Gateway
 ---------------------------
 
-You can launch the OpenIO docker image with our S3 and Swift gateway embedded, and map its port (6007) to access to it remotely:
+You can launch the OpenIO docker image with our S3 and Swift gateway embedded, and map its port (6007) to access to it remotely.
 
-Launching the container with the port mapping:
+Launching the container with port mapping:
 
 .. code-block:: console
 
@@ -48,13 +49,13 @@ The S3 and Swift gateway is now accessible on `127.0.0.1:6007`.
 
 **Using Swift gateway**
 
-First install python-swiftclient
+First install python-swiftclient:
 
 .. code-block:: console
 
   # yum install python-swiftclient
 
-Then, you can use the swift APIs:
+Then you can use the swift APIs:
 
 .. code-block:: console
 
@@ -62,7 +63,7 @@ Then, you can use the swift APIs:
 
 **Using S3 gateway**
 
-First install awscli
+First install awscli:
 
 .. code-block:: console
 
@@ -85,10 +86,10 @@ Finally you can put your first object:
 
    # aws --endpoint-url http://127.0.0.1:6007 --no-verify-ssl s3 cp /etc/localtime s3://bucket1
 
-Using host network interface
-----------------------------
+Using the host network interface
+--------------------------------
 
-You can start an instance using `Docker host mode networking <https://docs.docker.com/engine/reference/run/#network-host>`_, it allows you to access the services outside your container. You can specify the interface or the IP you want to use.
+You can start an instance using `Docker host mode networking <https://docs.docker.com/engine/reference/run/#network-host>`_. This allows you to access services outside your container. You can specify the interface or the IP address you want to use.
 
 
 Setting the interface:

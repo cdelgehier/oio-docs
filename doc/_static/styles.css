@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 html {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -7,7 +7,7 @@ html {
 body {
     background-color: #fff;
     color: #4a4a4a;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 17px;
     line-height: 1.6;
     text-transform: none;
@@ -67,6 +67,10 @@ a {
     z-index: -1;
 }
 
+a.toc-backref {
+    color: #000000;
+}
+
 .documentwrapper a.reference.external:after {
     content: "";
     background: url('./images/arrow.svg') no-repeat;
@@ -116,6 +120,10 @@ input[type='text'] {
     -o-appearance: none;
     appearance: none;
     outline: none;
+}
+
+input, select {
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 /* Logo */
@@ -925,7 +933,7 @@ blockquote {
     z-index: 200;
 }
 
-div.highlight {
+div.highlight, code {
     width: 100%;
     background: #f8f8f8;
     color: #333333;
@@ -933,10 +941,18 @@ div.highlight {
     white-space: pre;
     position: relative;
     font-size: 0.80em;
+}
+
+div.highlight {
     display: inline-block;
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
+code {
+    padding: 0 5px 0 5px;
+}
+
 
 div.highlight pre {
     padding: 10px;
@@ -1020,7 +1036,6 @@ a.footer__community:after {
 
 .footer__license {
     color: #999999;
-    font-family: "Open Sans";
     font-size: 0.8em;
 }
 

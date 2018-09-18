@@ -1,29 +1,29 @@
 ===================
-Add a meta2 service
+Add a Meta2 Service
 ===================
 
 
 Description
 -----------
-In this documentation, you will find the different steps to add a new meta2 service on your cluster.
+This documentation explains how to add a new Meta2 service on your cluster.
 
-In this example, we add a new rawx service (meta2-2) in the namespace OPENIO on an existing server.
+In this example, we add a new Meta2 service (meta2-2) in the namespace OPENIO on an existing server.
 
 Prerequisites
 -------------
 
-You must have the IP and PORT of your new meta2 service. In this example, the new meta2 will listen on 10.0.0.36:6122
+You must have the IP address and port of your new Meta2 service. In this example, the new Meta2 will listen on 10.0.0.36:6122.
 
 Configuration
 -------------
 
-Create an new directory ``/meta2-2`` in ``/var/lib/oio/sds/OPENIO/``
+Create an new directory ``/meta2-2`` in ``/var/lib/oio/sds/OPENIO/``.
 
-Give the rights on this directory to the openio user:
+Give the rights for this directory to the openio user:
 
 .. code-block:: text
 
-    $ chown openio.openio meta2-2/
+    $ chown openio:openio meta2-2/
 
 Create a new configuration file (``OPENIO-meta2-2``) in the ``/etc/gridinit.d/`` directory:
 
@@ -62,7 +62,7 @@ The following configuration must be adapted to your new service:
 - port        
 - type: volume, path
 
-Then, to make your new meta2 service available, you have to reload the configuration and start the service:
+To make your new meta2 service available, you must reload the configuration and start the service:
 
 .. code-block:: text
 
@@ -75,7 +75,7 @@ And to restart the conscience agent:
 
     $ gridinit_cmd restart @conscienceagent
 
-Finally, you will have to unlock your new service:
+Finally, you must unlock your new service:
 
 .. code-block:: text
 

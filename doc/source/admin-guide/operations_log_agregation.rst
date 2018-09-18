@@ -1,8 +1,8 @@
 ==========================
-OpenIO SDS change tracking
+OpenIO SDS Change Tracking
 ==========================
 
-OpenIO SDS provides a way to track changes to data in the cluster,
+OpenIO SDS provides a way to track changes to data in the cluster.
 
 .. code-block:: shell
   :caption: openio cli
@@ -26,7 +26,7 @@ OpenIO SDS provides a way to track changes to data in the cluster,
   Jul 27 08:17:35 node1 OIO,OPENIO,rawx,1 14685 140695335397120 access INF 172.17.0.123:6201 172.17.0.3:47000 PUT 201 16849 1194 DD83434968FE3D4D0815BEE837572D5B4669241A8156E4F59DB55A06788DD1CD 4E54A5BDA1EA1812B7DED90F964B1971 /4E54A5E9BBBC97D1168E36E3C5E73F8D9511D93F5D4CA9078CB8457597A1AEB7
 
 
-Here the ``DD83434968FE3D4D0815BEE837572D5B4669241A8156E4F59DB55A06788DD1CD`` is the container ID of my object creation.
+Here ``DD83434968FE3D4D0815BEE837572D5B4669241A8156E4F59DB55A06788DD1CD`` is the container ID of the object creation.
 
 
 .. code-block:: shell
@@ -58,4 +58,4 @@ Here the ``DD83434968FE3D4D0815BEE837572D5B4669241A8156E4F59DB55A06788DD1CD`` is
 
 
 
-In addition to the ID OpenIO SDS, the ID AWD S3 is trackable too (here: ``tx92f6fddb4cd94baf9413b-005b5ad95b``)
+In addition to the ID OpenIO SDS, the ID AWD S3 is trackable too (here: ``tx92f6fddb4cd94baf9413b-005b5ad95b``).

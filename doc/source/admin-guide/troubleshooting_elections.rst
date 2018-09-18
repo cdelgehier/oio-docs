@@ -1,18 +1,18 @@
-==============================
-Troubleshoot Election troubles
-==============================
+===============================
+Troubleshooting Election Issues
+===============================
 
 The problem
 -----------
 
-You just wanted to set a property on a container, but then shit happens!
+You just wanted to set a property on a container, but something went wrong.
 
   .. code-block:: console
 
     > openio container set FVE0 --property a=1
     Open/lock: Election failed [697ECB056A5F9339B36C3B0A020B5AB17B4B0160FBEBEA203315EA1FC1B61605.1][meta2] (HTTP 503) (STATUS 503)
 
-You go check meta2 logs, but they don't really help you.
+You check meta2 logs, but they don't really help you.
 
   .. code::
 
@@ -41,10 +41,10 @@ the status of an election, triggering it if necessary.
     | 127.0.0.1:6018 |      7 | Timeout                                                                                      |
     +----------------+--------+----------------------------------------------------------------------------------------------+
 
-Here my election is failing because 2 services do not answer fast enough.
+Here an election is failing because two services do not answer fast enough.
 
-Another interesting command is ``openio election debug`` (taking the same
-parameters as ``openio election status``). This will give you advanced
+Another interesting command is ``openio election debug`` (using the same
+parameters as ``openio election status``). This returns advanced
 information about the current status of an election, such as the history
 of internal election states, and which event triggered state changes.
 

@@ -1,7 +1,7 @@
 .. _ref-admin-guide:
 
 ==================================
-Namespace configuration (sds.conf)
+Namespace Configuration (sds.conf)
 ==================================
 
 Service locations

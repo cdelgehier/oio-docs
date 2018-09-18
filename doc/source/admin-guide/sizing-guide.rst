@@ -1,5 +1,5 @@
 ============
-Sizing guide
+Sizing Guide
 ============
 
 .. contents::
@@ -15,7 +15,7 @@ best practices for configuring an OpenIO cluster on x86 servers depending
 on use case, performance, and security requirements.
 
 OpenIO SDS is supported on physical and virtual environments, but production
-clusters are usually deployed on physical nodes, due to the better efficiency
+clusters are usually deployed on physical nodes, due to their better efficiency
 and lower costs; this is particularly true for the storage layer. The access
 layer (S3/Swift services) can be deployed as physical or virtual machines
 depending on user requirements.
@@ -38,12 +38,12 @@ There are two types of supported production layouts:
   for small clusters, but it is less efficient in large scale deployments,
   and could lead to higher costs over time.
 
-- **Split configuration**: the access layer is separated from the storage
+- **Split configuration**: here, the access layer is separated from the storage
   layer. This cluster layout is more complex to deploy and maintain, but presents
   many advantages regarding security and efficiency. By separating the access
   layer from the rest of the cluster, it is possible to deploy front-end nodes
   directly on public networks (DMZ) while reducing the attack surface. These
-  services are state-less and have a small number of open TCP/IP ports. Front-end
+  services are stateless and have a small number of open TCP/IP ports. Front-end
   nodes and back-end nodes have different characteristics in terms of CPU, RAM,
   network, and disk usage, and the separation increases the number of use cases,
   workloads, and effective multi-tenancy supported by the cluster. This type of
@@ -63,7 +63,7 @@ CPU requirements
 ~~~~~~~~~~~~~~~~
 
 OpenIO SDS has a lightweight design. It can be installed on a single CPU core
-with 400MB of RAM, but in production systems the minimum supported CPU has
+with 400MB RAM, but in production systems the minimum supported CPU has
 4 cores. Intel CPUs with ISA-L support are required for erasure coding and
 compression; otherwise the performance impact is quite severe and a larger
 number of cores will be needed.
@@ -85,20 +85,20 @@ Storage layer
 Front-end access layer
 ----------------------
 
-This type of nodes requires more CPU and RAM, as erasure coding, data
-encryption, and all data chunking is usually computed at this level.
+This type of node requires more CPU and RAM, as erasure coding, data
+encryption, and data chunking are usually computed at this level.
 
 - For cold data and archiving workloads, CPU is less important, and a single
   8-core CPU node is sufficient.
 - In uses cases with small objects, such as for email storage, 2 10/16-core
-  CPUs.
+  CPUs are required.
 - For use cases that require high throughput, such as video streaming,
   2 8/12 CPU cores are required.
 - Erasure coding and compression, with ISA-L support, require an additional
   10% of CPU power. Without ISA-L, 50% more CPU power is needed.
 
-By adding up CPU cores for the front end and back end, it is easy to find the
-right amount of cores needed for each node for simple layout configurations.
+By adding up the number of CPU cores required for the front end and back end,
+it is easy to find the right number of cores needed for each node for simple layout configurations.
 
 .. list-table::
    :header-rows: 1
@@ -108,19 +108,19 @@ right amount of cores needed for each node for simple layout configurations.
      - Storage node
      - Access node
      - Single node
-   * - Cold Data
+   * - Cold data
      - 60-90 HDDs (0.5-1PB)
      - 8
      - 8
      - 16
    * - Small files
-       Frequent access
+       frequent access
      - 10-24 HDDs (80-300TB)
      - 10-16
      - 10-16
      - 20-32
    * - Large files
-       High throughput
+       high throughput
      - 48-90 HDDs (0.5-1PB)
      - 8-12
      - 8-12
@@ -137,7 +137,7 @@ The minimum RAM configuration for any type of cluster node is 8GB, but 16GB
 is highly recommended. Storage nodes use RAM primarily for caching metadata
 and data chunks. If the same data and metadata are frequently accessed,
 more RAM is recommended. Very small objects, less than 1MB in size, benefit
-the most from large RAM configurations.
+the most from larger RAM configurations.
 
 
 Storage layer RAM configuration
@@ -156,17 +156,17 @@ Frontend access layer
 ---------------------
 
 This type of node is CPU and RAM heavy, since erasure coding, data encryption,
-and all data chunking are usually computed at this level.
+and data chunking are usually computed at this level.
 
-- For cold data and archiving workloads, 8GB of RAM is enough in most cases
-- In uses cases with small objects, such as for email storage, RAM can bring a
+- For cold data and archiving workloads, 8GB of RAM is enough in most cases.
+- In use cases with small objects, such as for email storage, RAM can bring a
   huge speed boost, and 32-64GB configurations can increase overall performance.
 - For use cases that require high throughput, such as video streaming with
   large files, large RAM configurations are unnecessary; most of the caching
   is provided by the storage layer, and 32GB is usually accepted as a standard
   configuration in most scenarios.
 
-By adding up the RAM needs for the front end and back end, it is easy to find
+By adding up RAM needs for the front end and back end, it is easy to find
 the right amount of RAM needed for each node for simple layout configurations.
 
 Examples
@@ -180,19 +180,19 @@ Examples
      - Storage node RAM
      - Access node RAM
      - Single node RAM
-   * - Cold Data
+   * - Cold data
      - 60-90 HDDs (0.5-1PB)
      - 64GB
      - 16GB
      - 80GB
    * - Small files
-       Frequent access
+       frequent access
      - 10-24 HDDs (80-300TB)
      - 32-64GB
      - 32-64GB
      - 64-128GB
    * - Large files
-       High throughput
+       high throughput
      - 48-90 HDDs (0.5-1PB)
      - 128GB
      - 32GB
@@ -216,9 +216,9 @@ Storage Node Capacity
 ---------------------
 
 OpenIO SDS supports node capacities that range from one disk up to the limit
-of the largest servers available in the market (90-100 disks). The most common
+of the largest servers available on the market (90-100 disks). The most common
 disk type used with OpenIO SDS is the 3.5” LFF with SATA interface. Disks
-with different capacity can be mixed in the same node. SMR (shingled magnetic
+with different capacities can be mixed in the same node. SMR (shingled magnetic
 recording) drives are not currently supported in production environments.
 
 Nodes with different capacities are supported in the same cluster, but
@@ -226,7 +226,7 @@ CPU/RAM/FLASH/DISK ratios should remain similar to maintain consistent levels
 of performance.
 
 The net node capacity depends on the data protection schemes applied to the
-data, and whether it is compressed. As a general rule, format and file system
+data, and whether it is compressed. As a general rule, formating and file system
 allocation add a 10% overhead to the original disk capacity.
 
 Network
@@ -248,10 +248,10 @@ A private, redundant network for east-west cluster traffic is highly
 recommended for storage nodes. Access layer nodes access this network through
 their back-end ports.
 
-In simple layout, with front-end and back-end nodes collapsed, the nodes are
-connected directly to the network. Even if a single dual-port connection
-is supported, it is highly recommended to separate front-end and back-end
-traffic on two separate redundant networks.
+In a simple layout, with front-end and back-end nodes collapsed, the nodes are
+connected directly to the network. Though a single dual-port connection
+is supported, it is strongly recommended to separate front-end and back-end
+traffic on two separate, redundant networks.
 
 An additional, private, 1Gbit/sec network is necessary to connect all the
 nodes of the cluster for monitoring and management. Hardware management
@@ -262,9 +262,9 @@ all be part of this network.
 Load balancing
 ~~~~~~~~~~~~~~
 
-The front-end access layer its stateless, and doesn’t require any connection
-persistency or complex load balancing protocols. Supported load balancing
-solution include HA-Proxy, and third party commercial load balancers with
+The front-end access layer is stateless, and doesn’t require any connection
+persistency or complex load-balancing protocols. Supported load-balancing
+solutions include HA-Proxy, and other third-party commercial load balancers with
 the HTTP protocol enabled.
 
 
@@ -284,30 +284,30 @@ Admin console configuration example:
 - 200GB SSD storage for storing logs and running analytics jobs
 
 
-Services tuning
+Tuning Services
 ~~~~~~~~~~~~~~~
 
-meta0/meta1: size the top-level index
+meta0/meta1: Size the top-level index
 -------------------------------------
 
-In OpenIO SDS, the directory of services acts like a hash table: an
-associative array mapping unique identifiers to list of services. Each unique
+In OpenIO SDS, the directory of services acts like a hash table: it is an
+associative array mapping unique identifiers to a list of services. Each unique
 ID corresponds to an end-user of the platform.
 
-Our directory of services uses separate chaining to manage the collisions:
-each slot of the top-level index point to a SQLite database managing all the
-services with the same hash. The top-level hash is managed by the `meta0`
-service, while each slot is a base managed by `meta1` services.
+Our directory of services uses separate chaining to manage collisions: each
+slot of the top-level index points to an SQLite database managing all the
+services with the same hash. The top-level hash is managed by the `meta0` service,
+while each slot is a database managed by a `meta1` service.
 
-So, how properly to dimension the top-level index in `meta0`? In other words,
-how many `meta1` shards do you require? It will depend on the number of
-items you plan to have in each `meta1` base, and there is one item for each
-services linked to an end-user.
+So, how should the top-level index in `meta0` be dimensioned? In other words,
+how many `meta1` shards do you need? It will depend on the number of items you
+plan to have in each `meta1` base, as there is one item for each service linked
+to an end-user.
 
 .. note::
 
-  We recommend to stay below 100k entries per SQLite file as a maximum, and
-  below 10k entries as a good practice.
+  We recommend that you stay below 100k entries per SQLite file, and
+  below 10k entries is a good practice.
 
 .. list-table:: Meta1 sharding
    :header-rows: 1
@@ -315,16 +315,16 @@ services linked to an end-user.
 
    * - Digits
      - Slots
-     - Behaviour
+     - Behavior
    * - 4
      - 65536
      - good for huge deployments (> 100M linked services)
    * - 3
      - 4096
-     - good until 100M linked services
+     - good up to 100M linked services
    * - 2
      - 256
-     - Adviced when less then 64k, e.g. for "flat namespaces"
+     - Advised when less then 64k, e.g. for "flat namespaces."
    * - 1
      - 16
      - minimal hash, only for demonstration purposes and sandboxing.
@@ -333,31 +333,28 @@ services linked to an end-user.
      - no-op hash, only for demonstration purposes.
 
 
-meta*: how many sqliterepo services
+meta*: How many sqliterepo services
 -----------------------------------
 
-`sqliterepo` is the piece of software managing a repository of SQLite
-databases, a cache of open databases and a lock around each database
-usage. This piece of software is used is the `meta0`, `meta1`, `meta2` and
-`sqlx` services.
+`sqliterepo` is software that manages a repository of SQLite databases,
+a cache of open databases, and a lock for each database. This software is used
+is the `meta0`, `meta1`, `meta2`, and `sqlx` services.
 
-While the total number of databases currently held by the repository is not
-limited, the number of active bases should be low enough to be kept by the
+While there is no limit to the total number of databases currently held by the
+repository, the number of active databases should be low enough to fit in the
 current cache size.
 
-As a default, that maximum number of bases kept in cache is deduced to **1/3**
-from the maximum number of open files allowed to the server, a.k.a. the
-**RLIMIT_NOFILE** fields of the `getrlimit()`, a.k.a. the value `ulimit -n`
-will tell you.
+As a default, the maximum number of databases kept in cache is **1/3** of the
+maximum number of open files allowed by the server, i.e. the **RLIMIT_NOFILE**
+fields of the `getrlimit()`, on the value that `ulimit -n` will return.
 
 .. note::
 
-  For a given type of service based on `sqliterepo`, you should deploy enough
-  services to have the active part of you population [of data] kept open and
+  for a given type of service based on sqliterepo, you should deploy enough
+  services to have the active part of your population (of data) kept open and
   cached.
 
-
-Zookeeper: standalone services
+Zookeeper: Standalone services
 ------------------------------
 
 With small demonstration or sandbox deployments, you won't need to precisely
@@ -369,8 +366,8 @@ might help you.
 Zookeeper: Garbage collection
 -----------------------------
 
-Make the Zookeeper doesn't hang for too long while collecting the garbage
-memory and use the best GC implementation possible.
+Make sure that Zookeeper doesn't hang for too long while collecting garbage
+memory, and use the best GC implementation possible.
 
 .. note::
 
@@ -381,29 +378,29 @@ Zookeeper: jute.maxbuffer
 -------------------------
 
 When the Zookeeper client is connected to the Zookeeper cluster, it sends
-heartbeat messages that refresh all the ephemeral nodes metadata, thus
-extending their TTL. The information will be transactionally replicated to
+heartbeat messages that refresh all the ephemeral nodes’ metadata, thus
+extending their TTL. The information is transactionally replicated to
 all the nodes in the cluster, and the transaction to do so will include the
-connection of the client. The **jute.maxbuffer** is the maximum size allowed
+client connection. **jute.maxbuffer** is the maximum size allowed
 for the buffer in such an intra-cluster replication.
 
-The problem we encounter is that the transaction includes the client's
-connection, so that if the transaction fails, the connection of the client
-will be reset by the cluster's node. But the FSM (internal to the client)
-won't enter in the **DISCONNECTED** state and the application won't be able to
-react on that situation. And an insufficient buffer size is a well-known cause
-for a transaction to fail. The symptom will be a client app. continuously
-reconnecting to the Zookeeper cluster, with the service consuming 100% CPU
+The problem you encounter is that the transaction includes the client’s
+connection, so that if the transaction fails, the connection with the client
+is reset by the cluster’s node. But the FSM (internal to the client) won’t
+enter in **DISCONNECTED** state and the application won’t be able to react
+to that situation. An insufficient buffer size is a well-known cause for
+transaction failure. The symptom is a client app continuously reconnecting
+to the Zookeeper cluster, with the service consuming 100% of CPU
 (in the ZK background thread).
 
-The value is configured as a system property, on the Zookeeper CLI with the
-help of a ``-Djute.maxbuffer=...`` option.
+The value is configured as a system property on the Zookeeper CLI using the
+``-Djute.maxbuffer=...`` option.
 
 .. note::
 
-   In the usage of Zookeeper made by OpenIO SDS, we roughly estimate that each
-   ephemeral node might require 150 bytes of metadata (110 for its name, 20 for
-   the metadata, and 20 for the codec itself).
+   when Zookeeper is used by OpenIO SDS, each ephemeral node requires approximately
+   150 bytes of metadata (110 for its name, 20 for the metadata, and 20 for
+   the codec itself).
 
-   The default value for the buffer size is set to 1048576, and lets you manage
-   ~7900 ephemeral nodes, so ~7900 active bases on the server.
+   The default value for the buffer size is set to 1048576, and this lets you
+   manage ~7,900 ephemeral nodes, or ~7,900 active databases on the server.

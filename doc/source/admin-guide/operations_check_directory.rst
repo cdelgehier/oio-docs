@@ -1,33 +1,32 @@
 =================
-Check a directory
+Check a Directory
 =================
 
-Check an OpenIO namespace has been fully deployed. Mostly the directory of
-services will be checked.
+Check that an OpenIO namespace has been fully deployed. This checks the directory of services.
 
 .. list-table::
    :widths: 20 100
 
    * - meta0
-     - check if meta0 are registred on zookeeper.
+     - Check that meta0 services are registered on zookeeper.
    * - meta1
-     - check if meta1  are reachable.
+     - Check that meta1 services are reachable.
    * - dir
-     - check if prefix are rechable and same as prefix on meta0, and check if meta1 are registered on meta0
+     - Check that prefixes are reachable and are the same as prefixes on meta0, and check if meta1 services are registered on meta0.
    * - rdir
-     - check if all rawx have an associated rdir and check if rdir are up
+     - Check that all rawx services have associated rdir and check that rdir are up.
 
 Preparation
 ~~~~~~~~~~~
 
-You can check if the services are UP using ``openio cluster list``
+You can check if services are UP using ``openio cluster list``
 
 Launch check
 ~~~~~~~~~~~~
 
 Run ``oio-check-directory <NAMESPACE> <ACTION>``. ACTION is a value among meta0, meta1, dir, rdir.
 
-For example you can check meta1 on namespace named OPENIO with:
+For example you can check meta1 on the namespace named OPENIO with:
 
   .. code-block:: text
 
@@ -42,6 +41,6 @@ The result can be:
      07/09/2018 03:11:03 All the META1 are alive
      07/09/2018 03:11:03 All the META1 have a positive score
 
-You can use option ``--catalog`` to check if service present in conscience are same as service on catalog
-Each line of catalog represent a service and must be formated like ``Type IP PORT``.
+You can use the option ``--catalog`` to check if services present in conscience are the same as services in catalog.
+Each line of catalog represents a service and must be formatted like ``Type IP PORT``.
 You can generate a catalog using ``openio cluster list -c Type -c Addr -f value | tr ':' ' '``

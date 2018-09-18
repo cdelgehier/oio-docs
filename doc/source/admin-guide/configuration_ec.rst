@@ -1,16 +1,16 @@
 ========================
-Configure Erasure coding
+Configure Erasure Coding
 ========================
 
 Erasure coding uses a set of algorithms (similar to RAID 6) to allow the recovery
-of missing data using a subset of original data.
-In theory, EC techniques uses less storage capacity than standard replication,
-but keeping the same durability guarantees.
+of missing data using a subset of the original data.
+In theory, erasure coding uses less storage capacity than standard replication,
+but offers the same guaranty of durability.
 Erasure coding is transparent from the application perspective.
 
-To use erasure coding, you must have a storage policy with an erasure coding data security configured.
+To use erasure coding, you must have a storage policy with an erasure coding data security policy configured.
 
-Example of storage policy using erasure coding:
+Here is an example of a storage policy using erasure coding:
 
 .. code-block:: text
 
@@ -20,7 +20,7 @@ Example of storage policy using erasure coding:
    [DATA_SECURITY]
    EC_ISA_6_3=ec/k=6,m=3,algo=isa_l_rs_vand,distance=1
 
-This describes a storage policy named ``EC`` configured with a data security called ``EC_ISA_6_3`` that uses
+This describes a storage policy named ``EC`` configured with a data security policy called ``EC_ISA_6_3`` that uses
 the erasure coding backend ISA-L with the following parameters:
 
 * ``algo``: code of the erasure coding backend.

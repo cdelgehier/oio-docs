@@ -1,6 +1,6 @@
 .. _label-support-openstack:
 
-Supported OpenStack distributions
+Supported OpenStack Distributions
 =================================
 
 Pike
@@ -16,7 +16,7 @@ OpenIO 17.10 and 18.04 supports the following components from Openstack Pike:
 Queens
 ++++++
 
-OpenIO 18.10 supports the following components from Openstack Pike:
+OpenIO 18.10 supports the following components from Openstack Queens:
 
 * keystone 13
 * swift 2.17
@@ -27,5 +27,5 @@ Obsolete distributions
 ++++++++++++++++++++++
 
 * Mitaka (discontinued after OpenIO 16.04)
-* Newton (never actually supported)
+* Newton (never officially supported)
 * Ocata (discontinued after OpenIO 16.10)

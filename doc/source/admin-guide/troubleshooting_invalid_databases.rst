@@ -1,14 +1,14 @@
 ===========================================
-Fix invalid, corrupted or missing databases
+Fix Invalid, Corrupted or Missing Databases
 ===========================================
 
 The problem
 -----------
 
-When you query a specific container, one of the services hosting it is always
-returning an error saying that the database file is missing or is corrupt or
-has missing entries in admin table. In such case, the replication mechanism
-should fetch a fresh copy a the database from another peer, but for some
+When you query a specific container, one of the services hosting it
+returns an error saying that the database file is missing, or is corrupt, or
+has missing entries in its admin table. In such a case, the replication mechanism
+should fetch a fresh copy of the database from another peer, but for some
 reason, it does not.
 
   .. code-block:: console
@@ -58,7 +58,7 @@ reason, it does not.
 The solution
 ------------
 
-Since openio-sds 4.2, you can force the synchronization of the base on each
+Since openio-sds 4.2, it is possible force the synchronization of the base on each
 peer by using ``openio election sync`` with the type of service and the name
 of the database as parameters.
 
@@ -74,4 +74,4 @@ of the database as parameters.
     +----------------+--------+-----------+------+
 
 Services 127.0.0.1:6015 and 127.0.0.1:6017 have fetched a fresh copy of the
-whole database from 127.0.0.1:6016.
+entire database from 127.0.0.1:6016.

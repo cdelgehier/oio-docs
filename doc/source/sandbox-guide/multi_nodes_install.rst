@@ -1,6 +1,11 @@
-===================
-Multi nodes install
-===================
+.. _ref-install-guide:
+========================
+Multi Nodes Installation
+========================
+
+.. contents::
+   :depth: 1
+   :local:
 
 Requirements
 ============
@@ -19,10 +24,10 @@ Operating system
 System
 ------
 
--  root privileges are required (using sudo)
--  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment)
--  All nodes must have different hostnames
--  ``/var/lib`` partition must support Extended Attributes: XFS is recommended
+-  Root privileges are required (using sudo).
+-  `SELinux <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-changing_selinux_modes>`__ or `AppArmor <https://help.ubuntu.com/lts/serverguide/apparmor.html.en>`__ are disabled (managed at deployment).
+-  All nodes must have different hostnames.
+-  The ``/var/lib`` partition must support extended attributes: XFS is recommended.
 
   .. code-block:: shell
 
@@ -32,7 +37,7 @@ System
     [root@centos ~]# file -sL /dev/vda1
     /dev/vda1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
 
--  System must be up-to-date
+-  The system must be up to date.
 
   .. code-block:: shell
 
@@ -50,8 +55,8 @@ System
 Network
 -------
 
--  All nodes connected to the same LAN through the specified interface (first one by default)
--  Firewall is disabled (managed at deployment)
+-  All nodes are connected to the same LAN through the specified interface (first one by default).
+-  The firewall is disabled (managed at deployment).
 
   .. code-block:: shell
 
@@ -63,10 +68,10 @@ Network
 Setup
 -----
 
-You only need to perform this setup on one of the node involved in the cluster (or your laptop)
+You only need to perform this setup on one of the nodes in the cluster (or your laptop).
 
--  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__)
--  Install ``git`` and ``python-netaddr`` (this one is managed at deployment)
+-  Install Ansible (`official guide <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html>`__).
+-  Install ``git`` and ``python-netaddr`` (this one is managed at deployment).
 
   .. code-block:: shell
 
@@ -87,7 +92,7 @@ You only need to perform this setup on one of the node involved in the cluster (
 Architecture
 ============
 
-This playbook will deploy a multi nodes cluster as below
+This playbook will deploy a multi-nodes cluster as shown below:
 
   .. code-block:: shell
 
@@ -105,9 +110,9 @@ This playbook will deploy a multi nodes cluster as below
 Installation
 ============
 
-First you need to fill the inventory accordingly to your environment:
+First, fill the inventory according to your environment:
 
-- Edit the ``inventories/n-nodes/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/01_inventory.ini>`__)
+- Edit the ``inventories/n-nodes/01_inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/01_inventory.ini>`__).
 
   .. code-block:: shell
 
@@ -122,7 +127,7 @@ First you need to fill the inventory accordingly to your environment:
     [all:vars]
     ansible_user=root # Change it accordingly
 
-You can check that everything is well configured using this command:
+You can check that everything is configured correctly using this command:
 
   .. code-block:: shell
 
@@ -142,12 +147,12 @@ Run these commands:
 
     ansible-playbook -i inventories/n-nodes main.yml
 
-Post-install Checks
-===================
+Post-installation Checks
+========================
 
-All the nodes are configured to easily use the openio-cli and aws-cli.
+All the nodes are configured to use openio-cli and aws-cli.
 
-Run this check script on one of the node involved in the cluster ``sudo /root/checks.sh``
+Run this check script on one of the nodes in the cluster ``sudo /root/checks.sh``.
 
 Sample output:
 
@@ -199,14 +204,14 @@ Sample output:
   | rdir    | 172.17.0.2:6301 | n/a        | /var/lib/oio/sds/OPENIO/rdir-1  | node1    | n/a   | True |    98 |
   +---------+-----------------+------------+---------------------------------+----------+-------+------+-------+
   --
-   Upload the /etc/passwd into the bucket MY_CONTAINER of the MY_ACCOUNT project.
+   Upload the /etc/passwd file to the bucket MY_CONTAINER of the project MY_ACCOUNT.
   +--------+------+----------------------------------+--------+
   | Name   | Size | Hash                             | Status |
   +--------+------+----------------------------------+--------+
   | passwd | 1246 | D39F219BF5875D561DAFB2B789CD1C6C | Ok     |
   +--------+------+----------------------------------+--------+
   --
-   Get some informations about your object.
+   Get some information about your object.
   +----------------+--------------------------------------------------------------------+
   | Field          | Value                                                              |
   +----------------+--------------------------------------------------------------------+
@@ -222,7 +227,7 @@ Sample output:
   | storage_policy | Namespace default                                                  |
   +----------------+--------------------------------------------------------------------+
   --
-   List object in container.
+   List the object in its container.
   +--------+------+----------------------------------+------------------+
   | Name   | Size | Hash                             |          Version |
   +--------+------+----------------------------------+------------------+
@@ -274,7 +279,7 @@ Sample output:
    Create a bucket mybucket.
   make_bucket: mybucket
   --
-   Upload the /etc/passwd into the bucket mybucket.
+   Upload the /etc/passwd file to the bucket mybucket.
   upload: ../etc/passwd to s3://mybucket/passwd
   --
    List your buckets.
@@ -283,7 +288,7 @@ Sample output:
   Total Objects: 1
      Total Size: 1.2 KiB
   --
-   Save the data stored in the given object into the file given.
+   Save the data stored in the given object to the given file.
   download: s3://mybucket/passwd to ../tmp/passwd.aws
   root:x:0:0:root:/root:/bin/bash
   bin:x:1:1:bin:/bin:/sbin/nologin
@@ -302,15 +307,6 @@ Sample output:
    Delete your empty bucket.
   remove_bucket: mybucket
 
-  Done
-
-
-Disclaimer
-==========
-
-Please keep in mind that this guide is not intended for production, use it for demo/POC/development purposes only.
-
-**Don't go in production with this setup.**
 
 .. include:: manual_requirements.rst
 

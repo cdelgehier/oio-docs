@@ -1,11 +1,11 @@
 =======================
-Rebuild a volume: meta1
+Rebuild a Volume: Meta1
 =======================
 
 Preparation
 ~~~~~~~~~~~
-First you must run ``gridinit_cmd restart @meta1``, in this way you can check if meta services are up.
-If score are low, the rebuilder can be long and can failed due to timeout.
+First, run ``gridinit_cmd restart @meta1``; this allows you to check that meta services are up.
+If scores are low, the rebuilder can take a long time and can fail due to a timeout.
 You can check the score by running ``openio cluster list meta1``.
 
 Launch rebuilding
@@ -23,19 +23,19 @@ You can  launch the rebuild by using the ``oio-meta1-rebuilder`` tool:
 Options
 ~~~~~~~
 
-If you want to have more information about current rebuilding, you can change the report interval using ``--report-interval`` option.
-The default value is set to 3600 seconds, but if you want a report every minutes, you must launch rebuilding using ``oio-meta1-rebuilder --report-interval 60``.
+If you want more information about current rebuilding, you can change the report interval using the ``--report-interval`` option.
+The default value is set to 3600 seconds, but if you want a report every minute, you can launch rebuilding using ``oio-meta1-rebuilder --report-interval 60``.
 
-By default, the rebuilding use only one worker, you can give a number of worker using ``--workers`` option.
-For example, ``oio-meta1-rebuilder --workers 42`` launch rebuilding using 42 workers.
+By default, rebuilding uses only one worker; you can set a number of workers using the ``--workers`` option.
+For example, ``oio-meta1-rebuilder --workers 42`` launches rebuilding using 42 workers.
 
-The workers have a limited number of prefix to rebuild per seconds, 30 by default: the goal is to keep the meta performance during the rebuiliding.
-You can change this value using ``--prefixes-per-seconds`` option. If you want to unlimit the number of prefix to rebuild per seconds,
+Workers have a limited number of prefixes to rebuild per seconds, 30 by default: the goal is to maintain the meta performance during the rebuilding.
+You can change this value using the ``--prefixes-per-seconds`` option. If you want to unlimit the number of prefixes to rebuild per second,
 you can use ``oio-meta1-rebuilder --prefixes-per-seconds 0``.
 
-If you want to rebuild only some containers you can give a file in argument. This file must contain containers prefix IDs.
-The prefix ID size is stored on sds.conf (meta1_digits=4). You just need to give first digits of base_name line of ``openio container show <container>``.
-For example if you want to rebuuild only container1:
+If you want to rebuild only some containers, you can specify a file. This file must contain container prefix IDs.
+The prefix ID size is stored in sds.conf (meta1_digits=4). You just need to give first digits of base_name line of ``openio container show <container>``.
+For example, if you want to rebuuild only container1:
 
   .. code-block:: console
 
@@ -56,7 +56,7 @@ For example if you want to rebuuild only container1:
      | storage_policy | Namespace default                                                  |
      +----------------+--------------------------------------------------------------------+
 
-You put ``4383`` on file and you can launch rebuilding using.
+You can specify ``4383`` for the file and launch rebuilding using:
 
   .. code-block:: console
 

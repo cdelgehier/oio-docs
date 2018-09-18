@@ -1,7 +1,7 @@
 .. _label-oiofs-configuration:
 
 ========================================
-Configure an OpenIO Filesystem connector
+Configure an OpenIO Filesystem Connector
 ========================================
 
 .. include:: ../business_oiofs.rst
@@ -9,26 +9,23 @@ Configure an OpenIO Filesystem connector
 Description
 ~~~~~~~~~~~
 
-OpenIO proposes a FUSE implementation to connect an OpenIO SDS namespace as
-backend for a file system. Please refer to ":ref:`label-oiofs-architecture`"
+OpenIO provides a FUSE implementation to connect an OpenIO SDS namespace as
+backend for a file system. Please refer to :ref:`label-oiofs-architecture`
 for more information.
 
 Prerequisites
 ~~~~~~~~~~~~~
 
-In this guide we suppose you have an OpenIO SDS namespace that is ready to use,
-in version **{{OIO_SDS_BRANCHNAME}}**, and then an oio-fs connector in version
+In this guide we assume that you have an OpenIO SDS namespace that is ready to use,
+in version **{{OIO_SDS_BRANCHNAME}}**, and an oio-fs connector in version
 **{{OIO_FS_BRANCHNAME}}**.
 
 Its name is **OPENIO** and it is accessible through an `oio-proxy` at
 **127.0.0.1:6000**.
 
-If you do not have such an installation, please refer to the guide
-":ref:`label-intall-guide`" for a production-grade installation, or to the
-guide ":ref:`label-sandbox-guide`" for an installation "the hard way" (with
-all the control you might dream of).
+If you do not have such an installation, please refer to the :ref:`installation guide <ref-install-guide>`
 
-In the subsequent sections, we will asusme the **${REDIS_ENDPOINT}** macro is
+In the subsequent sections, we will assume that the **${REDIS_ENDPOINT}** variable is
 replaced with the actual network endpoint of the Redis service, e.g. the local
 redis server at `127.0.0.1:6379`.
 
@@ -39,11 +36,11 @@ oio-fs configuration
 Prepare your system
 ^^^^^^^^^^^^^^^^^^^
 
-If working with a regular "non-priviledged" user, you will need to configure
-the FUSE permissions. In the file `/etc/fuse.conf`, you should uncomment the
+If working with a regular non-privileged user, you will need to configure
+FUSE permissions. In the file `/etc/fuse.conf`, you should uncomment the
 line with `user_allow_other`.
 
-If working in a container, be sure it has been started in proviledged mode.
+If working in a container, be sure it has been started in privileged mode.
 Please contact your system administrator if this is not the case, or to check
 if it is.
 
@@ -56,13 +53,13 @@ reference that will gather all the container shards that hold the inodes of
 your file system.
 
 .. code-block:: console
-   :caption: Init oio-sds for a oio-fs usage
+   :caption: Init oio-sds for oio-fs usage
 
    $ mkfs.oiofs OPENIO/MyAccount/MyReference
 
 
-This former command will create a directory reference and associate several
-properties to it. These properties are really important, and they should not
+This command will create a directory reference and associate several
+properties to it. These properties are important, and they should not
 change during the lifetime of the oio-fs volume.
 
 .. code-block:: console
@@ -82,8 +79,7 @@ change during the lifetime of the oio-fs volume.
 oiofs-fuse: CLI options
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Let's study the `oiofs-fuse` command before starting it.
-Many options are available:
+Many options are available for the `oiofs-fuse` command. Study these before using it:
 
 .. code-block:: console
    :caption: oiofs-fuse help section
@@ -137,18 +133,18 @@ Many options are available:
      -o [no_]splice_read    use splice to read from the fuse device
 
 
-The mandatory value are:
+The mandatory values are:
 
-* `--oiofs-user-url` that must match the oio-sds URL you already used earlier, e.g.
+* `--oiofs-user-url` must match the oio-sds URL you used earlier, e.g.
   `OPENIO/MyAccount/MyReference`.
-* `--oiofs-config` that must point to a readable JSON file, whose keys are described
-  here-below.
+* `--oiofs-config` must point to a readable JSON file, whose keys are described
+  below.
 
 oiofs-fuse: configuration file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 `oio-fs` is configured with a JSON file, the possible keys (directives) are
-described here-below.
+described below.
 
 .. contents::
    :local:
@@ -165,8 +161,8 @@ Set to true to flush chunks to oio-sds.
 attributes_timeout
 ------------------
 
-Set the validity delay for the `oiofs` chunks attributes, in seconds.
-Set to 0 to never cache those attributes.
+Set the validity delay for the `oiofs` chunk attributes, in seconds.
+Set to 0 to never cache these attributes.
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -176,9 +172,9 @@ Set to 0 to never cache those attributes.
 auto_retry
 ----------
 
-By default the cache doesn't retry on write/read/flush but returns EAGAIN.
-This can cause some problems with the local mounts. You can enable automatic
-retry when setting `auto_retry` to `true`
+By default, the cache doesn't retry on write/read/flush but returns EAGAIN.
+This can cause some problems with local mounts. You can enable automatic
+retry by setting `auto_retry` to `true`.
 
 * **OPTIONAL**
 * Format: **true** or **false**
@@ -188,9 +184,9 @@ retry when setting `auto_retry` to `true`
 cache_asynchronous
 ------------------
 
-Configure the cache management: set `cache_asynchronous` to `false` for a
+Configure cache management: set `cache_asynchronous` to `false` for
 synchronous write-back behavior, or set `cache_asynchronous` to `true` to make
-it asynchronous, thus relaxing the security for better performance.
+it asynchronous, thus relaxing security for better performance.
 
 * **OPTIONAL**
 * Format: **true** of **false**
@@ -200,13 +196,12 @@ it asynchronous, thus relaxing the security for better performance.
 cache_directory
 ---------------
 
-Explain where oiofs-fuse will will store its cached chunks of data.
+Specify where oiofs-fuse will store its cached chunks of data.
 It must point to a directory with `read` / `write` / `execute` permissions
 granted to the user running `oiofs-fuse`.
 
-No special options is required, but the operator is invited to dedicate a
-directory on a partitio that is rather fast. The fastest the best!
-`tmpfs` caches show good results.
+No special options are required, but the operator is invited to dedicate a
+directory on a partition that is as fast as possible. `tmpfs` caches show good results.
 
 * **MANDATORY**
 * Format: the path to an accessible directory
@@ -216,13 +211,13 @@ directory on a partitio that is rather fast. The fastest the best!
 cache_size
 ----------
 
-Sets how many bytes might a cache hold.
+Sets how many bytes a cache can hold.
 
-When the limit is reached, the behavior is different depending on the type
+When the limit is reached, behavior is different depending on the type
 of cache that has been configured. In cases of a synchronous cache (when
-`cache_asynchronous` is set to `false`), the content is expunged from the
+`cache_asynchronous` is set to `false`), content is expunged from the
 cache until enough space is recovered for the file being accessed. In cases of
-asynchronous caches, reaching the is a possible trigger for a write-back of
+asynchronous caches, reaching the limit is a possible trigger for a write-back of
 the cache.
 
 * **MANDATORY**
@@ -232,7 +227,7 @@ the cache.
 cache_size_for_flush_activation
 -------------------------------
 
-To set the high water mark. This is the size that will start a flush of the
+To set the high-water mark. This is the size that will start a flush of the
 cache when reached:
 
 * **OPTIONAL**
@@ -252,7 +247,7 @@ its size reaches a value below the threshold set by `cache_size_on_flush`.
 cache_timeout
 -------------
 
-Set how many seconds happen between periodic flush of the cache.
+Set how many seconds pass between periodic flush of the cache.
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -260,7 +255,7 @@ Set how many seconds happen between periodic flush of the cache.
 
 chunk_part_size
 ---------------
-To set the size of a chunk part, this is only use when updating the
+To set the size of a chunk part, this is only used when updating the
 recovery cache:
 
 * **OPTIONAL**
@@ -279,8 +274,8 @@ To set the chunk numbers to read ahead
 full_cache_timeout
 ------------------
 
-On a full cache, if a request need to retrieve a chunk it will wait until
-some space are freed or it reach a timeout defined by the following option
+On a full cache, if a request needs to retrieve a chunk, it will wait until
+some space has been freed or it reaches a timeout defined by the following option:
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -289,7 +284,7 @@ some space are freed or it reach a timeout defined by the following option
 fuse_max_retries
 --------------
 
-The maximal number of rewrite (`auto_retry` must be set to `true`).
+The maximal number of rewrites (`auto_retry` must be set to `true`).
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -298,7 +293,7 @@ The maximal number of rewrite (`auto_retry` must be set to `true`).
 ha_write_timeout
 ----------------
 
-To set the write timeout of the distance cache (in milliseconds and > 0):
+The write timeout of the distance cache (in milliseconds and > 0):
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -307,23 +302,23 @@ To set the write timeout of the distance cache (in milliseconds and > 0):
 http_server
 ------------
 
-The adress of the internal HTTP server that exhibit some metrics about the behavior
-of the current oiofs-fuse. If no address is explicitely configured, no internal stats
+The address of the internal HTTP server that displays some metrics about the behavior
+of the current oiofs-fuse. If no address is explicitly configured, no internal stats
 server is started and no socket is exposed.
 
-Please refer to that :ref:`section <ref-oiofs-sample-stat>` for an example output of
-the internal http server.
+Please refer to this :ref:`section <ref-oiofs-sample-stat>` for an example output of
+the internal HTTP server.
 
 * **MANDATORY**
 * Format: an ASCII string, the dot-decimal representation of an IPv4 address or a
-  colon-hexadecimal representation of an IPv6 address, followed by a colon then the TCP port.
+  colon-hexadecimal representation of an IPv6 address, followed by a colon, then the TCP port.
 * Default: None
 
 ignore_flush
 ------------
 
 When using an asynchronous cache, it is possible to postpone the `flush()`
-commands by setting `ignore_flush` to `true`.
+command by setting `ignore_flush` to `true`.
 
 * **OPTIONAL**
 * Format: **true** or **false**
@@ -334,18 +329,19 @@ log_level
 ---------
 
 Tune the verbosity of the `oio-fs` server. As a rule of thumb, verbosity levels
-beyond **"NOTICE"** are suitable for production. Below that level, there is a risk
-of flood.
+beyond **NOTICE** are suitable for production. Below that level, there is a risk
+of flooding.
 
 * **OPTIONAL**
-* Format: a string among "TRACE2", "TRACE", "DEBUG", "INFO", "NOTICE", "WARN" and "ERROR"
+* Format: a string among TRACE2, TRACE, DEBUG, INFO, NOTICE, WARN and ERROR.
 * Default: **"NOTICE"**
 
 max_flush_threads
 -----------------
 
-To improve the overall performance it is also necessary to avoid the connection to `oio-sds`
-to become the bottleneck. `oio-fs` manage a pool of thread, the threads are created on demand until `max_flush_threads` is reached. Any more demand will be blocked until a thread finishes its job (threads are reused).
+To improve overall performance, it is also necessary to avoid the connection to `oio-sds`
+to prevent bottlenecks. `oio-fs` manages a pool of threads; these threads are created on demand until `max_flush_threads` is reached.
+Any more demands will be blocked until a thread finishes its job (threads are reused).
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -364,9 +360,9 @@ This is the maximum number of chunks per upload.
 max_redis_connections
 ---------------------
 
-To improve the overall performance it is necessary to avoid the connection to Redis
-(Single or Sentinel) to become the bottleneck. `oio-fs` has been adapted to manage
-a pool of connections, the connections are created on demand until `max_redis_connections`
+To improve overall performance it is necessary to avoid the connection to
+Redis (Single or Sentinel) to prevent bottlenecks. `oio-fs` has been adapted to manage
+a pool of connections; the connections are created on demand until `max_redis_connections`
 is reached. Any attempt to get an outstanding connection is blocked until a connection
 is released in the pool.
 
@@ -403,18 +399,18 @@ Set the locations of the Redis Sentinel services to target, when not using
 `redis_server`.
 
 * **MANDATORY** (if not using `redis_server`)
-* Format: a array of ASCII strings representing valid network locations, i.e. a dot-decimal representations of IPv4 addresses or a colon-hexadecimal representations of an IPv6 addresses, followed by a colon then the TCP port.
+* Format: an array of ASCII strings representing valid network locations, i.e. dot-decimal representations of IPv4 addresses or a colon-hexadecimal representations of an IPv6 addresses, followed by a colon then the TCP port.
 * Default: None
 
 
 redis_server
 ------------
 
-The network location of the Redis server that manage the inodes persistence,
+The network location of the Redis server that manages inodes persistence,
 when not using a Redis Sentinel.
 
-When targetting a Redis Sentinel (toward a replicated Redis cluster), you must
-not use the `redis_server` configuration and rather use the couple
+When targeting a Redis Sentinel (toward a replicated Redis cluster), you must
+not use the `redis_server` configuration but rather use the couple
 `redis_sentinel_server` and `redis_sentinel_name`.
 
 * **MANDATORY** (if not using `redis_sentinel_server`)
@@ -424,8 +420,8 @@ not use the `redis_server` configuration and rather use the couple
 sds_retry_delay
 ---------------
 
-In some cases `oio-fs` may be too fast for `oio-sds`, for example when there is a lot of `oio-fs`
-instances on only one cluster. So to not overload `oio-sds` of requests there is a parameter to wait after a request failed.
+In some cases, oio-fs may be too fast for `oio-sds`, such as when there are a lot of `oio-fs`
+instances on only one cluster. So, to not overload `oio-sds` with requests, you can set a time for it to wait after a failed request.
 
 * **OPTIONAL**
 * Format: a positive integer
@@ -434,7 +430,7 @@ instances on only one cluster. So to not overload `oio-sds` of requests there is
 sync_ha
 -------
 
-To only flush to the "recovery_cache_directory" on sync you need to change this value
+To only flush to the recovery_cache_directory on sync you need to change this value.
 
 * **OPTIONAL**
 * Format: a boolean
@@ -447,7 +443,7 @@ Additional notes
 Minimal setups
 ^^^^^^^^^^^^^^
 
-The minimal file you need to provides must contain the 4 keys presented below:
+The minimal file you need to provide must contain the 4 keys presented below:
 
 .. code-block:: json
    :caption: Minimal configuration
@@ -487,10 +483,10 @@ Conservative setups
 Sample stats
 ^^^^^^^^^^^^
 
-Here is a sample of request/response exchange between an HTTP client and the
-stats server internal to the oiofs server. Please note that the output has been
-pretty-printed for a readability purpose, but that it won't necessary be in
-actual production deployments.
+Here is a sample of a request/response exchange between an HTTP client and the
+stats server internal to the oiofs server. Output has been formatted here for
+readability, but that won’t necessary be the case in actual production
+deployments.
 
 .. code-block:: http
 
@@ -597,7 +593,7 @@ actual production deployments.
 Sample configuration from the http server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can retrieve the running configuration from the http server using the '/conf' route
+You can retrieve the running configuration from the http server using the '/conf' route.
 
 .. code-block:: http
 

@@ -27,12 +27,17 @@ def main(out):
     data = None
     with open("components.json") as fin:
         data = json.load(fin)
-    for component, vals in data["repositories"].items():
-        for k, v in [('branchname', 'id'), ('repository', 'repository')]:
-            name = conv(component + '_' + k)
-            value = vals[v]
-            print("{0} {1}".format(name, value), file=out)
-    print("RELEASE {0}".format(data["release"]), file=out)
+    # for component, vals in data["repositories"].items():
+    for key, val in data.items():
+        if key == 'repositories':
+            for component, vals in val.items():
+                for k, v in [('branchname', 'id'),
+                             ('repository', 'repository')]:
+                    name = conv(component + '_' + k)
+                    value = vals[v]
+                    print("{0} {1}".format(name, value), file=out)
+        else:
+            print("{0} {1}".format(conv(key), val), file=out)
 
 
 if __name__ == "__main__":

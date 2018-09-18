@@ -1,36 +1,31 @@
-==========
-Quickstart
-==========
+===========
+Quick Start
+===========
 
 OpenIO SDS is a scalable open-source object storage solution.
 It is compatible with Amazon S3 and OpenStack Swift.
-Using OpenIO SDS one can easily scale its storage from a few-terabyte cluster to a multi-petabyte platform.
+Using OpenIO SDS, it is easy to scale a storage infrastructure from a simple cluster of a few terabytes to a multi-petabyte platform.
 OpenIO SDS is hardware-agnostic and can be installed on both x86 and ARM hardware.
 
-Try using docker
+Try using Docker
 ----------------
 
 .. code-block:: console
 
    # docker run -ti --tty openio/sds
 
-For more information, check out our :ref:`docker image <ref-docker-image>` documentation.
-
-Try on a Raspberry PI
----------------------
-
-Check out our Raspberry PI :ref:`install guide <ref-install-raspberry-pi-standalone>`.
+For more information, check out our :ref:`Docker image <ref-docker-image>` documentation.
 
 Install
 -------
 
-To install OpenIO SDS on your cluster, check out the :ref:`install guide <ref-install-guide>`.
+To install OpenIO SDS on your cluster, check out the :ref:`installation guide <ref-install-guide>`.
 
 
 Use
 ---
 
-Check out the :ref:`user guide <ref-user-guide>` to learn how to use OpenIO, or discover real :ref:`use cases <ref-use-case>` that involve OpenIO SDS.
+Check out the :ref:`user guide <ref-user-guide>` to learn how to use OpenIO, or discover real :ref:`use cases <ref-use-case>` showing how OpenIO SDS can be leveraged in a variety of situations.
 
 
 Operate
@@ -49,13 +44,13 @@ OpenIO SDS is available on `GitHub <https://github.com/open-io/oio-sds>`_.
 Learn
 -----
 
-Read about the :ref:`Solution <ref-solution-key-characteristics>` or the :ref:`Core concepts <ref-solution-core-concepts>` and make yourself familiar with the terminology.
+Read about the :ref:`Solution <ref-solution-key-characteristics>` or the :ref:`Core concepts <ref-solution-core-concepts>` and get familiar with the terminology.
 
 
 Develop
 -------
 
-OpenIO comes with a set of SDKs and APIs written in different languages, which you can base your projects upon:
+OpenIO comes with a set of SDKs and APIs written in different languages that you can use for your projects:
 
 - :ref:`Python API reference <ref-sdk-python>`
 - `C API reference <../../oio-api-c-doc>`_ (with :ref:`examples <ref-sdk-c>`)

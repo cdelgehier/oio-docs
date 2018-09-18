@@ -1,12 +1,12 @@
-========================
-Configure a rdir service
-========================
+=========================
+Configure an Rdir Service
+=========================
 
 Description
 -----------
 
-Rdir is a reverse directory which stores chunks references of a rawx. This service is useful to rebuild a rawx.
-Each rawx has a Rdir instance associated which is not hosted on the same server.
+Rdir is a reverse directory that stores chunk references of a rawx. This service is useful to rebuild a rawx.
+Each rawx has an Rdir instance associated that is not hosted on the same server.
 
 Prerequisites
 -------------

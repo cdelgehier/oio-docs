@@ -1,5 +1,5 @@
 ========================
-Configure a rawx service
+Configure a Rawx Service
 ========================
 
 Description

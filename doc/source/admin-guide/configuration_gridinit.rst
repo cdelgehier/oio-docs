@@ -1,5 +1,5 @@
 ===========================
-Configure a gridinit daemon
+Configure a Gridinit Daemon
 ===========================
 
 .. contents::
@@ -116,4 +116,3 @@ Sample configuration
    enabled=true
    start_at_boot=true
    command=/bin/sleep 3600
-

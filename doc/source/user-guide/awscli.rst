@@ -2,13 +2,13 @@
 AWS S3 CLI
 ==========
 
-This guide provides a few hints to help users getting started with the `AWS S3 command line client`_ using the OpenIO Swift gateway. By default, the gateway uses the `Swift3`_ middleware to allow the access to OpenIO object storage using Amazon S3 API.
-The AWS CLI allows to use the different APIs provided by AWS, including the `S3`_ and `S3API`_ ones.
+This guide provides a few tips to help users get started with the `AWS S3 command line client`_ using the OpenIO Swift gateway. By default, the gateway uses the Swift3 middleware to allow access to OpenIO object storage using the Amazon S3 API.
+The AWS CLI allows you to use the different APIs provided by AWS, including the `S3`_ and `S3API`_ ones.
 
 Configuration
 =============
 
-The configuration of the client depends on whenether you use a `TempAuth`_ or `Keystone`_ authentication on the Swift proxy.
+Client configuration depends on whether you use a `TempAuth`_ or `Keystone`_ authentication on the Swift proxy.
 
 TempAuth
 --------
@@ -38,8 +38,8 @@ You can also set specific parameters for the S3 commands:
 Keystone
 --------
 
-Using Openstack Keystone authentication system, you need to get a token in order in order to authenticate.
-Your need to install the `Openstack command line interface`_.
+Using the Openstack Keystone authentication system, you need to obtain a token in order in order to authenticate.
+You need to install the `Openstack command line interface`_.
 Export these variables to use the S3 CLI. Create a file `~/keystonerc_demo` containing:
 
    .. code-block:: console
@@ -50,7 +50,7 @@ Export these variables to use the S3 CLI. Create a file `~/keystonerc_demo` cont
     export OS_PASSWORD=DEMO_PASS
     export OS_AUTH_URL=http://localhost:5000/v2.0
 
-  .. note:: Replace the IP by the IP of your Keystone service
+  .. Note:: Replace the IP with the IP address of your Keystone service
 
 Source your credentials and get a token:
 
@@ -58,7 +58,8 @@ Source your credentials and get a token:
 
     # . keystonerc_demo ; openstack ec2 credentials create
 
-Configure your crediantials to the *~/.aws/credantials* and configure the default S3 client. Replace *ACCESS_KEY* and *SECRET_KEY* with the result of the previous command:
+Configure your credentials to *~/.aws/credantials* and configure the default S3 client.
+Replace *ACCESS_KEY* and *SECRET_KEY* with the result of the previous command:
 
    .. code-block:: console
 
@@ -91,9 +92,9 @@ Configure your crediantials to the *~/.aws/credantials* and configure the defaul
 Usage
 =====
 
-You will need to provide the command line the endpoint of the Swift gateway and disable the SSL verification, as it is not provided by default.
+You will need to provide the command line the endpoint of the Swift gateway and disable SSL verification, as it is not provided by default.
 
-.. note:: Replace *localhost* with the IP of your OpenIO Swift proxy.
+.. note:: Replace *localhost* with the IP address of your OpenIO Swift proxy.
 
 Install awscli
 --------------
@@ -116,8 +117,8 @@ List buckets
 
     # aws --endpoint-url http://localhost:6007 --no-verify-ssl s3 ls
 
-Upload a content
-----------------
+Upload content
+--------------
 
   .. code-block:: console
 

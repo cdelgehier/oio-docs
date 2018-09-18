@@ -1,11 +1,11 @@
 =======================
-Rebuild a volume: meta2
+Rebuild a Volume: Meta2
 =======================
 
 Preparation
 ~~~~~~~~~~~
-First you must run ``gridinit_cmd restart @meta2``, in this way you can check if meta services are up.
-If score are low, the rebuilder can be long and can failed due to timeout.
+First, run ``gridinit_cmd restart @meta2``; this allows you to check if meta services are up.
+If scores are low, the rebuilder can take a long time and can fail due to a timeout.
 You can check the score by running ``openio cluster list meta2``.
 
 Launch rebuilding
@@ -25,6 +25,9 @@ Options
 
 If you want to have more information about current rebuilding, you can change the report interval using ``--report-interval`` option.
 The default value is set to 3600 seconds, but if you want a report every minutes, you must launch rebuilding using ``oio-meta2-rebuilder --report-interval 60``.
+
+If you want more information about current rebuilding, you can change the report interval using the ``--report-interval`` option.
+The default value is set to 3600 seconds, but if you want a report every minute, you can launch rebuilding using ``oio-meta2-rebuilder --report-interval 60`.
 
 By default, the rebuilding use only one worker, you can give a number of worker using ``--workers`` option.
 For example, ``oio-meta2-rebuilder --workers 42`` launch rebuilding using 42 workers.
@@ -58,7 +61,7 @@ For example if you want to rebuild only this container:
      +----------------+--------------------------------------------------------------------+
 
 
-You put ``43839DACDD060FA939FAE2714A60640BDC5AFFDDBE8C494BDAB7AA994C3190A5`` on file and you can launch rebuilding using.
+You specify ``43839DACDD060FA939FAE2714A60640BDC5AFFDDBE8C494BDAB7AA994C3190A5`` as the file and launch rebuilding using:
 
   .. code-block:: console
 

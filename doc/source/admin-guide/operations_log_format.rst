@@ -1,14 +1,14 @@
 .. _label-log-format:
 
 =================================
-Understand the format of the logs
+Understand the Format of the Logs
 =================================
 
 The services in an OpenIO system respect a common format for their logs. Each
-log item is a single line of text, encoded in UTF-8. A line is a sequence of
-items separated by a sequence of white spaces. For an easy parsing, the variety
+log item is a single line of text encoded in UTF-8. A line is a sequence of
+items separated by a sequence of whitespaces. For easy parsing, the variety
 of the messages is organized around a recursion of envelopes (header and
-payload). All the fields are always present on a line, and when a field is not
+payload). All fields are always present on a line, and when a field is not
 set it is represented by a single dash character.
 
 
@@ -21,20 +21,20 @@ oio-swift
 COMMON envelope
 ~~~~~~~~~~~~~~~
 
-All the messages share this envelope. The first 3 fields depend on syslog,
-and all the others are populated by the application.
+All messages share this envelope. The first three fields depend on syslog,
+and all others are populated by the application.
 
 .. list-table:: Common Header
    :widths: 20 100
 
    * - Timestamp
-     - When the message has been issued. Should be displayed in ISO-8601
+     - When the message was issued. Should be displayed in ISO-8601.
    * - Hostname
-     - Where (on the platform) was the log trace emitted
+     - Where (on the platform) the log trace was emitted.
    * - Instance ID
-     - Logical identifier of the runninng application
+     - Logical identifier of the running application.
    * - Loglevel
-     - A value in the set: **error**, **warning**, **notice**, **info**, **debug**
+     - A value in the set: **error**, **warning**, **notice**, **info**, **debug**.
 
 
 ACCESS logs
@@ -44,7 +44,7 @@ ACCESS logs
    :widths: 20 100
 
    * - Client IP
-     - Swift’s guess at the end-client IP, taken from various headers in the request.
+     - Swift’s guess at the end-client's IP address, taken from various headers in the request.
    * - Remote Address
      - The IP address of the other end of the TCP connection.
    * - Datetime
@@ -54,11 +54,11 @@ ACCESS logs
    * - Request Path
      - The path portion of the request.
    * - Protocol
-     - The transport protocol used (currently one of http or https).
+     - The transport protocol used (currently either http or https).
    * - Return Code
      - The response code for the request.
-   * - Referer
-     - The value of the HTTP Referer header.
+   * - Referrer
+     - The value of the HTTP Referrer header.
    * - User Agent
      - The value of the HTTP User-Agent header.
    * - Auth Token
@@ -70,7 +70,7 @@ ACCESS logs
    * - Client Etag
      - The etag header value given by the client.
    * - Transaction ID
-     - The transaction id of the request.
+     - The transaction ID of the request.
    * - Headers
      - The headers given in the request.
    * - Request Time
@@ -87,7 +87,7 @@ ACCESS logs
      - The value of the storage policy index.
 
 
-In one log line, all of the above fields are space-separated and url-encoded. If any value is empty, it will be logged as a ``-``. This allows for simple parsing by splitting each line on whitespace.
+In one log line, all of the above fields are space-separated and URL-encoded. If any value is empty, it will be logged as a ``-``. This allows for simple parsing by splitting each line on whitespace.
 New values may be placed at the end of the log line from time to time, but the order of the existing values will not change.
 
 DEBUG logs
@@ -140,7 +140,7 @@ compound parameters.
      - `HTTP/1.0`
    * - Return code
      - `200`
-   * - Referer
+   * - Referrer
      - `-`
    * - User Agent
      - `aws-sdk-java`
@@ -175,28 +175,28 @@ oio-sds: oio-proxy, oio-meta{0,1,2}-server
 COMMON envelope
 ~~~~~~~~~~~~~~~
 
-All the messages share this envelope. The first 3 fields depend on syslog,
+All messages share this envelope. The first three fields depend on syslog,
 and all the others are populated by the application.
 
 .. list-table:: Common Header
    :widths: 20 100
 
    * - Timestamp
-     - When the message has been issued. Should be displayed in ISO-8601
+     - When the message has been issued. Should be displayed in ISO-8601.
    * - Hostname
-     - Where (on the platform) was the log trace emitted
+     - Where (on the platform) was the log trace emitted.
    * - Instance ID
-     - Logical identifier of the runninng application
+     - Logical identifier of the running application.
    * - Process ID
-     - Physical identifier of the currently running application
+     - Physical identifier of the currently running application.
    * - Thread ID
-     - Internal identifier of the control thread
+     - Internal identifier of the control thread.
    * - Domain
-     - ``access``, ``log``, ``out``
+     - ``access``, ``log``, ``out``.
    * - Payload
-     - A data whose format will depend on the value of the ``Domain``
+     - Data whose format will depend on the value of the ``Domain``.
    * - Loglevel
-     - A value in the set: **err**, **warning**, **notice**, **info**, **debug**
+     - A value in the set: **err**, **warning**, **notice**, **info**, **debug**.
 
 
 ACCESS logs
@@ -210,28 +210,28 @@ carries the ``access`` domain, and the payload is formatted as follows.
    :widths: 20 100
 
    * - Level
-     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**
+     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**.
    * - Local Address
-     - The local network address the service is bound to
+     - The local network address the service is bound to.
    * - Remote Address
-     - The network address of the peer that connected to the service
+     - The network address of the peer that connected to the service.
    * - Request Type
      - The name of the request, a.k.a. the RPC method.
    * - Return Code
      - The numeric return code of the message.
    * - Request Time
-     - How many microseconds it took to handle the request until a reply was ready (but not sent yet!)
+     - How many microseconds it took to handle the request until a reply was ready (but not sent yet).
    * - Request Size
      - How many bytes have been serialized for the reply. In case of HTTP requests, this doesn't include the headers.
    * - User ID
-     - The ID of the end-user the request is issued for
+     - The ID of the end-user the request is issued for.
    * - Session ID
-     - The ID of the user's session, sometimes also named Request-Id, used for aggregation purposes.
+     - The ID of the user's session, sometimes also named Request-ID, used for aggregation purposes.
    * - Payload
      - An arbitrary payload, often organized as a sequence of ``key=value`` pairs.
 
 
-Let's mention the case of the ACCESS log for outgoing requests. It is triggered
+There is also the ACCESS log for outgoing requests. It is triggered
 by an option in the central configuration file, and the format of each line is
 exactly the same as for incoming requests, with the exception of the ``Domain``
 in the common envelope that is set to ``out``.
@@ -248,7 +248,7 @@ purposes, destined to be read by a human more than a parser.
    :widths: 20 100
 
    * - Level
-     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**
+     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**.
    * - Payload
      - An arbitrary message.
 
@@ -283,8 +283,8 @@ The first 3 fields are set by syslog, making the ``Process ID`` field redundant.
    * - Loglevel
      - `info`
 
-The ``Domain`` is set to ``access``, so let's unpack the tail with the
-appropriated format.
+The ``Domain`` is set to ``access``; here is the tail of the error message with the
+appropriate format.
 
 .. list-table:: Fields from the ACCESS envelope
    :widths: 20 100
@@ -310,48 +310,48 @@ appropriated format.
    * - Payload
      - `t=63 AAA0`
 
-In this example, all the fields are always present as expected, but one
-of the missing fields is defaulting to a dash. The final field is has an
-arbitrary (or unspecified) format, it depends on the service
+In this example, all fields are present as expected, but one
+of the missing fields is defaulting to a dash. The final field has an
+arbitrary (or unspecified) format; this depends on the service
 implementation.
 
 The key ``t=`` represents the time (in microseconds) spent by a worker thread,
 once the request has been polled out of the queue in front of the thread pool.
 The difference between this time and the value of the ``Request Time`` field
 of the ``access`` envelope is the delay spent in the queue. A large delay is
-a sign of an heavily loaded service or, worse, a thread starvation.
+a sign of a heavily loaded service or, worse, a thread starvation.
 
-Another key used by OpenIO SDS is ``e=``, that gives the root cause of the
-error that occured. At the moment, there is no common format for that error,
+Another key used by OpenIO SDS is ``e=``; it gives the root cause of the
+error that occurred. At the moment, there is no common format for that error,
 but we tend to explain the error as a JSON object with ``status`` and a
 ``message`` field.
 
-oio-sds: rawx services
+oio-sds: Rawx Services
 ++++++++++++++++++++++
 
 COMMON envelope
 ~~~~~~~~~~~~~~~
 
-All the messages share this envelope. The first 3 fields depend on syslog,
+All messages share this envelope. The first three fields depend on syslog,
 and all the others are populated by the application.
 
 .. list-table:: Common Header
    :widths: 20 100
 
    * - Timestamp
-     - When the message has been issued. Should be displayed in ISO-8601
+     - When the message has been issued. Should be displayed in ISO-8601.
    * - Hostname
-     - Where (on the platform) was the log trace emitted
+     - Where (on the platform) was the log trace emitted.
    * - Instance ID
-     - Logical identifier of the runninng application
+     - Logical identifier of the running application.
    * - Process ID
-     - Physical identifier of the currently running application
+     - Physical identifier of the currently running application.
    * - Thread ID
-     - Internal identifier of the control thread
+     - Internal identifier of the control thread.
    * - Domain
-     - ``access``, ``log``, ``out``
+     - ``access``, ``log``, ``out``.
    * - Payload
-     - A data whose format will depend on the value of the ``Domain``
+     - Data whose format will depend on the value of the ``Domain``.
 
 
 
@@ -366,21 +366,21 @@ carries the ``access`` domain, and the payload is formatted as follows.
    :widths: 20 100
 
    * - Level
-     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**
+     - A value in the set: **ERR**, **WRN**, **NOT**, **INF**, **DBG**, **TR0**, **TR1**.
    * - Local Address
-     - The local network address the service is bound to
+     - The local network address the service is bound to.
    * - Remote Address
-     - The network address of the peer that connected to the service
+     - The network address of the peer that connected to the service.
    * - Request Type
      - The name of the request, a.k.a. the RPC method.
    * - Return Code
      - The numeric return code of the message.
    * - Request Time
-     - How many microseconds it took to handle the request until a reply was ready (but not sent yet!)
+     - How many microseconds it took to handle the request until a reply was ready (but not sent yet).
    * - Request Size
      - How many bytes have been serialized for the reply. In case of HTTP requests, this doesn't include the headers.
    * - User ID
-     - The ID of the end-user the request is issued for
+     - The ID of the end-user the request is issued for.
    * - Session ID
      - The ID of the user's session, sometimes also named Request-Id, used for aggregation purposes.
    * - Payload
@@ -415,8 +415,7 @@ The first 3 fields are set by syslog, making the ``Process ID`` field redundant.
      - `access`
 
 
-The ``Domain`` is set to ``access``, so let's unpack the tail with the
-appropriated format.
+The ``Domain`` is set to ``access``; here is the tail of the error message with the appropriate format.
 
 .. list-table:: Fields from the ACCESS envelope
    :widths: 20 100

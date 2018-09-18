@@ -5,23 +5,23 @@ Use the Swift API
 Setup
 +++++
 
-Simplest way to start use Swift over OpenIO is to follow
-http://docs.openio.io/{{RELEASE}}/docker-image/ to run standalone OpenIO SDS with
-Swift connector:
+The simplest way to start using Swift over OpenIO is to follow these instructions
+http://docs.openio.io/{{RELEASE}}/docker-image/ to run a standalone version of OpenIO SDS
+with the Swift connector:
 
 ::
 
   $ docker run -ti --tty -p 127.0.0.1:6007:6007 openio/sds
 
-You can use now Swift API (described at https://developer.openstack.org/api-ref/object-store/)
+You can use now the Swift API (described at https://developer.openstack.org/api-ref/object-store/).
 
-Few simple examples with `curl` command.
+Here are a few simple examples with the `curl` command.
 
 
 Authentication
 ++++++++++++++
 
-First, you have to retrieve your Authentication Token (`tempauth`)
+First, you have to retrieve your Authentication Token (`tempauth`):
 
 ::
 
@@ -37,7 +37,7 @@ First, you have to retrieve your Authentication Token (`tempauth`)
   X-Openstack-Request-Id: tx1ca2ca3465574968be754-005ae73afe
   Date: Mon, 30 Apr 2018 15:49:18 GMT
 
-and expose it for following examples
+And expose it for the following examples:
 
 ::
 
@@ -45,8 +45,8 @@ and expose it for following examples
   $ export TOKEN=AUTH_tkdc3c3c9c09bb470ebd4561faf524244f
 
 
-Create new container
-++++++++++++++++++++
+Create a New Container
+++++++++++++++++++++++
 
 ::
 
@@ -60,7 +60,7 @@ Create new container
   Date: Mon, 30 Apr 2018 15:56:17 GMT
 
 
-List available containers
+List Available Containers
 +++++++++++++++++++++++++
 
 ::
@@ -86,8 +86,8 @@ List available containers
   ]
 
 
-Upload a new content to a container
-+++++++++++++++++++++++++++++++++++
+Upload New Content to a Container
++++++++++++++++++++++++++++++++++
 
 ::
 
@@ -104,8 +104,8 @@ Upload a new content to a container
   X-Openstack-Request-Id: tx5d6a44c25b6347349cce6-005ae72f8e
   Date: Mon, 30 Apr 2018 15:00:30 GMT
 
-List content of a container
-+++++++++++++++++++++++++++
+List the Content of a Container
++++++++++++++++++++++++++++++++
 
 ::
 
@@ -132,7 +132,8 @@ List content of a container
   ]
 
 
-**Delete an object**
+Delete an object
+++++++++++++++++
 
 ::
 
