@@ -10,7 +10,7 @@ Configure an OpenIO Billing Service
 Description
 ~~~~~~~~~~~
 
-OpenIO Billing is an HTTP service allowing to retrieve the following information for an account, useful for billing :
+OpenIO Billing is an HTTP service allowing to retrieve the following information for an account, useful for billing:
 
 - number of bytes
 - number of objects

@@ -45,7 +45,7 @@ To get help on any command, use the ``help`` command.
 
     # openio help container create
 
-    usage : openio container create [-h] [-f {csv,html,json,table,value,yaml}]
+    usage: openio container create [-h] [-f {csv,html,json,table,value,yaml}]
                    [-c COLUMN] [--max-width <integer>]
                    [--quote {all,minimal,none,nonnumeric}]
                    <container-name> [<container-name> ...]
@@ -269,7 +269,7 @@ Delete container
 
     # openio container delete my_container
 
-Note : only empty containers can be deleted.
+Note: only empty containers can be deleted.
 
    .. code-block:: console
 

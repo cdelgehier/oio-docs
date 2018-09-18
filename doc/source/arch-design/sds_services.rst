@@ -12,7 +12,7 @@ OpenIO SDS is composed of multiple services, running on commodity hardware,
 from power-efficient systems to high-performance servers. Services are designed
 to run across multiple nodes and do not require any specific collocation.
 
-Here is a view of the different services available :
+Here is a view of the different services available:
 
 .. image:: ../../../images/openio-arch-solution.jpg
    :width: 600 px
@@ -75,8 +75,8 @@ Conscience services are composed of a conscience service and conscience-agent se
 
 The conscience service has two main functions:
 
-- Service Discovery : A service uses Conscience to discover what kind of services are available in the namespace and how to contact them.
-- Load Balancing : Conscience performs load balancing using real time metrics that are collected from the storage nodes. A score between 0 and 100 is computed using a configurable formula and then used to make a weighted random selection.
+- Service Discovery: A service uses Conscience to discover what kind of services are available in the namespace and how to contact them.
+- Load Balancing: Conscience performs load balancing using real time metrics that are collected from the storage nodes. A score between 0 and 100 is computed using a configurable formula and then used to make a weighted random selection.
 
 Key characteristics:
 
@@ -265,7 +265,7 @@ Key characteristics:
 
 Billing
 -------
-OIO-Billing is an HTTP service that retrieves the following information for an account, useful for billing :
+OIO-Billing is an HTTP service that retrieves the following information for an account, useful for billing:
 
 - Number of bytes
 - Number of objects
@@ -273,7 +273,7 @@ OIO-Billing is an HTTP service that retrieves the following information for an a
 - Outgoing bandwidth
 - Details of selected containers
 
-Key characteristics :
+Key characteristics:
 
 - Stateless
 
