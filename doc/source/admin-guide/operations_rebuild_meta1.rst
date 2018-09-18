@@ -2,8 +2,12 @@
 Rebuild a Volume: Meta1
 =======================
 
+.. contents::
+   :local:
+
 Preparation
 ~~~~~~~~~~~
+
 First, run ``gridinit_cmd restart @meta1``; this allows you to check that meta services are up.
 If scores are low, the rebuilder can take a long time and can fail due to a timeout.
 You can check the score by running ``openio cluster list meta1``.
@@ -17,8 +21,10 @@ You can  launch the rebuild by using the ``oio-meta1-rebuilder`` tool:
 
     # oio-meta1-rebuilder <NAMESPACE>
 
-    14171 7FD246EFC9B0 log INFO RUN worker=0 started=2018-07-10T11:29:02 passes=1 errors=0 meta1_prefixes=1 255.49/s waiting_time=0.00 rebuilder_time=0.00 total_time=0.00 (rebuilder: 100.00%)
-    14171 7FD24826BCD0 log INFO DONE started=2018-07-10T11:29:02 ended=2018-07-10T11:29:06 elapsed=3.67 passes=110 errors=0 meta1_prefixes=111 30.21/s waiting_time=1.83 rebuilder_time=1.83 (rebuilder: 100.00%)
+    16322 7F4F92F0BC30 log INFO START volume=None last_report=2018-09-18T11:17:01 0.00s prefixes=0 0.00/s errors=0 0.00% start_time=2018-09-18T11:17:01 0.00s total_prefixes=0 0.00/s total_errors=0 0.00%
+    16322 7F4F90F4D7D0 log INFO RUN volume=None last_report=2018-09-18T11:17:01 10.06s prefixes=541 53.75/s errors=0 0.00% start_time=2018-09-18T11:17:01 10.06s total_prefixes=541 53.75/s total_errors=0 0.00%
+    16322 7F4F90F4D7D0 log INFO RUN volume=None last_report=2018-09-18T11:17:11 10.10s prefixes=427 42.28/s errors=0 0.00% start_time=2018-09-18T11:17:01 20.16s total_prefixes=968 48.01/s total_errors=0 0.00%
+    16322 7F4F92F0BC30 log INFO DONE volume=None last_report=2018-09-18T11:17:21 2.35s prefixes=6 2.55/s errors=0 0.00% start_time=2018-09-18T11:17:01 22.52s total_prefixes=974 43.26/s total_errors=0 0.00%
 
 Options
 ~~~~~~~

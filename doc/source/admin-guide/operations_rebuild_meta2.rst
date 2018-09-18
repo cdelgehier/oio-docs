@@ -2,8 +2,12 @@
 Rebuild a Volume: Meta2
 =======================
 
+.. contents::
+   :local:
+
 Preparation
 ~~~~~~~~~~~
+
 First, run ``gridinit_cmd restart @meta2``; this allows you to check if meta services are up.
 If scores are low, the rebuilder can take a long time and can fail due to a timeout.
 You can check the score by running ``openio cluster list meta2``.
@@ -17,8 +21,9 @@ You can  launch the rebuild by using the ``oio-meta2-rebuilder`` tool:
 
     # oio-meta2-rebuilder <NAMESPACE>
 
-    24531 7F7E2D4FC690 log INFO RUN worker=0 started=2018-07-10T12:27:57 passes=1 errors=0 meta2_references=1 250.44/s waiting_time=0.00 rebuilder_time=0.00 total_time=0.00 (rebuilder: 100.00%)
-    24531 7F7E2E2A47D0 log INFO DONE started=2018-07-10T12:27:57 ended=2018-07-10T12:28:01 elapsed=3.26 passes=99 errors=0 meta2_references=100 30.66/s waiting_time=1.89 rebuilder_time=1.36 (rebuilder: 100.00%)
+    16479 7F0E45D504B0 log INFO START volume=None last_report=2018-09-18T11:19:18 0.00s references=0 0.00/s errors=0 0.00% start_time=2018-09-18T11:19:18 0.00s total_references=0 0.00/s total_errors=0 0.00%
+    16479 7F0E43CCE7D0 log INFO RUN volume=None last_report=2018-09-18T11:19:18 10.01s references=553 55.27/s errors=0 0.00% start_time=2018-09-18T11:19:18 10.01s total_references=553 55.27/s total_errors=0 0.00%
+    16479 7F0E45D504B0 log INFO DONE volume=None last_report=2018-09-18T11:19:28 9.68s references=427 44.12/s errors=0 0.00% start_time=2018-09-18T11:19:18 19.68s total_references=980 49.79/s total_errors=0 0.00%
 
 Options
 ~~~~~~~
