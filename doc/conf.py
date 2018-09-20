@@ -1,6 +1,6 @@
 html_context = {
     'css_files': ['_static/styles.css'],
-    'oio_versions': ['16.10', '17.04', '18.04', 'master'],
+    'oio_versions': ['18.04', '17.04', '16.04', 'master'],
     'is_stable': False,
     'landing_page': 'source/sandbox-guide/quickstart.html'
 }
