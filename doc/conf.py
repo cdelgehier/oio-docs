@@ -1,3 +1,5 @@
+project = 'OpenIO'
+
 html_context = {
     'css_files': ['_static/styles.css'],
     'oio_versions': ['18.04', '17.04', '16.04', 'master'],
