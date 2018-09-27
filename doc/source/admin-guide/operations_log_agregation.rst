@@ -1,8 +1,8 @@
-==========================
-OpenIO SDS Change Tracking
-==========================
+==============
+Trace Requests
+==============
 
-OpenIO SDS provides a way to track changes to data in the cluster.
+OpenIO SDS provides a way to trace requests in the cluster.
 
 .. code-block:: shell
   :caption: openio cli
