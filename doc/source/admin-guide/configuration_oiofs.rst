@@ -1,8 +1,8 @@
 .. _label-oiofs-configuration:
 
-========================================
-Configure an OpenIO Filesystem Connector
-========================================
+====================
+Filesystem Connector
+====================
 
 .. include:: ../business_oiofs.rst
 

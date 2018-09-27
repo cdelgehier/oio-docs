@@ -1,6 +1,6 @@
-=============================
-Configure a Zookeeper Service
-=============================
+=================
+Zookeeper Service
+=================
 
 Description
 -----------

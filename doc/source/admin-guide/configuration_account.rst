@@ -1,6 +1,6 @@
-=============================
-Configure the Account Service
-=============================
+===============
+Account Service
+===============
 
 Description
 -----------

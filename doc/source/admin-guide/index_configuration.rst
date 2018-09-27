@@ -1,6 +1,6 @@
-==================
-Configure services
-==================
+=============
+Configuration
+=============
 
 The administration and operations guide is focused on explaining how to
 configure OpenIO SDS. It also touches on the aspect of operating the platform

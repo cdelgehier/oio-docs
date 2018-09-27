@@ -1,6 +1,6 @@
-===================================
-Configure an OpenIO Billing Service
-===================================
+===============
+Billing Service
+===============
 
 .. include:: ../business_oiobilling.rst
 

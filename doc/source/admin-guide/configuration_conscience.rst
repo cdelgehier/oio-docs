@@ -1,6 +1,6 @@
-=============================
-Configure Conscience Services
-=============================
+===================
+Conscience Services
+===================
 
 Description
 -----------
