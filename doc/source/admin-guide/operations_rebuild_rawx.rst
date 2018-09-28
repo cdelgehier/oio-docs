@@ -83,3 +83,23 @@ After the rebuilding and if there were no errors, you can clear the incident.
    +--------+----------------+
    | volume | 127.0.0.1:6025 |
    +--------+----------------+
+
+Distribute rebuilding
+~~~~~~~~~~~~~~~~~~~~~
+
+To distribute, we use the Master/Slave model. The broken chunks are sent to beanstalkd tubes and the slave rebuilders listen to these beanstalkd tubes.
+
+You can start a slave:
+
+.. code-block:: console
+
+   # oio-blob-rebuilder <NAMESPACE> --beanstalkd <SLAVE1_IP:SLAVE1_PORT>
+
+
+You can start the master:
+
+.. code-block:: console
+
+   # oio-blob-rebuilder <NAMESPACE> --volume <RAWX_ID> --distributed <SLAVE1_IP:SLAVE1_PORT;SLAVE2_IP:SLAVE2_PORT;...> --beanstalkd <MASTER_IP:MASTER_PORT> --beanstalkd-tube oio-rebuilt
+
+The slaves must be started before the master.
