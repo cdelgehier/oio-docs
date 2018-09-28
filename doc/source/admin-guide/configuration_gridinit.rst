@@ -1,6 +1,6 @@
-===========================
-Configure a Gridinit Daemon
-===========================
+===============
+Gridinit Daemon
+===============
 
 .. contents::
    :local:

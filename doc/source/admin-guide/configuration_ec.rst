@@ -1,6 +1,6 @@
-========================
-Configure Erasure Coding
-========================
+==============
+Erasure Coding
+==============
 
 Erasure coding uses a set of algorithms (similar to RAID 6) to allow the recovery
 of missing data using a subset of the original data.
