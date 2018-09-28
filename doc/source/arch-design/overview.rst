@@ -1,4 +1,5 @@
 .. _ref-solution-key-characteristics:
+
 ===================
 Key Characteristics
 ===================
