@@ -1,3 +1,4 @@
+.. title:: Object Storage C client library, SDK docs, API examples
 .. _ref-sdk-c:
 
 =====

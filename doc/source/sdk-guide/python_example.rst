@@ -1,3 +1,4 @@
+.. title:: Object Storage Python client library, SDK docs, API examples
 .. _ref-sdk-python:
 
 ==========

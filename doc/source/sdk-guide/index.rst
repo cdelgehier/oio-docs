@@ -1,3 +1,5 @@
+.. title:: Guides for OpenIO SDK and internal services API
+
 ==========
 SDK guides
 ==========

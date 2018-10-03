@@ -11,6 +11,7 @@ doc2/
 /doc/source/sdk-guide/java-api/
 /doc/oio-sds-c-api/
 /doc/source/sdk-guide/proxy_container_api_calls.rst
+/doc/source/sdk-guide/proxy_content_api_calls.rst
 /doc/source/sdk-guide/proxy_cs_api_calls.rst
 /doc/source/sdk-guide/proxy_dir_api_calls.rst
 /doc/source/sdk-guide/rawx_api_calls.rst

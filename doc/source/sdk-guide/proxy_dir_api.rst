@@ -1,3 +1,5 @@
+.. title:: Manage the Directory of services, RESTful API
+
 =================
 Directory service
 =================
