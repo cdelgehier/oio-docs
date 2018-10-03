@@ -105,6 +105,7 @@ done < "${BUILD}/vars.export"
 find doc2/ -type f -name '*.rst' | while read P ; do
   $SED -f $BUILD/macros.ss "$P"
 done
+$SED -f $BUILD/macros.ss doc2/conf.py
 
 # Patch conf.py with components.json
 if cat components.json | python -mjson.tool | grep stable | grep true; then
