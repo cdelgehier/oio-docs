@@ -15,6 +15,7 @@ This guide documents how to install and try OpenIO SDS.
    single_node_install
    oiofs_install
    build_from_source
+   raspi_x1_ubuntu
    linux_support
    openstack_support
 
