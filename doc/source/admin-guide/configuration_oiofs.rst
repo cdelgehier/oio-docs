@@ -282,7 +282,7 @@ some space has been freed or it reaches a timeout defined by the following optio
 * Default: **0**
 
 fuse_max_retries
---------------
+----------------
 
 The maximal number of rewrites (`auto_retry` must be set to `true`).
 
