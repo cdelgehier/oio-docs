@@ -1,3 +1,7 @@
+.. title:: Integrate RClone with on premise S3 object storage.
+
+.. _ref-use-case-rclone:
+
 ======
 RClone
 ======

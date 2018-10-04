@@ -1,3 +1,7 @@
+.. title:: Integrate Mattermost with on premise S3 object storage.
+
+.. _ref-use-case-mattermost:
+
 ==========
 Mattermost
 ==========

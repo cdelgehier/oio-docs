@@ -1,3 +1,7 @@
+.. title:: Integrate Open-XChange Dovecot (Enterprise Edition) with on premise Swift/S3 object storage.
+
+.. _ref-use-case-dovecot:
+
 ============
 Dovecot Obox
 ============

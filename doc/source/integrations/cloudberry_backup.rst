@@ -1,4 +1,6 @@
-.. _ref-use-case:
+.. title:: Integrate CloudBerry Backup with on premise S3 object storage.
+
+.. _ref-use-case-cloudberry:
 
 =================
 Cloudberry Backup
