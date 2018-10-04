@@ -1,3 +1,5 @@
+.. title:: Manage Accounts (create, destroy, properties), RESTful API
+
 ===============
 Account service
 ===============

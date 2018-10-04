@@ -1,3 +1,4 @@
+.. title:: Object Storage Java client JAR, SDK docs, API examples
 .. _ref-sdk-java:
 
 ========

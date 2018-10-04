@@ -1,3 +1,7 @@
+.. title:: Integrate NextCloud with on premise S3 object storage.
+
+.. _ref-use-case-nextcloud:
+
 =========
 Nextcloud
 =========

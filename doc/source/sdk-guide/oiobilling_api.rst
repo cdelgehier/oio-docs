@@ -1,3 +1,5 @@
+.. title:: Billing & Accounting RESTful API
+
 ==========================
 OpenIO Billing service API
 ==========================

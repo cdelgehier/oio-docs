@@ -1,3 +1,5 @@
+.. title:: Features of the Filesystem (FS) connector to your on premise object storage
+
 .. _label-oiofs-architecture:
 
 ======================

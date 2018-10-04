@@ -1,3 +1,5 @@
+.. title:: Internal services of OpenIO SDS
+
 ========
 Services
 ========
