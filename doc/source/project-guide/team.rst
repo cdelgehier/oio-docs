@@ -1,3 +1,5 @@
+.. title:: The story of the people behind OpenIO
+
 ========
 The team
 ========
