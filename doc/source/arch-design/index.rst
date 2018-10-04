@@ -1,3 +1,5 @@
+.. title:: Understand the key notions of your on premise object storage
+
 ========
 Solution
 ========

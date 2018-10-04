@@ -1,4 +1,7 @@
+.. title:: Core business features for your on premise object storage
+
 .. _ref-solution-key-characteristics:
+
 ===================
 Key Characteristics
 ===================

@@ -1,3 +1,5 @@
+.. title:: Core management features for your on premise object storage
+
 ===============
 Data Management
 ===============

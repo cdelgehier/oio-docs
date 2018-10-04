@@ -1,3 +1,5 @@
+.. title:: On premise S3 compliant backend
+
 .. _label-s3-compliancy:
 
 =============

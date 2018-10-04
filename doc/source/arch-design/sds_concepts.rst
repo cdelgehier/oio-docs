@@ -1,4 +1,7 @@
+.. title:: Core concept of OpenIO SDS
+
 .. _ref-solution-core-concepts:
+
 =========================
 OpenIO SDS: Core Concepts
 =========================
