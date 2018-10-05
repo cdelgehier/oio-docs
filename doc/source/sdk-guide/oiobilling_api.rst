@@ -1,5 +1,7 @@
 .. title:: Billing & Accounting RESTful API
 
+.. _label-oiobilling-api:
+
 ==========================
 OpenIO Billing service API
 ==========================
@@ -19,6 +21,8 @@ OpenIO Billing is an HTTP service allowing to retrieve the following information
 - incoming bandwidth
 - outgoing bandwidth
 - details of selected containers
+
+To know how to run the service, see :ref:`label-oiobilling-configuration`.
 
 Check the service
 ~~~~~~~~~~~~~~~~~
