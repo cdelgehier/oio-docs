@@ -1,3 +1,5 @@
+.. _label-rdir-configuration:
+
 =========================
 Configure an Rdir Service
 =========================
@@ -36,3 +38,9 @@ Sample configuration file
    log_level = info
    log_address = /dev/log
    syslog_prefix = OIO,OPENIO,rdir,0
+
+
+Usage
+-----
+
+See :ref:`label-rdir-api`.
