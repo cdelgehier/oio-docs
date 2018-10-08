@@ -41,7 +41,7 @@
         "oio-fs":{
             "doc": false,
             "repository":"git@github.com:open-io/oio-fs.git",
-            "id":"2.1.1"
+            "id":"2.2.3"
         },
         "oio-replicator":{
             "doc": false,
@@ -51,7 +51,7 @@
         "oio-dashboard":{
             "doc": false,
             "repository":"git@github.com:open-io/oio-dashboard.git",
-            "id":"2.1.0-rc1"
+            "id":"2.1.0-rc2"
         },
 
         "cosbench":{
