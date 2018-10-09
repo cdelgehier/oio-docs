@@ -1,8 +1,15 @@
+.. title:: Your Swift/S3 backend in a Docker container
+
 .. _ref-docker-image:
 
 ============
 Docker Image
 ============
+
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
 
 This `Docker <http://www.docker.com>`_ image provides an easy way to run an OpenIO namespace.
 It deploys and configure a simple non-replicated namespace in a single container.

@@ -1,6 +1,15 @@
+.. title:: Quickstart guide for OpenIO SDS beginners
+
+.. _ref-quickstart:
+
 ===========
 Quick Start
 ===========
+
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
 
 OpenIO SDS is a scalable open-source object storage solution.
 It is compatible with Amazon S3 and OpenStack Swift.

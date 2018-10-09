@@ -1,8 +1,15 @@
+.. title:: Deploy a filesystem connector to your on premise object storage backend.
+
+.. _label-oiofs-installation:
+
 =======================
 OIOFS Node Installation
 =======================
 
+.. include:: ../business_oiofs.rst
+
 .. contents::
+   :backlinks: none
    :depth: 1
    :local:
 
