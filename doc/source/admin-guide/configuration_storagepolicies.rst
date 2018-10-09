@@ -34,9 +34,7 @@ You can then define a storage policy that uses this pool to replicate chunks 3 t
 
 As shown in the example above, a custom storage policy has been created for multi-site replication.
 
-See also: `Conscience`_.
-
-.. _`Conscience`: ../arch-design/conscience.html
+See also :ref:`label-arch-conscience`, :ref:`label-arch-dynstgpol`.
 
 Data Security
 -------------
