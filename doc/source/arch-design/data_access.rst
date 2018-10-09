@@ -30,6 +30,8 @@ Application integration becomes easy with this standard REST protocol. This API
 can take advantage of many features available in OpenIO SDS withoutmajor
 tradeoffs.
 
+More information at ":ref:`label-swift-api-example`", ":ref:`label-swift-cli-example`".
+
 OpenIO FS
 +++++++++
 If you need to work with legacy use cases and export an OpenIO SDS account as a file system, you can use OpenIO FS. Locally mounted, you can then export it with NFS or SMB / CIFS protocols. High-availability extensions can be added on top of these protocols for best-in-class integration with a legacy filesystem architecture, while providing all the benefits of the OpenIO suite.

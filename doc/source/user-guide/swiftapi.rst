@@ -1,13 +1,20 @@
+.. _label-swift-api-example:
+
 =================
 Use the Swift API
 =================
 
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
+
 Setup
 +++++
 
-The simplest way to start using Swift over OpenIO is to follow these instructions
-http://docs.openio.io/{{RELEASE}}/docker-image/ to run a standalone version of OpenIO SDS
-with the Swift connector:
+The simplest way to start using Swift over OpenIO is to follow the instructions
+at :ref:`ref-docker-image` to run a standalone version of OpenIO SDS with the
+Openstack Swift connector:
 
 ::
 

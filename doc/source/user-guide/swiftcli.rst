@@ -1,6 +1,13 @@
+.. _label-swift-cli-example:
+
 ===================
 Openstack Swift CLI
 ===================
+
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
 
 This guide provides a few tips to help users getting started with the Openstack Swift command line client.
 The Openstack Swift command line client supports different authentication methods; the way to use the client
