@@ -27,7 +27,7 @@ If you want to have more information about current rebuilding, you can change th
 The default value is set to 3600 seconds, but if you want a report every minutes, you must launch rebuilding using ``oio-meta2-rebuilder --report-interval 60``.
 
 If you want more information about current rebuilding, you can change the report interval using the ``--report-interval`` option.
-The default value is set to 3600 seconds, but if you want a report every minute, you can launch rebuilding using ``oio-meta2-rebuilder --report-interval 60`.
+The default value is set to 3600 seconds, but if you want a report every minute, you can launch rebuilding using ``oio-meta2-rebuilder --report-interval 60``.
 
 By default, the rebuilding use only one worker, you can give a number of worker using ``--workers`` option.
 For example, ``oio-meta2-rebuilder --workers 42`` launch rebuilding using 42 workers.
