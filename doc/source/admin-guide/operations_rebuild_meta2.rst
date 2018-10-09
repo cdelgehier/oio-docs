@@ -2,6 +2,11 @@
 Rebuild a Volume: Meta2
 =======================
 
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
+
 Preparation
 ~~~~~~~~~~~
 First, run ``gridinit_cmd restart @meta2``; this allows you to check if meta services are up.
