@@ -1,3 +1,5 @@
+.. title:: How to dimension your object storage on premise
+
 ============
 Sizing Guide
 ============
@@ -359,7 +361,7 @@ Zookeeper: Standalone services
 
 With small demonstration or sandbox deployments, you won't need to precisely
 dimension your Zookeeper instance. However, the general [Zookeeper administration
-guide](https://zookeeper.apache.org/doc/trunk/zookeeperAdmin.html)
+guide](https://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html)
 might help you.
 
 
