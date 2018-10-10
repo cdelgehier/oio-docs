@@ -63,19 +63,11 @@ if [[ -z "$OIO_DOCS_LIGHT" ]]; then
       doc/source/admin-guide/variables.rst || true
 
     # Build the Java API javadoc
-    if which javadoc 2>/dev/null >/dev/null ; then
-      if [[ -d $BUILD/oio-api-java/src/main/java ]] ; then
-        ( cd $BUILD/oio-api-java/src/main/java \
-          && javadoc -d $TARGET/oio-api-java-doc io.openio.sds )
-      fi
-    fi
+    ( cd $BUILD/oio-api-java/src/main/java \
+      && javadoc -d $TARGET/oio-api-java-doc io.openio.sds )
 
     # Build the C API doxygen doc
-    if which doxygen 2>/dev/null >/dev/null ; then
-      if [[ -r doc/Doxyfile-api-c ]] ; then
-        doxygen doc/Doxyfile-api-c
-      fi
-    fi
+    doxygen doc/Doxyfile-api-c
 
     # We configured sphinx to make it document the python sdk. The modules will
     # be loaded, we need even the dependencies.

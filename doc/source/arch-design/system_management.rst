@@ -37,8 +37,25 @@ comprehensive dashboard allows users to see the status of the cluster in real
 time, and to perform most day-to-day tasks including user management, cluster
 expansion, and maintenance, as well as performance analysis.
 
+.. _label-oiobilling-value:
+
 Billing API
 -----------
-OpenIO’s customers can take advantage of this API to get relevant information
+OpenIO's customers can take advantage of this API to get relevant information
 for any account configured in the system, its status, and all the metrics used
 to compute the exact amount of resources consumed by users.
+
+For more information, please refer to :ref:`label-oiobilling-descr` or
+:ref:`label-oiobilling-configuration`.
+
+.. _label-replicator-value:
+
+Replicator Service
+------------------
+The *repicator* service allows OpenIO's customers to asynchronously replicate a
+namespace on an other namespace. In other words, the replicator is the key element
+in your multi-datacenters Disaster Recovery Plans (DRP).
+
+For more information, please refer to :ref:`label-replicator-descr` or
+:ref:`label-replicator-configuration`.
+

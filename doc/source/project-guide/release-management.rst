@@ -7,8 +7,11 @@ Release Management
 Version numbers
 ---------------
 
-Each OpenIO subproject (oio-sds_, oiopy_, etc.) has its own version number.
-We will follow the rules defined in `Openstack's fork of Semantic Versioning`_.
+Either from the Open Source side (oio-sds_, gridinit_, etc.) or the close
+source part (:ref:`label-oiofs-architecture`, :ref:`label-replicator-value`,
+:ref:`label-oiobilling-value`, etc), each OpenIO subproject has its own
+version number. We will follow the rules defined in
+`Openstack's fork of Semantic Versioning`_.
 
 * Breaking changes increment the major version number,
 * Regular changes increment the minor version number,
@@ -29,5 +32,5 @@ During its life, a distribution will receive only non-breaking updates
 of its subprojects.
 
 .. _oio-sds: https://github.com/open-io/oio-sds
-.. _oiopy: https://github.com/open-io/oiopy
+.. _gridinit: https://github.com/open-io/gridinit
 .. _Openstack's fork of Semantic Versioning: http://docs.openstack.org/developer/pbr/semver.html

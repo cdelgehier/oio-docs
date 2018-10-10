@@ -1,3 +1,6 @@
+
+.. _label-oiobilling-configuration:
+
 ===============
 Billing Service
 ===============
@@ -59,3 +62,9 @@ Run
 .. code-block:: shell
 
       oio-billing-server <conf>
+
+
+Usage
+~~~~~
+
+See :ref:`label-oiobilling-api`.

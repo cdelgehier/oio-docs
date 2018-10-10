@@ -154,7 +154,7 @@ Our runtime also requires the following python dependencies:
 .. _templates: https://github.com/open-io/puppet-openiosds
 .. _virtualbox: https://www.virtualbox.org/
 .. _zeromq3: http://zeromq.org/
-.. _zookeeper: http://zookeeperapr.apache.org
+.. _zookeeper: http://zookeeper.apache.org
 
 .. _AGPLv3: https://www.gnu.org/licenses/agpl.html
 .. _AGPLv2: https://www.gnu.org/licenses/old-licenses/agpl-2.1.html

@@ -117,9 +117,10 @@ respected. Note that slaves can also perform reads if requested.
 Transient failures like network partitions can cause replicas to diverge, but with this
 replication mechanism differences are reconciled automatically.
 
+.. _label-arch-conscience:
+
 Conscience: Dynamic Load-Balancing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 For data placement, OpenIO SDS provides a system called Conscience, responsible for efficiently matching requests and services. Conscience takes into account constraints set by the request (i.e. respect of storage policies) and computes a quality score between 0 and 100 for each service available in the cluster. These quality scores are based on an algorithm that aggregates data provided by a number of sensors on the various nodes of the grid. Through this feedback loop, each node knows in real time which are the best nodes with the highest scores to handle subsequent requests.
 
 A score of 0 indicates the service must be avoided. A positive score means the service can be used; the higher it is, the better its performance will be.

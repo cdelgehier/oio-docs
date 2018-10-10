@@ -580,29 +580,6 @@ div.document {
     transition: all 350ms;
 }
 
-.sidebar-warning-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    font-size: 1.2em;
-    z-index: 500;
-    color: #fff;
-    overflow: hidden;
-    display: none;
-    text-align: justify;
-    background: rgba(74,74,74,0.9);
-    cursor: pointer;
-}
-
-.sidebar-warning-container:hover {
-    background: rgba(74,74,74,0.8);
-}
-
-.sidebar-warning-container > div {
-    padding: 20px;
-}
-
 .sidebar-footer {
     padding-bottom: 50px;
 }

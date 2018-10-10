@@ -36,6 +36,8 @@ with a specific data protection mechanism for a particular dataset, and so on.
 .. Hybrid cloud support
 .. --------------------
 
+.. _label-arch-dynstgpol:
+
 Dynamic Storage Policies
 ------------------------
 Storage policies are OpenIO’s way of managing storage tiering. They consist

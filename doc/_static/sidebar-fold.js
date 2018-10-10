@@ -173,19 +173,6 @@ $(document).ready(function() {
             sel.prop('selected', 'selected');
     }
 
-    // Display warning if version is marked as "unstable"
-
-    if (ISUNSTABLE) {
-        var selWarning = $('.sidebar-warning-container');
-        if(!window.sessionStorage.getItem('unstableWarn')) {
-            selWarning.slideDown();
-            window.sessionStorage.setItem('unstableWarn', true);
-            selWarning.on('click', function() {
-                selWarning.slideUp();
-            });
-        }
-    }
-
 });
 
 function debounce(f, delay) {

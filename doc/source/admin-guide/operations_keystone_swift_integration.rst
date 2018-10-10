@@ -27,7 +27,7 @@ a Swift resource, the user authenticates against Keystone, which provides
 a token the user will need for each request to Swift. Swift has access to
 Keystone to allow or deny each request it receives.
 
-In `Keystone API v2 <https://developer.openstack.org/api-ref/identity/v2/>`__,
+In v2 of `Keystone API v2 <https://developer.openstack.org/api-ref/identity/>`__,
 you first create a user, then give a role to that user in a tenant (or
 project). The default `domain <https://docs.openstack.org/newton/install-guide-obs/common/glossary.html#term-domain>`__
 is *default*.

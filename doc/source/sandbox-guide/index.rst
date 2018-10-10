@@ -1,3 +1,5 @@
+.. title:: OpenIO installation guides
+
 .. _label-sandbox-guide:
 
 ==============

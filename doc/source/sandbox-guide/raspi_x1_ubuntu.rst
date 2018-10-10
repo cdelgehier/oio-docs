@@ -1,8 +1,15 @@
+.. title:: Deploy a Swift/S3 object storage backend on a Raspberry Pi
+
 .. _ref-install-raspberry-pi-standalone:
 
-====================================
+=====================
 SDS on a Raspberry PI
-====================================
+=====================
+
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
 
 This guide explains how to install OpenIO SDS in standalone mode on a Raspberry Pi 3 Model B running Ubuntu Xenial 64 bit.
 

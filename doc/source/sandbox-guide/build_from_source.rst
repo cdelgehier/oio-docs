@@ -1,18 +1,22 @@
+.. title:: Learn OpenIO SDS the hard way, your Swift/S3 on premise backend built from scratch.
+
 .. _ref-build-from-source:
 
 =================
 Build from Source
 =================
 
+.. contents::
+   :backlinks: none
+   :depth: 1
+   :local:
+
 This section describes how to compile OpenIO SDS from the official source downloaded from GitHub.
 
-The build procedure is available for:
-
-* Ubuntu 16.04
+The build procedure is available for **Ubuntu 16.04**.
 
 Set the $SDS variable
 ---------------------
-
 Throughout this guide, the environment variable `SDS` will be used several times. You should ensure this variable is always defined.
 It should be set to the name of directory where you are building OpenIO SDS.
 
@@ -34,7 +38,6 @@ We provide easy access to build and runtime dependency versions not available in
 
 Build Dependencies
 ------------------
-
 Build tools
 
    .. code-block:: shell

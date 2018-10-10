@@ -1,8 +1,13 @@
+.. title:: Deploy a sandbox Swift/S3 on premise object storage backend
+
+.. _ref-install-1node-guide:
+
 ========================
 Single Node Installation
 ========================
 
 .. contents::
+   :backlinks: none
    :depth: 1
    :local:
 

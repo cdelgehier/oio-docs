@@ -1,3 +1,5 @@
+.. title:: Deploy a multi-node Swift/S3 on premise object storage backend
+
 .. _ref-install-guide:
 
 ========================
@@ -5,6 +7,7 @@ Multi Nodes Installation
 ========================
 
 .. contents::
+   :backlinks: none
    :depth: 1
    :local:
 
