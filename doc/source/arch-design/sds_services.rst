@@ -256,17 +256,22 @@ Key characteristics:
 Other Services
 ~~~~~~~~~~~~~~
 
+.. _label-replicator-descr:
+
 Replicator
 ----------
+
 The replicator service is a work queue consumer process. Its main purpose is to asynchronously replicate objects and containers from one local namespace to another geographically distant namespace.
 
 Key characteristics:
 
 - Stateless
 
+.. _label-billing-descr:
 
 Billing
 -------
+
 OIO-Billing is an HTTP service that retrieves the following information for an account, useful for billing:
 
 - Number of bytes
@@ -278,6 +283,8 @@ OIO-Billing is an HTTP service that retrieves the following information for an a
 Key characteristics:
 
 - Stateless
+
+Please refer to :ref:`label-oiobilling-value` or :ref:`label-oiobilling-configuration` for more information.
 
 WebUI
 -----

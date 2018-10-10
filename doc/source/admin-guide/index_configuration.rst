@@ -17,6 +17,7 @@ by showing how to perform various administration tasks.
    configuration_swift
    configuration_oiofs
    configuration_oiobilling
+   configuration_replicator
    configuration_rawx
    configuration_rdir
    configuration_account
