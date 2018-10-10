@@ -165,7 +165,3 @@ Delete a container
   X-Openstack-Request-Id: txd3efa8f6a63f45a194bf8-005ae72fc3
   Date: Mon, 30 Apr 2018 15:01:23 GMT
 
-
-Resources:
-
-https://prosuncsedu.wordpress.com/2014/02/26/accessing-object-store-with-curl/
