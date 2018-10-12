@@ -15,5 +15,6 @@ Solution
    sds_concepts
    sds_services
    s3_compliancy
+   metadata_indexing
 
 .. end of contents

@@ -1,0 +1,35 @@
+ digraph G {
+  newrank=true
+  node [shape = box; width = 1.5; fixedsize = true;]
+
+  subgraph cluster_A {
+    sds_webhook [label = "webhook"];
+    label = "SDS";
+  }
+
+  subgraph cluster_B{
+    grid_indexing [label = "indexing"];
+    grid_search [label = "search"];
+    label = "GRID functions";
+ }
+
+  subgraph cluster_X {
+    s3tokens;
+    label = "Keystone";
+  }
+
+  subgraph cluster_D {
+    es_index [label = "index"];
+    es_search [label = "search"];
+    label = "ElasticSearch";
+  }
+
+ sds_webhook -> grid_indexing [label = "invoke", width=1.5];
+ grid_search -> s3tokens [label = "auth"];
+ grid_search -> es_search;
+ grid_indexing -> es_index;
+
+ {rank=same; grid_search; s3tokens;}
+
+ Users -> grid_search [label="search"];
+}
