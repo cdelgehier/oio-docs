@@ -25,6 +25,7 @@ by showing how to perform various administration tasks.
    configuration_zk
    configuration_gridinit
    configuration_namespace
+   configuration_indexing
    sizing-guide
 
 .. end of contents
