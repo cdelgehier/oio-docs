@@ -2,23 +2,23 @@
 set -x
 
 case $(uname -s) in
-	Darwin)
-		TARGET="$PWD/result-docs"
-		BUILD="$PWD/$1"
-		SED="/usr/bin/sed -i ''"
-		;;
-	Linux)
-		set -e
-		TARGET=$(readlink --canonicalize result-docs)
-		BUILD=$(readlink --canonicalize "$1")
-		SED="/bin/sed -i"
-		set -e
-		[[ -n "$BUILD" ]]
-		;;
-	*)
-		echo "Platform not supported"
-		exit 1
-		;;
+  Darwin)
+    TARGET="$PWD/result-docs"
+    BUILD="$PWD/$1"
+    SED="/usr/bin/sed -i ''"
+    ;;
+  Linux)
+    set -e
+    TARGET=$(readlink --canonicalize result-docs)
+    BUILD=$(readlink --canonicalize "$1")
+    SED="/bin/sed -i"
+    set -e
+    [[ -n "$BUILD" ]]
+    ;;
+  *)
+    echo "Platform not supported"
+    exit 1
+    ;;
 esac
 
 mkdir -p "$TARGET"
