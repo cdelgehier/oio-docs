@@ -48,7 +48,7 @@ Here is the detail of supported operations.
    * - DELETE Bucket replication
      - ❌
    * - DELETE Bucket tagging
-     - ❌
+     - ✅
    * - DELETE Bucket website
      - ❌
    * - GET Bucket (List Objects) Version 2
@@ -84,7 +84,7 @@ Here is the detail of supported operations.
    * - GET Bucket requestPayment
      - ❌
    * - GET Bucket tagging
-     - ❌
+     - ✅
    * - GET Bucket versioning
      - ✅
    * - GET Bucket website
@@ -128,7 +128,7 @@ Here is the detail of supported operations.
    * - PUT Bucket requestPayment
      - ❌
    * - PUT Bucket tagging
-     - ❌
+     - ✅
    * - PUT Bucket versioning
      - ✅
    * - PUT Bucket website
@@ -144,13 +144,13 @@ Here is the detail of supported operations.
    * - DELETE Object
      - ✅
    * - DELETE Object tagging
-     - ❌
+     - ✅
    * - GET Object
      - ✅
    * - GET Object ACL
      - ✅
    * - GET Object tagging
-     - ❌
+     - ✅
    * - GET Object torrent
      - ❌
    * - HEAD Object
@@ -168,7 +168,7 @@ Here is the detail of supported operations.
    * - PUT Object acl
      - ✅
    * - PUT Object tagging
-     - ❌
+     - ✅
    * - SELECT Object Content (Preview)
      - ❌
 
