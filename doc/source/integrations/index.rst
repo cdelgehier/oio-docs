@@ -13,5 +13,6 @@ common tools of the industry.
    dovecot_obox
    cookbook_nextcloud.rst
    cookbook_mattermost.rst
+   cookbook_cyberduck.rst
 
 .. end of contents
