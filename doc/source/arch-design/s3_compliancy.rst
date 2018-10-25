@@ -36,7 +36,7 @@ Here is the detail of supported operations.
    * - DELETE Bucket cors
      - ✅
    * - DELETE Bucket encryption
-     - ❌
+     - ✅
    * - DELETE Bucket inventory
      - ❌
    * - DELETE Bucket lifecycle
@@ -62,7 +62,7 @@ Here is the detail of supported operations.
    * - GET Bucket cors
      - ✅
    * - GET Bucket encryption
-     - ❌
+     - ✅
    * - GET Bucket Inventory
      - ❌
    * - GET Bucket lifecycle
@@ -110,7 +110,7 @@ Here is the detail of supported operations.
    * - PUT Bucket cors
      - ✅
    * - PUT Bucket encryption
-     - ❌
+     - ✅
    * - PUT Bucket inventory
      - ❌
    * - PUT Bucket lifecycle
