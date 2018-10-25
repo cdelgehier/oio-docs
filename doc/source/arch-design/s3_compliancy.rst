@@ -34,7 +34,7 @@ Here is the detail of supported operations.
    * - DELETE Bucket analytics
      - ❌
    * - DELETE Bucket cors
-     - ❌
+     - ✅
    * - DELETE Bucket encryption
      - ❌
    * - DELETE Bucket inventory
@@ -60,7 +60,7 @@ Here is the detail of supported operations.
    * - GET Bucket analytics
      - ❌
    * - GET Bucket cors
-     - ❌
+     - ✅
    * - GET Bucket encryption
      - ❌
    * - GET Bucket Inventory
@@ -108,7 +108,7 @@ Here is the detail of supported operations.
    * - PUT Bucket analytics
      - ❌
    * - PUT Bucket cors
-     - ❌
+     - ✅
    * - PUT Bucket encryption
      - ❌
    * - PUT Bucket inventory
@@ -156,7 +156,7 @@ Here is the detail of supported operations.
    * - HEAD Object
      - ✅
    * - OPTIONS object
-     - ❌
+     - ✅
    * - POST Object
      - ❌
    * - POST Object restore
