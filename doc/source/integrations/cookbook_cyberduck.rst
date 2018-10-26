@@ -16,9 +16,10 @@ This guide will explain how to setup this client to use OpenIO.
 
 -  OpenIO cluster is running on any ``oioswift`` node at port 6007 in ``HTTP``, follow `Multi Nodes Installation <https://docs.openio.io/latest/source/sandbox-guide/multi_nodes_install.html>`__ guide for installing OpenIO.
 
-  .. code-block:: console
-     :caption: result of check.sh
+.. code-block:: console
+   :caption: result of check.sh
 
+    
     AWS S3 summary:
       endpoint: http://192.168.1.155:6007
       region: us-east-1
