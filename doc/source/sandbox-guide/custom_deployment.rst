@@ -4,7 +4,7 @@ Customizing your deployment
 Manage NTP configuration
 ------------------------
 
-You can set the time settings in the `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/sds/inventories/n-nodes/group_vars/all.yml>`__ file.
+You can set the time settings in the `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/18.10/products/sds/group_vars/all.yml>`__ file.
 By default, the deployment dont change your timezone but enable the NTP service and set 4 NTP servers
 
 .. code-block:: yaml
@@ -52,7 +52,7 @@ If needed, you can set your own settings:
 Manage storage volumes
 ----------------------
 
-You can customize all storage devices by node in the `host_vars <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/sds/inventories/n-nodes/host_vars>`__ folder.
+You can customize all storage devices by node in the `host_vars <https://github.com/open-io/ansible-playbook-openio-deployment/tree/18.10/products/sds/host_vars>`__ folder.
 In this example, the nodes have two mounted volumes to store data and one to store metadata:
 
 .. code-block:: yaml
@@ -60,10 +60,10 @@ In this example, the nodes have two mounted volumes to store data and one to sto
 
    ---
    openio_data_mounts:
-     - { mountpoint: "/mnt/sda1" }
-     - { mountpoint: "/mnt/sda2" }
+     - { partition: '/dev/sdb', mountpoint: "/mnt/sda1" }
+     - { partition: '/dev/sdc', mountpoint: "/mnt/sda2" }
    openio_metadata_mounts:
-     - { mountpoint: "/mnt/ssd1" }
+     - { partition: '/dev/sdd', mountpoint: "/mnt/ssd1" }
    ...
 
 Manage the ssh connection
@@ -84,7 +84,7 @@ If one of your nodes doesn’t have the same ssh user configured, you can define
 Manage the data network interface used
 --------------------------------------
 
-Globally, the interface used for data is defined by ``openio_bind_interface`` in the `openio.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/group_vars/openio.yml>`__. You can define a specific interface for a node in its ``host_vars`` file.
+The interface used for data is defined by ``openio_bind_interface`` in the `openio.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/18.10/products/sds/group_vars/openio.yml>`__. You can define a specific interface for a node in its ``host_vars`` file.
 
 .. code-block:: yaml
    :caption: node1.yml
@@ -102,13 +102,14 @@ If you prefer to define each IP address instead of using a global interface, you
   :caption: node1.yml
 
   ---
-  openio_bind_address: 172.16.20.1
+  openio_bind_interface: "{{ ansible_bond0.ipv4.address }}"
+  openio_bind_address: "{{ ansible_bond0.ipv4.address }}"
   ...
 
 Manage S3 authentification
 --------------------------
 
-Set ``name``, ``password``, and ``role`` in `openio.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/group_vars/openio.yml>`__.
+Set ``name``, ``password``, and ``role`` in `openio.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/18.10/products/sds/group_vars/openio.yml>`__.
 
 .. code-block:: yaml
   :caption: openio.yml
@@ -119,11 +120,11 @@ Set ``name``, ``password``, and ``role`` in `openio.yml <https://github.com/open
     - name: "demo:demo"
       password: "DEMO_PASS"
       roles:
-        - admin
+        - member
     - name: "test:tester"
       password: "testing"
       roles:
-        - admin
+        - member
         - reseller_admin
   ...
 
@@ -136,7 +137,7 @@ If you don't have physical nodes to test our solution, you can spawn some *Docke
   :caption: Example:
 
   $ ./spawn_my_lab.sh 3
-  Replace with the following in the file named "01_inventory.ini"
+  Replace with the following in the file named "inventory.ini"
   [all]
   node1 ansible_host=11ce9e9fecde ansible_user=root ansible_connection=docker
   node2 ansible_host=12cd8e2fxdel ansible_user=root ansible_connection=docker

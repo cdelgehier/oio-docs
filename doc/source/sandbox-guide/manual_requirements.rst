@@ -2,7 +2,7 @@ Manual requirements
 ===================
 
 This deployment is designed to be as simple as possible.
-Set ``openio_manage_os_requirement`` to ``false`` in the file `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/group_vars/all.yml>`__ if you wish to manually manage your requirements.
+Set ``openio_manage_os_requirement`` to ``false`` in the file `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/18.10/products/sds/group_vars/all.yml>`__ if you wish to manually manage your requirements.
 
 SELinux and AppArmor
 --------------------
@@ -43,7 +43,7 @@ The firewall must be disabled:
 Proxy
 -----
 
-Set your variables environment in the file `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/sds/inventories/n-nodes/group_vars/all.yml>`__.
+Set your variables environment in the file `all.yml <https://github.com/open-io/ansible-playbook-openio-deployment/blob/18.10/products/sds/group_vars/all.yml>`__.
 
   .. code-block:: shell
 

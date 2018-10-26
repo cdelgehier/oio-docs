@@ -31,6 +31,7 @@ Operating system
 
 -  Centos 7
 -  Ubuntu 16.04 (Server)
+-  Ubuntu 18.04 (Server)
 
 System
 ------
@@ -87,7 +88,7 @@ You only need to perform this setup on one of the nodes in the cluster (or your 
 
   .. code-block:: shell
 
-    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git oiofs && cd oiosds/products/oiofs
+    git clone https://github.com/open-io/ansible-playbook-openio-deployment.git --branch 18.10 oiofs && cd oiosds/products/oiofs
 
 Architecture
 ============
@@ -120,7 +121,7 @@ Installation
 ============
 First, fill the inventory according to your environment:
 
-- Edit the ``inventories/01_oiofs.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/oiofs/inventories/01_oiofs.ini>`__).
+- Edit the ``inventory.ini`` file and adapt the IP addresses and SSH user (sample here: `inventory <https://github.com/open-io/ansible-playbook-openio-deployment/blob/master/products/oiofs/inventory.ini>`__).
 
   .. code-block:: shell
 
@@ -146,7 +147,7 @@ Run these commands:
 
   .. code-block:: shell
 
-    ansible-playbook -i inventories main.yml
+    ansible-playbook -i inventory.ini main.yml
 
 Post-install Checks
 ===================
@@ -177,7 +178,7 @@ Custom your deployment
 Credentials
 -----------
 
-You can set your credentials in the `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/group_vars/oiofs.yml>`__ file.
+You can set your credentials in the `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/group_vars/oiofs.yml>`__ file.
 
 .. code-block:: yaml
    :caption: oiofs.yml
@@ -192,7 +193,7 @@ You can set your credentials in the `oiofs.yml <https://github.com/open-io/ansib
 SDS informations
 ----------------
 
-You can set all your SDS information in the  `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/group_vars/oiofs.yml>`__ file.
+You can set all your SDS information in the  `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/group_vars/oiofs.yml>`__ file.
 
 By default, an ``ecd`` and an ``oioproxy`` are deployed on the target node and binded the default IP address.
 
@@ -217,7 +218,7 @@ By default, an ``ecd`` and an ``oioproxy`` are deployed on the target node and b
 Manage mounts
 -------------
 
-All mounts are defined in the `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/group_vars/oiofs.yml>`__ file and customized by host in the `node_oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/host_vars/node_oiofs.yml>`__ file.
+All mounts are defined in the `oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/group_vars/oiofs.yml>`__ file and customized by host in the `node_oiofs.yml <https://github.com/open-io/ansible-playbook-openio-deployment/tree/master/products/oiofs/inventories/host_vars/node_oiofs.yml>`__ file.
 
 .. code-block:: yaml
    :caption: oiofs.yml
